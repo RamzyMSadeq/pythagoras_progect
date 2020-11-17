@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="356" height="210" viewBox="0 0 356 210">
+  <defs>
+    <filter id="_5" x="0" y="0" width="102" height="210" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.278"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Group_7982" data-name="Group 7982" transform="translate(-5 -80)">
+    <path id="Rectangle_2633" data-name="Rectangle 2633" d="M0,0H311a8,8,0,0,1,8,8V94a8,8,0,0,1-8,8H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(42 144)" fill="#f5645f"/>
+    <path id="Rectangle_2641" data-name="Rectangle 2641" d="M0,0H30a8,8,0,0,1,8,8V26a8,8,0,0,1-8,8H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(34 198)" fill="#fff"/>
+    <g transform="matrix(1, 0, 0, 1, 5, 80)" filter="url(#_5)">
+      <text id="_5-2" data-name="5" transform="translate(51 165)" fill="#f5645f" font-size="145" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="-41.702" y="0">5</tspan></text>
+    </g>
+  </g>
+</svg>

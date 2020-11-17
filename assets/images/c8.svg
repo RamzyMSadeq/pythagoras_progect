@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="84" height="117" viewBox="0 0 84 117">
+  <defs>
+    <clipPath id="clip-path">
+      <rect x="9" y="57" width="84" height="117" fill="none"/>
+    </clipPath>
+    <filter id="_8" x="-9" y="-57" width="102" height="213" filterUnits="userSpaceOnUse">
+      <feOffset input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.278"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+  </defs>
+  <g id="Scroll_Group_6" data-name="Scroll Group 6" transform="translate(-9 -57)" clip-path="url(#clip-path)" style="isolation: isolate">
+    <g id="Group_6908" data-name="Group 6908" transform="translate(-5 -457)">
+      <path id="Rectangle_2643" data-name="Rectangle 2643" d="M0,0H8a8,8,0,0,1,8,8V38a8,8,0,0,1-8,8H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(55 528)" fill="#fff"/>
+      <path id="Rectangle_2639" data-name="Rectangle 2639" d="M0,0H9a8,8,0,0,1,8,8V38a8,8,0,0,1-8,8H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(55 576)" fill="#fff"/>
+      <g transform="matrix(1, 0, 0, 1, 14, 514)" filter="url(#_8)">
+        <text id="_8-2" data-name="8" transform="translate(42 110)" fill="#7377b4" font-size="146" font-family="SegoeUI-Bold, Segoe UI" font-weight="700"><tspan x="-41.989" y="0">8</tspan></text>
+      </g>
+    </g>
+  </g>
+</svg>
