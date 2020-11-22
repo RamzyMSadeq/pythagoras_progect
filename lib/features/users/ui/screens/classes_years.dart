@@ -35,17 +35,19 @@ class ClassesYears extends StatelessWidget {
                 size: 25,
                 color: whiteColor,
               ),
-              onPressed: () {})
+              onPressed: () {
+               // push(context, Sook());
+              })
         ],
         leading: Icon(Icons.share),
         backgroundColor: pinkColor,
         title: Column(
           children: [
             Image.asset(
-                'assets/images/qwd.png',
-                fit: BoxFit.fill,
-                height: 30,
-              ),
+              'assets/images/qwd.png',
+              fit: BoxFit.fill,
+              height: 30,
+            ),
             Text("متعة تعلم الرياضيات", style: styleSubLogoLight),
           ],
         ),
@@ -53,7 +55,7 @@ class ClassesYears extends StatelessWidget {
       ),
       body: WillPopScope(
         onWillPop: () async {
-           return isBob(context);
+          return isBob(context);
         },
         child: Container(
           margin: EdgeInsets.all(30),

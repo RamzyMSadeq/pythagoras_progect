@@ -24,21 +24,18 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-   
-
     super.initState();
     Timer(Duration(seconds: 3), () async {
       String token = await SPHelper.spHelper.getToken();
+      print("rrrrrrrrrrrraaaaaaaaaaaammmmmmmmmmmm $token");
       if (token != null) {
-         BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+        BlocProvider.of<UserBloc>(context).add(SettingsEvent());
         Timer(Duration(seconds: 3), () async {
-
           pushAndRemoveUntil(
-          context,
-          HomeScreen(),
-        );
+            context,
+            HomeScreen(),
+          );
         });
-        
       } else {
         pushAndRemoveUntil(
           context,

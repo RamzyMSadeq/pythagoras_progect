@@ -70,9 +70,9 @@ class DataNotification {
   int id;
   int levelId;
   String description;
-  Null link;
+  String link;
   String icon;
-  Null expiredAt;
+  var expiredAt;
   String createdAt;
   String updatedAt;
 

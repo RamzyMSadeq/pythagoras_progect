@@ -10,6 +10,8 @@ import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardPaymentDialog extends StatefulWidget {
+  int unitId;
+  CardPaymentDialog({this.unitId});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();
 }
@@ -19,9 +21,7 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
 
   setValu(int value) {
     selectedValu = value;
-    setState(() {
-      
-    });
+    setState(() {});
   }
 
   @override
@@ -167,11 +167,12 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                             onTap: () {
                               Navigator.of(context).pop();
                             },
-                                                      child: Container(
+                            child: Container(
                               height: ScreenUtil().setHeight(35),
                               width: ScreenUtil().setWidth(130),
                               decoration: BoxDecoration(
-                                  color: whiteColor, borderRadius: borderRadius8),
+                                  color: whiteColor,
+                                  borderRadius: borderRadius8),
                               child: Center(
                                 child: Text(
                                   "الغاء",

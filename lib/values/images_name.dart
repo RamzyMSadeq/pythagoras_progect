@@ -27,7 +27,8 @@ final String splashback = 'assets/svgs/splashback.svg';
 final String bcksplash = 'assets/images/bcksplash.png';
 final String fgsplash = 'assets/images/fgsplash.svg';
 final String fgsplash2 = 'assets/images/fgsplash2.png';
-final String logbt = 'assets/svgs/logbt.svg';
 final String forgroundsplash1 = 'assets/images/forgroundsplash1.svg';
 final String forgroundsplash = 'assets/images/forgroundsplash.png';
 final String mancontainer = 'assets/svgs/mancontainer.svg';
+final String loginBoutom0 = 'assets/images/loginBoutom0.png';
+

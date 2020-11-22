@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -21,8 +22,14 @@ import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/styles.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   DateTime selectedDate = DateTime.now();
+
   final GlobalKey<FormState> registerFormkey =
       GlobalKey<FormState>(debugLabel: '_registerFormKey');
 
@@ -33,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
         Provider.of<AuthProviderUser>(context, listen: false);
 
     return Scaffold(
-   //   resizeToAvoidBottomPadding: false,
+      //   resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -148,200 +155,212 @@ class SignUpScreen extends StatelessWidget {
             ),
             SingleChildScrollView(
               reverse: true,
-
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom,
-                            ),
-                            child: Container(
-                     child: Column(
-                  children: [
-                    CustomTextField(
-                hintTitle: "الاسم",
-                icon: Icon(
-                  Icons.person,
-                  size: 20,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom,
                 ),
-                onSaved: authProviderUserWithListen.setName,
-                onValidate: authProviderUserWithListen.validateName,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomDropDown(
-                type: "gender",
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: InkWell(
-                  onTap: () {
-                    return showRoundedDatePicker(
-                      context: context,
-                      height: 320,
-                      theme: ThemeData(primarySwatch: Colors.pink),
-                      initialDate: selectedDate,
-                      firstDate: DateTime(selectedDate.year - 100),
-                      lastDate: DateTime(selectedDate.year + 10),
-                      borderRadius: 16,
-                    );
-                  },
-                  child: Container(
-                    height: ScreenUtil().setHeight(45),
-                    width: double.infinity,
-                    padding: EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                        color: backgroundTextFieldColor.withOpacity(.12),
-                        borderRadius: borderRadius22),
-                    child: Row(
-                      children: [
-                        Expanded(
-                            flex: 1,
-                            child: Icon(
-                              Icons.date_range,
-                              color: Colors.grey[600],
-                            ),
+                child: Container(
+                  child: Column(
+                    children: [
+                      CustomTextField(
+                        hintTitle: "الاسم",
+                        icon: Icon(
+                          Icons.person,
+                          size: 20,
                         ),
-                        Expanded(
-                              flex: 12,
-                              child: Container(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Text(
-                                  "تاريخ الميلاد",
-                                  style: TextStyle(
-                                      color: Colors.grey[400],
-                                      fontFamily: "Ithrabold",
-                                      fontSize: 14),
+                        onSaved: authProviderUserWithListen.setName,
+                        onValidate: authProviderUserWithListen.validateName,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomDropDown(
+                        type: "gender",
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      Directionality(
+                        textDirection: TextDirection.rtl,
+                        child: InkWell(
+                          onTap: () {
+                            return showRoundedDatePicker(
+                              context: context,
+                              height: 320,
+                              theme: ThemeData(primarySwatch: Colors.pink),
+                              initialDate: selectedDate,
+                              firstDate: DateTime(selectedDate.year - 100),
+                              lastDate: DateTime(selectedDate.year + 10),
+                              borderRadius: 16,
+                            ).then((value) {
+                              selectedDate = value;
+                              setState(() {
+                                
+                              });
+                            });
+                          },
+                          child: Container(
+                            height: ScreenUtil().setHeight(45),
+                            width: double.infinity,
+                            padding: EdgeInsets.only(right: 12),
+                            decoration: BoxDecoration(
+                                color:
+                                    backgroundTextFieldColor.withOpacity(.12),
+                                borderRadius: borderRadius22),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  flex: 1,
+                                  child: Icon(
+                                    Icons.date_range,
+                                    color: Colors.grey[600],
+                                  ),
                                 ),
-                              ))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomDropDown(
-                type: "class",
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomDropDown(
-                type: "state",
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextField(
-                hintTitle: "رقم الهاتف",
-                icon: Icon(
-                  Icons.phone,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setMobile,
-                onValidate: authProviderUserWithListen.validateMobile,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextField(
-                hintTitle: "كلمة السر",
-                icon: Icon(
-                  Icons.lock,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setPassword,
-                onValidate: authProviderUserWithListen.validatePassword,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextField(
-                hintTitle: "اعد كتابة كلمة السر",
-                icon: Icon(
-                  Icons.lock,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setConfirmPassword,
-                onValidate: authProviderUserWithListen.validateConfirmPassword,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      )),
-                  Text(
-                    "معلومات ولي الامر",
-                    style: styleTitleSignUpLight,
-                  ),
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextField(
-                hintTitle: "اسم ولي الامر",
-                icon: Icon(
-                  Icons.person,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setFatherName,
-                onValidate: authProviderUserWithListen.validateFatherName,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextField(
-                hintTitle: "صلة القرابة بولي الامر",
-                icon: Icon(
-                  Icons.group,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setLink,
-                onValidate: authProviderUserWithListen.validateLink,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(30),
-              ),
-              Container(
-                margin: EdgeInsets.only(
-                  left: ScreenUtil().setWidth(50),
-                  right: ScreenUtil().setWidth(50),
-                ),
-                width: ScreenUtil().setWidth(202),
-                child: CustomBottom(
-                  title: "إنشاء حساب",
-                  color: orangeColor,
-                  route: () {
-                 authProviderUserNoListen.onSavedRegisterForm(
-                        context, registerFormkey);
-                      
-                   
-                    // push(context, LogInScreen());
-                  },
-                ),
-              ),
-                  ],
-                ),
-              ),
+                                Expanded(
+                                    flex: 12,
+                                    child: Container(
+                                      padding: EdgeInsets.only(right: 10),
+                                      child: Text(
+                                        "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
+                                        style: TextStyle(
+                                            color: Colors.grey[400],
+                                            fontFamily: "Ithrabold",
+                                            fontSize: 14),
+                                      ),
+                                    ))
+                              ],
+                            ),
                           ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomDropDown(
+                        type: "class",
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomTextField(
+                        hintTitle: "المنطقة",
+                        icon: Icon(
+                          Icons.location_on,
+                          size: 20,
+                        ),
+                        onSaved: authProviderUserWithListen.setLocation,
+                        onValidate: authProviderUserWithListen.validateLocation,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomTextField(
+                        hintTitle: "رقم الهاتف",
+                        icon: Icon(
+                          Icons.phone,
+                          size: 20,
+                        ),
+                        onSaved: authProviderUserWithListen.setMobile,
+                        onValidate: authProviderUserWithListen.validateMobile,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomTextField(
+                        hintTitle: "كلمة السر",
+                        icon: Icon(
+                          Icons.lock,
+                          size: 20,
+                        ),
+                        onSaved: authProviderUserWithListen.setPassword,
+                        onValidate: authProviderUserWithListen.validatePassword,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      // CustomTextField(
+                      //   hintTitle: "اعد كتابة كلمة السر",
+                      //   icon: Icon(
+                      //     Icons.lock,
+                      //     size: 20,
+                      //   ),
+                      //   onSaved: authProviderUserWithListen.setConfirmPassword,
+                      //   onValidate:
+                      //       authProviderUserWithListen.validateConfirmPassword,
+                      // ),
+                      // SizedBox(
+                      //   height: ScreenUtil().setHeight(10),
+                      // ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                              width: ScreenUtil().setWidth(75),
+                              child: Divider(
+                                thickness: 2,
+                                endIndent: 20,
+                              )),
+                          Text(
+                            "معلومات ولي الامر",
+                            style: styleTitleSignUpLight,
+                          ),
+                          Container(
+                              width: ScreenUtil().setWidth(75),
+                              child: Divider(
+                                thickness: 2,
+                                endIndent: 20,
+                              ))
+                        ],
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomTextField(
+                        hintTitle: "اسم ولي الامر",
+                        icon: Icon(
+                          Icons.person,
+                          size: 20,
+                        ),
+                        onSaved: authProviderUserWithListen.setFatherName,
+                        onValidate:
+                            authProviderUserWithListen.validateFatherName,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(10),
+                      ),
+                      CustomTextField(
+                        hintTitle: "صلة القرابة بولي الامر",
+                        icon: Icon(
+                          Icons.group,
+                          size: 20,
+                        ),
+                        onSaved: authProviderUserWithListen.setLink,
+                        onValidate: authProviderUserWithListen.validateLink,
+                      ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(30),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(
+                          left: ScreenUtil().setWidth(50),
+                          right: ScreenUtil().setWidth(50),
+                        ),
+                        width: ScreenUtil().setWidth(202),
+                        child: CustomBottom(
+                          title: "إنشاء حساب",
+                          color: orangeColor,
+                          route: () {
+                            authProviderUserNoListen.onSavedRegisterForm(
+                                context, registerFormkey);
+
+                            // push(context, LogInScreen());
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ),
             // SizedBox(
             //   height: ScreenUtil().setHeight(50),
@@ -385,15 +404,24 @@ class SignUpScreen extends StatelessWidget {
                     );
                   } else if (state is EmptyTasksState) {
                     return Center(
-                    //  child: Text('Empty Tasks'),
-                    );
+                        //  child: Text('Empty Tasks'),
+                        );
                   } else if (state is TasksErrorState) {
-                    return Center(
+                    Center(
                       child: Text(state.error),
                     );
+                    // Fluttertoast.showToast(
+                    //   msg: "تاكد من المدخلات",
+                    //   toastLength: Toast.LENGTH_SHORT,
+                    //   gravity: ToastGravity.BOTTOM,
+                    //   timeInSecForIosWeb: 3,
+                    //   backgroundColor: Colors.red,
+                    //   textColor: Colors.white,
+                    //   fontSize: 16.0);
+                    return Center(
+                      child: Container(),
+                    );
                   } else if (state is SuccessState) {
-                   
-                 
                     //dpush(context, LogInScreen());
                     return Container();
                   }

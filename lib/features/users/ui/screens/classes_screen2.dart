@@ -28,7 +28,7 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
   int count2;
   @override
   void initState() {
-    BlocProvider.of<UserBloc>(context).add(LevelsEvent());
+   BlocProvider.of<UserBloc>(context).add(LevelsEvent());
 
     super.initState();
   }

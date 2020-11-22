@@ -1,14 +1,13 @@
 import 'dart:convert';
 import 'dart:io';
-
+import 'package:path/path.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http_parser/http_parser.dart';
 import 'package:pythagoras/services/sp_helper.dart';
-import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class ApiUserClient {
   ApiUserClient._();
@@ -68,6 +67,60 @@ class ApiUserClient {
     }
   }
 
+//////////////////////////////////////////////////////////
+
+  // Future<Map> registerUser3(
+  //     String name,
+  //     String gender,
+  //     String password,
+  //     String mobile,
+  //     String levelId,
+  //     String location,
+  //     String supervisor,
+  //     String supervisorType,
+  //     File avatar) async {
+  //   var uri = Uri.parse(basePath + regesterPath);
+  //   var request = new http.MultipartRequest("POST", uri);
+  //   var multipartFile = await http.MultipartFile.fromPath(
+  //     "image",
+  //     avatar.path,
+  //      filename: basename(avatar.path),
+  //     contentType: MediaType("image", "jpg"),
+  //   );
+
+  //   request.files.add(multipartFile);
+  //   request.headers.addAll({
+  //     HttpHeaders.acceptHeader: '*/*',
+  //     Headers.contentTypeHeader: 'multipart/form-data'
+  //   });
+
+  //   request.fields['name'] = name;
+  //   request.fields['gender'] = gender;
+  //   request.fields['mobile'] = mobile;
+  //   request.fields['password'] = password;
+  //   request.fields['mobile'] = mobile;
+  //   request.fields['level_id'] = levelId;
+  //   request.fields['location'] = location;
+  //   request.fields['supervisor'] = supervisor;
+  //   request.fields['supervisor_type'] = supervisorType;
+
+  //   try {
+  //     http.StreamedResponse response = await request.send();
+  //    // var responseByteArray = await response.stream.toBytes();
+
+  //     final respStr = await response.stream.bytesToString();
+  //     print("tttttttttttttttttttiiiiiiiiiiiiiiiii ${respStr} ");
+  //     //  Map map = json.decode(respStr) as Map;
+  //   //  Map map = json.decode(utf8.decode(responseByteArray));
+  //     // print("tttttttttttttttttttiiiiiiiiiiiiiiiii $map");
+
+  //     return Map();
+  //   } catch (e) {
+  //     print(e);
+  //     return null;
+  //   }
+  // }
+
   // Future<Map> registerUser2(
   //   String name,
   //     String gender,
@@ -91,15 +144,16 @@ class ApiUserClient {
   //         'location': location,
   //         'supervisor': supervisor,
   //         'supervisor_type': supervisorType,
-  //         'avatar': await MultipartFile.fromFile(
-  //           avatar.path,
-  //           filename: avatar.path.split('/').last,
-  //           contentType: MediaType("image", "jpg"),
-  //         )
+  //         // 'avatar': await MultipartFile.fromFile(
+  //         //   avatar.path,
+  //         //   filename: avatar.path.split('/').last,
+  //         //   contentType: MediaType("image", "jpg"),
+  //         // )
   //     }, headers: {
   //       HttpHeaders.acceptHeader: '*/*',
-  //      // Headers.contentTypeHeader: 'multipart/form-data',
-  //     });
+  //       // Headers.contentTypeHeader: 'multipart/form-data',
+  //       // HttpHeaders.connectionHeader:"keep-alive"
+  //      });
   //     print("333333333333333333333333333333333333333");
   //     if (response.statusCode == 401) {
   //       Fluttertoast.showToast(
@@ -121,7 +175,6 @@ class ApiUserClient {
   //     return null;
   //   }
   // }
-
 
   Future<Map> registerUser(
       String name,
@@ -166,33 +219,35 @@ class ApiUserClient {
     }
   }
 
-  // Future<Map> logInUser(
-  //   String mobile,
-  //   String password,
-  // ) async {
-  //   try {
-  //     await initApi();
-  //     FormData formData = FormData.fromMap(
-  //       {
-  //         "phone": mobile,
-  //         "password": password,
-  //       },
-  //     );
-  //     Response response = await dio.post(basePath + logInPath,
-  //         data: formData,
-  //         options: Options(headers: {
-  //           Headers.acceptHeader: "*/*",
-  //           Headers.contentTypeHeader: "multipart/form-data",
-  //         }));
-  //     print(
-  //         "8888888888889999999999999999999999999999999 ${response.statusCode}");
-
-  //     return response.data;
-  //   } catch (e) {
-  //     print(e.toString());
-  //     return null;
-  //   }
-  // }
+  Future<Map> logInUser(
+    String mobile,
+    String password,
+  ) async {
+    try {
+      await initApi();
+      FormData formData = FormData.fromMap(
+        {
+          "phone": mobile,
+          "password": password,
+        },
+      );
+      Response response = await dio.post(basePath + logInPath,
+          data: formData,
+          options: Options(headers: {
+            Headers.acceptHeader: "*/*",
+            // Headers.contentTypeHeader: "multipart/form-data",
+          }));
+      print(
+          "8888888888889999999999999999999999999999999 ${response.statusCode}");
+      if (response.statusCode != 200) {
+        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+      }
+      return response.data;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
 
   Future<Map> meStatusUser() async {
     try {
@@ -369,11 +424,13 @@ class ApiUserClient {
   ////////////////////////////////////////////////////////////////
   Future<Map> levels() async {
     try {
+      String token = await SPHelper.spHelper.getToken();
       initApi();
       Response response = await dio.get(basePath + levelsPath,
           options: Options(headers: {
             Headers.acceptHeader: "*/*",
             Headers.contentTypeHeader: "multipart/form-data",
+            HttpHeaders.authorizationHeader: "bearer $token"
           }));
       print(
           "rtrtrtrttttttteeeeeeeeeeeeeeeeeeeeeeetttttttrtrt ${response.data}");
@@ -491,7 +548,7 @@ class ApiUserClient {
   }
 
   ////////////////////////////////////////////////////
-  Future<Map> orderPaymentUser(String type, String unitId) async {
+  Future<Map> orderPaymentUser(String type, int unitId) async {
     try {
       String token = await SPHelper.spHelper.getToken();
       await initApi();
@@ -606,13 +663,12 @@ class ApiUserClient {
     try {
       await initApi();
       String token = await SPHelper.spHelper.getToken();
-      Response response =
-          await dio.get(basePath + notificationPath,
-              options: Options(headers: {
-                Headers.acceptHeader: "*/*",
-                Headers.contentTypeHeader: "multipart/form-data",
-                HttpHeaders.authorizationHeader: "bearer $token"
-              }));
+      Response response = await dio.get(basePath + notificationPath,
+          options: Options(headers: {
+            Headers.acceptHeader: "*/*",
+            Headers.contentTypeHeader: "multipart/form-data",
+            HttpHeaders.authorizationHeader: "bearer $token"
+          }));
 
       print("bnnnnnnnnnnnnnnnnnnnnnnnbbbbbbbbbbbbb ${response.data}");
       return response.data;

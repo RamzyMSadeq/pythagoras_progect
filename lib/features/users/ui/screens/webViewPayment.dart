@@ -8,6 +8,8 @@ import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPayment extends StatefulWidget {
+  int unitId;
+  WebViewPayment({this.unitId});
   @override
   _WebViewPaymentState createState() => _WebViewPaymentState();
 }
@@ -18,7 +20,12 @@ class _WebViewPaymentState extends State<WebViewPayment> {
 
   @override
   void initState() {
-    BlocProvider.of<UserBloc>(context).add(OrderPaymebtEvent("paypal", "2"));
+    if(widget.unitId == null){
+      BlocProvider.of<UserBloc>(context).add(OrderPaymebtEvent("paypal", 3));
+    }else{
+     BlocProvider.of<UserBloc>(context).add(OrderPaymebtEvent("paypal", widget.unitId));
+    }
+    
     super.initState();
   }
 
@@ -30,7 +37,6 @@ class _WebViewPaymentState extends State<WebViewPayment> {
         centerTitle: true,
       ),
       body: Container(
-        
         width: double.infinity,
         height: double.infinity,
         child: BlocBuilder<UserBloc, BlocStates>(

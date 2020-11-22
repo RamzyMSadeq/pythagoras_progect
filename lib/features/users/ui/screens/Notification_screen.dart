@@ -68,28 +68,27 @@ class NotificationScreen extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.symmetric(horizontal: 30),
                               margin: EdgeInsets.only(bottom: 20),
-                              height: ScreenUtil().setHeight(150),
+                              height: ScreenUtil().setHeight(120),
                               width: ScreenUtil().setWidth(330),
                               decoration: BoxDecoration(
                                   borderRadius: borderRadius8,
                                   color: pinkColor,
                                   boxShadow: <BoxShadow>[boxShadow6]),
-                              child: Center(
-                                  child: Column(
+                              child: Column(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
+                                MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    myNotification[index].description,
-                                    style: styleNotificationTitle,
-                                  ),
-                                  Text(
-                                    myNotification[index].createdAt,
-                                    style: styleNotificationSubTitle,
-                                  )
+                              Text(
+                                myNotification[index].description,
+                                style: styleNotificationTitle,
+                              ),
+                              Text(
+                                myNotification[index].createdAt,
+                                style: styleNotificationSubTitle,
+                              )
                                 ],
-                              )),
+                              ),
                             ),
                             Transform.translate(
                                 offset: Offset(15, -20),

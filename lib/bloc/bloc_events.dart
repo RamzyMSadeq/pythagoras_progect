@@ -94,7 +94,7 @@ class VideoViewEvent extends BlocEvents {
 
 class OrderPaymebtEvent extends BlocEvents {
   String type;
-  String unitId;
+  int unitId;
   OrderPaymebtEvent(this.type, this.unitId);
 }
 
@@ -133,14 +133,11 @@ class EditProfileEvent extends BlocEvents {
 class IsAccessVideoEvent extends BlocEvents {
   String videoId;
   Widget route;
+  int unitId;
   BuildContext context;
-  IsAccessVideoEvent(this.videoId, this.context, this.route);
+  IsAccessVideoEvent(this.videoId, this.context, this.route , this.unitId);
 }
 
-class SettingsEvent extends BlocEvents {
+class SettingsEvent extends BlocEvents {}
 
-}
-class NotificationEvent extends BlocEvents {
-  
-
-}
+class NotificationEvent extends BlocEvents {}

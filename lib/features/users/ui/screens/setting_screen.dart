@@ -28,6 +28,11 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   bool _lights = false;
 
+  isBob(BuildContext context) {
+    BlocProvider.of<UserBloc>(context).add(LevelsEvent());
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(MeUserEvent());
@@ -43,245 +48,221 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           backgroundColor: orangeColor,
         ),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          margin: EdgeInsets.all(10),
-          child: BlocBuilder<UserBloc, BlocStates>(
-            builder: (context, state) {
-              if (state is TasksLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is EmptyTasksState) {
-                return Center(
-                  child: Text('Empty Tasks'),
-                );
-              } else if (state is TasksErrorState) {
-                return Center(
-                  child: Text(state.error),
-                );
-              } else if (state is MeUserState) {
-                MeUser myUser = state.meUser;
+        body: WillPopScope(
+           onWillPop: () async {
+          return isBob(context);
+        },
+                  child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            margin: EdgeInsets.all(10),
+            child: BlocBuilder<UserBloc, BlocStates>(
+              builder: (context, state) {
+                if (state is TasksLoadingState) {
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else if (state is EmptyTasksState) {
+                  return Center(
+                    child: Text('Empty Tasks'),
+                  );
+                } else if (state is TasksErrorState) {
+                  return Center(
+                    child: Text(state.error),
+                  );
+                } else if (state is MeUserState) {
+                  MeUser myUser = state.meUser;
 
-                print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.name}");
+                  print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.name}");
 
-                return Column(
-                  children: [
-                    //SizedBox(height: ScreenUtil().setHeight(20),),
+                  return Column(
+                    children: [
+                      //SizedBox(height: ScreenUtil().setHeight(20),),
 
-                    Container(
-                      width: double.infinity,
-                      height: ScreenUtil().setHeight(130),
-                      decoration: BoxDecoration(
-                          color: blueColor, borderRadius: borderRadius5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          myUser.avatar == null || myUser.avatar == ""
-                              ? CircleAvatar(
-                                  radius: 40,
-                                  backgroundColor: whiteColor,
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.person,
-                                      size: 60,
+                      Container(
+                        width: double.infinity,
+                        height: ScreenUtil().setHeight(130),
+                        decoration: BoxDecoration(
+                            color: blueColor, borderRadius: borderRadius5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            myUser.avatar == null || myUser.avatar == ""
+                                ? CircleAvatar(
+                                    radius: 40,
+                                    backgroundColor: whiteColor,
+                                    child: Center(
+                                      child: Icon(
+                                        Icons.person,
+                                        size: 60,
+                                      ),
                                     ),
+                                  )
+                                : CircleAvatar(
+                                    radius: 40,
+                                    backgroundImage: CachedNetworkImageProvider(
+                                        photoPath + "${myUser.avatar}"),
                                   ),
-                                )
-                              : CircleAvatar(
-                                  radius: 40,
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      photoPath + "${myUser.avatar}"),
-                                ),
-                          Container(
-                            width: ScreenUtil().setWidth(135),
-                            height: ScreenUtil().setHeight(85),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            Container(
+                              width: ScreenUtil().setWidth(135),
+                              height: ScreenUtil().setHeight(85),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    myUser.name,
+                                    style: styleSettingName,
+                                  ),
+                                  Text(
+                                    myUser.location,
+                                    style: styleSettingPhone,
+                                  ),
+                                  Text(
+                                    myUser.phone,
+                                    style: styleSettingPhone,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                Text(
-                                  myUser.name,
-                                  style: styleSettingName,
-                                ),
-                                Text(
-                                  myUser.location,
-                                  style: styleSettingPhone,
-                                ),
-                                Text(
-                                  myUser.phone,
-                                  style: styleSettingPhone,
+                                InkWell(
+                                    onTap: () {
+                                      push(context, EditProfile());
+                                    },
+                                    child: Text(
+                                      "عدل",
+                                      style: styleSettingName,
+                                    )),
+                                Image.asset(
+                                  profile,
+                                  fit: BoxFit.fill,
                                 )
                               ],
-                            ),
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              InkWell(
-                                  onTap: () {
-                                    push(context, EditProfile());
-                                  },
-                                  child: Text(
-                                    "عدل",
-                                    style: styleSettingName,
-                                  )),
-                              Image.asset(
-                                profile,
-                                fit: BoxFit.fill,
-                              )
-                            ],
-                          )
-                        ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: ScreenUtil().setHeight(20),
-                    ),
+                      SizedBox(
+                        height: ScreenUtil().setHeight(20),
+                      ),
 
-                    Container(
-                      width: double.infinity,
-                      height: ScreenUtil().setHeight(280),
-                      decoration: BoxDecoration(
-                          color: whiteColor,
-                          borderRadius: borderRadius8,
-                          boxShadow: <BoxShadow>[boxShadow6]),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: ScreenUtil().setHeight(40),
-                            child: ListTile(
-                              onTap: () {
-                                return showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return CardContactUsDialog();
-                                  },
-                                );
-                              },
-                              leading: Icon(
-                                Icons.bookmark,
-                                color: blueColor,
-                                size: 20,
-                              ),
-                              title: Text(
-                                "هل انت معلم وتود الانضمام لنا  ؟",
-                                style: styleSettingTitle,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
-                              ),
-                            ),
-                          ),
-                          Divider(),
-                          Container(
-                            height: ScreenUtil().setHeight(40),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.notifications,
-                                color: blueColor,
-                                size: 20,
-                              ),
-                              title: Text(
-                                "الاشعارات",
-                                style: styleSettingTitle,
-                              ),
-                              trailing: CupertinoSwitch(
-                                activeColor: orangeColor,
-                                value: _lights,
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _lights = value;
-                                  });
+                      Container(
+                        width: double.infinity,
+                        height: ScreenUtil().setHeight(280),
+                        decoration: BoxDecoration(
+                            color: whiteColor,
+                            borderRadius: borderRadius8,
+                            boxShadow: <BoxShadow>[boxShadow6]),
+                        child: Column(
+                          children: [
+                            Container(
+                              height: ScreenUtil().setHeight(40),
+                              child: ListTile(
+                                onTap: () {
+                                  return showDialog(
+                                    context: context,
+                                    builder: (context) {
+                                      return CardContactUsDialog();
+                                    },
+                                  );
                                 },
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  _lights = !_lights;
-                                });
-                              },
-                            ),
-                          ),
-                          Divider(),
-                          Container(
-                            height: ScreenUtil().setHeight(40),
-                            child: ListTile(
-                              onTap: () {
-                                push(context, ContactUs());
-                              },
-                              leading: Icon(
-                                Icons.phone,
-                                color: blueColor,
-                                size: 20,
-                              ),
-                              title: Text(
-                                "تواصل معنا",
-                                style: styleSettingTitle,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
+                                leading: Icon(
+                                  Icons.bookmark,
+                                  color: blueColor,
+                                  size: 20,
+                                ),
+                                title: Text(
+                                  "هل انت معلم وتود الانضمام لنا  ؟",
+                                  style: styleSettingTitle,
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 15,
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(),
-                          Container(
-                            height: ScreenUtil().setHeight(40),
-                            child: ListTile(
-                              onTap: () {
-                                push(context, AboutMe());
-                              },
-                              leading: Icon(
-                                Icons.info,
-                                color: blueColor,
-                                size: 20,
-                              ),
-                              title: Text(
-                                "من نحن",
-                                style: styleSettingTitle,
-                              ),
-                              trailing: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 15,
+                            Divider(),
+                            Container(
+                              height: ScreenUtil().setHeight(40),
+                              child: ListTile(
+                                onTap: () {
+                                  push(context, ContactUs());
+                                },
+                                leading: Icon(
+                                  Icons.phone,
+                                  color: blueColor,
+                                  size: 20,
+                                ),
+                                title: Text(
+                                  "تواصل معنا",
+                                  style: styleSettingTitle,
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 15,
+                                ),
                               ),
                             ),
-                          ),
-                          Divider(),
-                          InkWell(
-                            onTap: () {
-                              SPHelper.spHelper.setToken(null);
-                              pushAndRemoveUntil(context, LogInScreen());
-                            },
-                            child: Container(
-                                height: ScreenUtil().setHeight(40),
-                                width: ScreenUtil().setWidth(100),
-                                child: Row(
-                                  children: [
-                                    Icon(
-                                      Icons.exit_to_app,
-                                      color: blueColor,
-                                      size: 20,
-                                    ),
-                                    SizedBox(
-                                      width: ScreenUtil().setHeight(10),
-                                    ),
-                                    Text(
-                                      "تسجيل خروج",
-                                      style: styleSettingTitle,
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                );
-              }
-              return null;
-            },
+                            Divider(),
+                            Container(
+                              height: ScreenUtil().setHeight(40),
+                              child: ListTile(
+                                onTap: () {
+                                  push(context, AboutMe());
+                                },
+                                leading: Icon(
+                                  Icons.info,
+                                  color: blueColor,
+                                  size: 20,
+                                ),
+                                title: Text(
+                                  "من نحن",
+                                  style: styleSettingTitle,
+                                ),
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 15,
+                                ),
+                              ),
+                            ),
+                            Divider(),
+                            InkWell(
+                              onTap: () {
+                                SPHelper.spHelper.setToken(null);
+                                pushAndRemoveUntil(context, LogInScreen());
+                              },
+                              child: Container(
+                                  height: ScreenUtil().setHeight(40),
+                                  width: ScreenUtil().setWidth(100),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.exit_to_app,
+                                        color: blueColor,
+                                        size: 20,
+                                      ),
+                                      SizedBox(
+                                        width: ScreenUtil().setHeight(10),
+                                      ),
+                                      Text(
+                                        "تسجيل خروج",
+                                        style: styleSettingTitle,
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  );
+                }
+                return Container();
+              },
+            ),
           ),
         ),
       ),

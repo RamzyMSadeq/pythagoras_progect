@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
+import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/screens/log_in_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_title_man.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
@@ -56,9 +58,9 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
               height: ScreenUtil().setHeight(200),
               width: double.infinity,
               child: CardTitleMan(
-                  title: "الدروس المسجلة",
+                  title: Provider.of<AuthProviderUser>(context).titlePay,
                   subTitle1:
-                      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
+                      Provider.of<AuthProviderUser>(context).subTitlePay,
                   subTitle2:
                       "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
                   color: blueColor),

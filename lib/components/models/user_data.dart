@@ -1,5 +1,5 @@
 class UserData {
-  String message;
+  var message;
   User user;
 
   UserData({this.message, this.user});
@@ -20,17 +20,17 @@ class UserData {
 }
 
 class User {
-  String name;
-  String gender;
-  String levelId;
-  String location;
-  String supervisor;
-  String supervisorType;
-  String phone;
-  String avatar;
-  String updatedAt;
-  String createdAt;
-  int id;
+  var name;
+  var gender;
+  var levelId;
+  var location;
+  var supervisor;
+  var supervisorType;
+  var phone;
+  var avatar;
+  var updatedAt;
+  var createdAt;
+  var id;
 
   User(
       {this.name,

@@ -10,7 +10,11 @@ import 'package:pythagoras/bloc2/bloc_class2.dart';
 import 'package:pythagoras/bloc2/bloc_states2.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
+import 'package:pythagoras/services/check_connct_internet.dart';
 import 'package:pythagoras/services/connectivity.dart';
+import 'package:pythagoras/services/notification.dart';
+import 'package:pythagoras/services/notification_handler.dart';
+import 'package:pythagoras/services/socket_class.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/splash_screen.dart';
 import 'package:pythagoras/values/images_name.dart';
@@ -19,10 +23,8 @@ import 'bloc/bloc_class.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  
+
   int co = await SPHelper.spHelper.getCountNotification();
- 
-  
 
   // initSvg();
   await precachePicture(
@@ -42,10 +44,8 @@ void main() async {
   await precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoder, container5), null);
   await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, logbt), null);
-  await precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoder, splashback), null);
-  runApp(co==null ? MyApp(0) : MyApp(co));
+  runApp(co == null ? MyApp(0) : MyApp(co));
 }
 
 class MyApp extends StatefulWidget {
@@ -62,6 +62,12 @@ class _MyAppState extends State<MyApp> {
     super.initState();
     connectivityService = ConnectivityService();
   }
+
+  // @override
+  // void dispose() {
+  //   CheckInternet().listener.cancel();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -119,6 +125,24 @@ class MyApp2 extends StatefulWidget {
 }
 
 class _MyApp2State extends State<MyApp2> {
+  @override
+  void initState() {
+    NotificationHandler().initialization();
+    CheckInternet().checkConnection(context);
+    //NotificationHandel().initi();
+    SocketHandel().ini();
+    // SocketHandel().listenToChannel("public", "notification", "PushNotification");
+    //NotificationHandel().showNotification();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    CheckInternet().listener.cancel();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Provider.of<AuthProviderUser>(context).setCountNotificationSp(widget.cou);

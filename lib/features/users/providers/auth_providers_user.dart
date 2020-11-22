@@ -20,6 +20,12 @@ class AuthProviderUser extends ChangeNotifier {
   String isAdmin;
   int phoneVerified;
   String blocked;
+  String location;
+
+  setLocation(String value) {
+    this.location = value;
+    notifyListeners();
+  }
 
   setIsAdmin(String value) {
     this.isAdmin = value;
@@ -60,14 +66,17 @@ class AuthProviderUser extends ChangeNotifier {
     "الصف السادس",
     "الصف السابع",
     "الصف الثامن",
-    "الصف التاسع"
+    "الصف التاسع",
+    "الصف العاشر",
+    "الصف الحادي عشر",
+    "الصف الثاني عشر"
   ];
   List<String> state = ["الرياض", "المدينه المنوره", "مكة", "جدة", "الطائف"];
 
   String valueClass;
   String valueState;
 
-  List<String> gender = ["MALE", "FEMALE"];
+  List<String> gender = ["ذكر", "انثى"];
   String valueGender;
 
   String birthday = "تاريخ الميلاد";
@@ -77,36 +86,37 @@ class AuthProviderUser extends ChangeNotifier {
   String subTitlePay = "";
   String titleLive = "";
   String subTitleLive = "";
-  int countNotification=0;
-  int countNotificationSp=0;
+  int countNotification = 0;
+  int countNotificationSp = 0;
   setInitialVideo(String value) {
     this.initialVideo = value;
     print("ttttrrrrrrrrrrrrrrrrrrrrrrrrrr $initialVideo");
-    notifyListeners();
+    //notifyListeners();
   }
-  
+
   setCountNotification(int value) {
     this.countNotification = value;
-    notifyListeners();
+    //notifyListeners();
   }
-   setCountNotificationSp(int value) {
+
+  setCountNotificationSp(int value) {
     this.countNotificationSp = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   settitlePay(String value) {
     this.titlePay = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   setsubTitlePay(String value) {
     this.subTitlePay = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   settitleLive(String value) {
     this.titleLive = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   setsubTitleLive(String value) {
@@ -141,6 +151,8 @@ class AuthProviderUser extends ChangeNotifier {
 
   setValueClass(String value) {
     this.valueClass = value;
+    var neee = className.indexOf("$valueClass");
+    print("rrrrrrrmaaaaaaaaaaaaaaaaaaazzzzzzzzzzzz $neee");
     notifyListeners();
   }
 
@@ -200,6 +212,13 @@ class AuthProviderUser extends ChangeNotifier {
     notifyListeners();
   }
 
+  validateLocation(String value) {
+    if (value == null || value == '') {
+      return "لا يمكن ان يكون هذا الحقل فارغ";
+    }
+    notifyListeners();
+  }
+
   validateFatherName(String value) {
     if (value == null || value == '') {
       return "لا يمكن ان يكون هذا الحقل فارغ";
@@ -229,14 +248,15 @@ class AuthProviderUser extends ChangeNotifier {
       BuildContext context, GlobalKey<FormState> registerFormkey) {
     if (registerFormkey.currentState.validate()) {
       registerFormkey.currentState.save();
-
+      int classe = className.indexOf("$valueClass");
+      String valueGender1 = valueGender == "ذكر" ? "MALE" : "FEMALE";
       BlocProvider.of<UserBloc>(context).add(RegisterUserEvent(
           name,
-          valueGender,
+          valueGender1,
           password,
           mobile,
-          "1",
-          valueState,
+          "${classe + 1}",
+          location,
           fatherName,
           link,
           imageProfile,

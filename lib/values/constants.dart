@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 push(BuildContext context, Widget page) {
   Navigator.push(
       context, MaterialPageRoute(builder: (BuildContext context) => page));
@@ -15,6 +16,8 @@ pushAndRemoveUntil(BuildContext context, Widget page) {
       MaterialPageRoute(builder: (context) => page),
       (Route<dynamic> route) => false);
 }
+
+
 
 final basePath = "https://api.pythagorath.com/api";
 final videoPath = "http://api.pythagorath.com/storage/videos/";

@@ -23,7 +23,8 @@ import 'package:videos_player/videos_player.dart';
 class WatchClasses extends StatefulWidget {
   String level;
   String term;
-  WatchClasses({this.level, this.term});
+  int unitId;
+  WatchClasses({this.level, this.term, this.unitId});
   @override
   _WatchClassesState createState() => _WatchClassesState();
 }
@@ -99,7 +100,7 @@ class _WatchClassesState extends State<WatchClasses> {
           child: Column(
             children: [
               Container(
-                height: ScreenUtil().setHeight(255),
+                height: ScreenUtil().setHeight(300),
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: hintColor,
@@ -132,13 +133,19 @@ class _WatchClassesState extends State<WatchClasses> {
                       NetworkVideo(
                           id: "1",
                           name: "Elephant Dream",
-                          videoUrl: vdint,
+                          videoUrl: vdint != null && vdint != ''
+                              ? vdint
+                              : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
                           thumbnailUrl:
                               "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
                           videoControl: NetworkVideoControl(
                             fullScreenByDefault: false,
+
                           )),
-                    ]);
+                    ],
+                    maxVideoPlayerHeight: ScreenUtil().setHeight(300),
+
+                    );
                   }
                   return Container(
                     color: Colors.red,
@@ -175,8 +182,14 @@ class _WatchClassesState extends State<WatchClasses> {
                   List<VideoData> videoDataOfline = videoData
                       .where((element) => element.type == "OFFLINE")
                       .toList();
-                  BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                      if(videoDataOfline[0].path == null || videoDataOfline[0].path == ''){
+                         BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                      "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
+                      }else{
+                       BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
                       "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}"));
+                      }
+                  
 
                   // videoOfline =
                   //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}";
@@ -199,7 +212,7 @@ class _WatchClassesState extends State<WatchClasses> {
                         height: ScreenUtil().setHeight(12),
                       ),
                       Container(
-                          height: ScreenUtil().setHeight(402),
+                          height: ScreenUtil().setHeight(350),
                           width: double.infinity,
                           child: ListView.builder(
                             itemCount: videoData.length,
@@ -225,7 +238,10 @@ class _WatchClassesState extends State<WatchClasses> {
                                                 term: widget.term,
                                                 videoUrl:
                                                     "https://api.pythagorath.com/storage/videos/${videoData[index].path}",
-                                              )));
+                                              ),
+                                              widget.unitId
+                                              
+                                              ));
                                       // Provider.of<AuthProviderUser>(context,
                                       //         listen: false)
                                       //     .setVideoOflineUrl(
@@ -259,7 +275,9 @@ class _WatchClassesState extends State<WatchClasses> {
                                                       videoData[index].link,
                                                   level: widget.level,
                                                   term: widget.term,
-                                                )));
+                                                ),
+                                                widget.unitId
+                                                ));
                                       });
 
                                       // BlocProvider.of<UserBloc>(this.context).add(

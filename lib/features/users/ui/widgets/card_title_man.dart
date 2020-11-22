@@ -31,7 +31,7 @@ class CardTitleMan extends StatelessWidget {
             alignment: Alignment.topRight,
             padding: EdgeInsets.only(
               left: ScreenUtil().setWidth(100),
-              right: ScreenUtil().setWidth(20),
+              right: ScreenUtil().setWidth(30),
               top: ScreenUtil().setHeight(10),
               bottom: ScreenUtil().setHeight(10),
             ),
@@ -42,7 +42,7 @@ class CardTitleMan extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(
-                  height: ScreenUtil().setHeight(20),
+                  height: ScreenUtil().setHeight(30),
                 ),
 
                 Text(title,
@@ -59,7 +59,7 @@ class CardTitleMan extends StatelessWidget {
                 Text(
                   subTitle2,
                   textDirection: TextDirection.rtl,
-                  style: styleSubTitlePayment.copyWith(fontSize: 9),
+                  style: styleSubTitlePayment.copyWith(fontSize: 12),
                 ),
               ],
             ),

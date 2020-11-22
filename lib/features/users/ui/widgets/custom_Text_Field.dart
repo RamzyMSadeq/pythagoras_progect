@@ -29,9 +29,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   Widget build(BuildContext context) {
+    int nu = 11;
     return Directionality(
       textDirection: TextDirection.rtl,
       child: TextFormField(
+        maxLength: widget.hintTitle == "رقم الهاتف" ? nu : null,
         keyboardType: widget.keyboardType,
         obscureText: widget.hintTitle == "كلمة السر" && isShow == false
                 ? true

@@ -21,58 +21,58 @@ class ConnectivityService {
     Connectivity().onConnectivityChanged.listen((ConnectivityResult result) {
       print(_getStatusFromResult(result));
       connectionStatusController.add(_getStatusFromResult(result));
-      if (_getStatusFromResult(result) == ConnectivityStatus.Offline) {
-        showOverlayNotification((context) {
-          this.context = context;
+      // if (_getStatusFromResult(result) == ConnectivityStatus.Offline) {
+      //   showOverlayNotification((context) {
+      //     this.context = context;
 
-          return Card(
-            color: Colors.red[800],
-            margin: const EdgeInsets.symmetric(horizontal: 4),
-            child: SafeArea(
-              child: Container(
-                width: double.infinity,
-                height: ScreenUtil().setHeight(50),
-                child: ListTile(
-                  leading: Icon(
-                    Icons.signal_wifi_off,
-                    color: Colors.white,
-                  ),
-                  title: Text(
-                    'connection_error',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ),
-          );
-        }, duration: Duration(hours: 4000));
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .setIsEditProfile(false);
-        // Provider.of<ProductProvider>(context, listen: false)
-        //     .setIsInternetAdd(false);
+      //     return Card(
+      //       color: Colors.red[800],
+      //       margin: const EdgeInsets.symmetric(horizontal: 4),
+      //       child: SafeArea(
+      //         child: Container(
+      //           width: double.infinity,
+      //           height: ScreenUtil().setHeight(50),
+      //           child: ListTile(
+      //             leading: Icon(
+      //               Icons.signal_wifi_off,
+      //               color: Colors.white,
+      //             ),
+      //             title: Text(
+      //               'connection_error',
+      //               style: TextStyle(color: Colors.white),
+      //             ),
+      //           ),
+      //         ),
+      //       ),
+      //     );
+      //   }, duration: Duration(hours: 4000));
+      //   // Provider.of<AuthProvider>(context, listen: false)
+      //   //     .setIsEditProfile(false);
+      //   // Provider.of<ProductProvider>(context, listen: false)
+      //   //     .setIsInternetAdd(false);
 
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .setisChangePassword(false);
-        // Provider.of<AuthProvider>(context, listen: false).setIsCheckCode(false);
-        // Provider.of<AuthProvider>(context, listen: false).setisSendCode(false);
-        // Provider.of<AuthProvider>(context, listen: false).setgoToSignUp(false);
-        // Provider.of<AuthProvider>(context, listen: false).setisSignUp(false);
-        // Provider.of<AuthProvider>(context, listen: false).setIsLogin(false);
-      } else if (_getStatusFromResult(result) != ConnectivityStatus.Offline &&
-          this.context != null) {
-        // Provider.of<ProductProvider>(context, listen: false)
-        //     .setIsInternetAdd(false);
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .setIsEditProfile(false);
-        // Provider.of<AuthProvider>(context, listen: false)
-        //     .setisChangePassword(false);
-        // Provider.of<AuthProvider>(context, listen: false).setIsCheckCode(false);
-        // Provider.of<AuthProvider>(context, listen: false).setisSendCode(false);
-        // Provider.of<AuthProvider>(context, listen: false).setgoToSignUp(false);
-        // Provider.of<AuthProvider>(context, listen: false).setisSignUp(false);
-        // Provider.of<AuthProvider>(context, listen: false).setIsLogin(false);
-        OverlaySupportEntry.of(context).dismiss();
-      }
+      //   // Provider.of<AuthProvider>(context, listen: false)
+      //   //     .setisChangePassword(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setIsCheckCode(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setisSendCode(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setgoToSignUp(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setisSignUp(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setIsLogin(false);
+      // } else if (_getStatusFromResult(result) != ConnectivityStatus.Offline &&
+      //     this.context != null) {
+      //   // Provider.of<ProductProvider>(context, listen: false)
+      //   //     .setIsInternetAdd(false);
+      //   // Provider.of<AuthProvider>(context, listen: false)
+      //   //     .setIsEditProfile(false);
+      //   // Provider.of<AuthProvider>(context, listen: false)
+      //   //     .setisChangePassword(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setIsCheckCode(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setisSendCode(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setgoToSignUp(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setisSignUp(false);
+      //   // Provider.of<AuthProvider>(context, listen: false).setIsLogin(false);
+      //   OverlaySupportEntry.of(context).dismiss();
+      // }
       // else
       // if (_getStatusFromResult(result) == ConnectivityStatus.WiFi) {
       //   print("8888888888888888888888888888888888888uuuuuuuuuuuuuuuuuuuuu");

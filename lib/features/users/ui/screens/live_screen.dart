@@ -57,7 +57,7 @@ class _LiveScreenState extends State<LiveScreen> {
         title: Column(
           children: [
             Image.asset(
-              titlepng,
+              'assets/images/qwd.png',
               fit: BoxFit.fill,
             ),
             Text("متعة تعلم الرياضيات", style: styleSubLogoLight),
@@ -91,7 +91,7 @@ class _LiveScreenState extends State<LiveScreen> {
               widget.linkLive != null || widget.linkLive != ""
                   ? Container(
                       decoration: BoxDecoration(borderRadius: borderRadius8),
-                      height: ScreenUtil().setHeight(200),
+                      height: ScreenUtil().setHeight(300),
                       width: ScreenUtil().setWidth(332),
                       child: InAppWebView(
                         initialData: InAppWebViewInitialData(data: """

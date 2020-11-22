@@ -59,7 +59,7 @@ class ContactUs extends StatelessWidget {
            ),),
 
            SizedBox(
-             height: ScreenUtil().setHeight(30),
+             height: ScreenUtil().setHeight(10),
 
            ),
 

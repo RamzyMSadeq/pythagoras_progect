@@ -14,34 +14,35 @@ class ApiRepositoryUser {
 
   static ApiRepositoryUser apiRepositoryUser = ApiRepositoryUser._();
 
-  Future<UserData> registerUser(
-      String name,
-      String gender,
-      String password,
-      String mobile,
-      String levelId,
-      String location,
-      String supervisor,
-      String supervisorType,
-      File avatar) async {
-    try {
-      Map map = await ApiUserClient.apiUserClient.registerUser(
-          name,
-          gender,
-          password,
-          mobile,
-          levelId,
-          location,
-          supervisor,
-          supervisorType,
-          avatar);
-      UserData user = UserData.fromJson(map);
-
-      return user;
-    } catch (e) {
-      return null;
-    }
-  }
+//   Future<UserData> registerUser(
+//       String name,
+//       String gender,
+//       String password,
+//       String mobile,
+//       String levelId,
+//       String location,
+//       String supervisor,
+//       String supervisorType,
+//       File avatar) async {
+//     try {
+//       Map map = await ApiUserClient.apiUserClient.registerUser(
+//           name,
+//           gender,
+//           password,
+//           mobile,
+//           levelId,
+//           location,
+//           supervisor,
+//           supervisorType,
+//           avatar);
+//            print("777777778888444444444441111111111111111111111111111 $map");
+//       UserData user = UserData.fromJson(map);
+//  print("7555555555555555555555555555555555555555111111111111111");
+//       return user;
+//     } catch (e) {
+//       return null;
+//     }
+//   }
 
   // Future<TokenData> logInUser(
   //   String mobile,

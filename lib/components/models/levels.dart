@@ -158,7 +158,7 @@ class Videos {
   int levelId;
   int unitId;
   String slug;
-  String path;
+  var path;
   String title;
   String status;
   String type;
@@ -170,6 +170,9 @@ class Videos {
   String updatedAt;
   int isMeetingRunning;
   String meetingEndedAt;
+  String thumbnail;
+  String sentNotificationAt;
+  var videoAccessUrl;
 
   Videos(
       {this.id,
@@ -188,7 +191,10 @@ class Videos {
       this.createdAt,
       this.updatedAt,
       this.isMeetingRunning,
-      this.meetingEndedAt});
+      this.meetingEndedAt,
+      this.thumbnail,
+      this.sentNotificationAt,
+      this.videoAccessUrl});
 
   Videos.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -208,6 +214,9 @@ class Videos {
     updatedAt = json['updated_at'];
     isMeetingRunning = json['is_meeting_running'];
     meetingEndedAt = json['meeting_ended_at'];
+    thumbnail = json['thumbnail'];
+    sentNotificationAt = json['sent_notification_at'];
+    videoAccessUrl = json['video_access_url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -229,6 +238,9 @@ class Videos {
     data['updated_at'] = this.updatedAt;
     data['is_meeting_running'] = this.isMeetingRunning;
     data['meeting_ended_at'] = this.meetingEndedAt;
+    data['thumbnail'] = this.thumbnail;
+    data['sent_notification_at'] = this.sentNotificationAt;
+    data['video_access_url'] = this.videoAccessUrl;
     return data;
   }
 }
@@ -242,7 +254,7 @@ class Units {
   String createdAt;
   String updatedAt;
   int price;
-  Null itemDeletedAt;
+  var itemDeletedAt;
   int term;
 
   Units(

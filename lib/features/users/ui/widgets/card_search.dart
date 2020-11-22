@@ -22,6 +22,7 @@ class CardSearch extends StatelessWidget {
                 borderRadius: borderRadius8,
                 boxShadow: <BoxShadow>[boxShadow6]),
             child: Row(
+              
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
@@ -31,7 +32,10 @@ class CardSearch extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: borderRadius8, 
                       color: hintColor,
-                      image: DecorationImage(image: CachedNetworkImageProvider(myVideo.thumbnail),fit: BoxFit.fill)
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(myVideo.thumbnail != null && myVideo.thumbnail != '' ? myVideo.thumbnail : "https://i.guim.co.uk/img/media/1f88ae6599ec098c9c0e4556c68a95f01fd314fc/0_273_4287_2572/master/4287.jpg" ),
+                      
+                      fit: BoxFit.fill)
                       ),
                   child: Center(
                     child: Icon(

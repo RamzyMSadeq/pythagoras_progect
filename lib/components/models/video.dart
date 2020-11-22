@@ -72,7 +72,7 @@ class VideoData {
   int levelId;
   int unitId;
   String slug;
-  String path;
+  var path;
   String title;
   String status;
   String type;
@@ -85,6 +85,8 @@ class VideoData {
   int isMeetingRunning;
   String meetingEndedAt;
   String thumbnail;
+  String sentNotificationAt;
+  var videoAccessUrl;
   Level level;
   Unit1 unit;
   User user;
@@ -108,6 +110,8 @@ class VideoData {
       this.isMeetingRunning,
       this.meetingEndedAt,
       this.thumbnail,
+      this.sentNotificationAt,
+      this.videoAccessUrl,
       this.level,
       this.unit,
       this.user});
@@ -131,6 +135,8 @@ class VideoData {
     isMeetingRunning = json['is_meeting_running'];
     meetingEndedAt = json['meeting_ended_at'];
     thumbnail = json['thumbnail'];
+    sentNotificationAt = json['sent_notification_at'];
+    videoAccessUrl = json['video_access_url'];
     level = json['level'] != null ? new Level.fromJson(json['level']) : null;
     unit = json['unit'] != null ? new Unit1.fromJson(json['unit']) : null;
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
@@ -156,6 +162,8 @@ class VideoData {
     data['is_meeting_running'] = this.isMeetingRunning;
     data['meeting_ended_at'] = this.meetingEndedAt;
     data['thumbnail'] = this.thumbnail;
+    data['sent_notification_at'] = this.sentNotificationAt;
+    data['video_access_url'] = this.videoAccessUrl;
     if (this.level != null) {
       data['level'] = this.level.toJson();
     }
@@ -278,7 +286,7 @@ class User {
   String updatedAt;
   int levelId;
   String power;
-  var avatar;
+  String avatar;
 
   User(
       {this.id,

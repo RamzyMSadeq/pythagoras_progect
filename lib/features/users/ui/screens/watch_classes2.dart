@@ -26,7 +26,8 @@ class WatchClasses2 extends StatefulWidget {
   String level;
   String term;
   String videoUrl;
-  WatchClasses2({this.level, this.term, this.videoUrl});
+  int unitId;
+  WatchClasses2({this.level, this.term, this.videoUrl , this.unitId});
   @override
   _WatchClasses2State createState() => _WatchClasses2State();
 }
@@ -42,8 +43,7 @@ class _WatchClasses2State extends State<WatchClasses2> {
 
   @override
   void initState() {
-      BlocProvider.of<UserBloc>(context)
-                                      .add(VideoEvent());
+    BlocProvider.of<UserBloc>(context).add(VideoEvent());
     networkVideoControl = NetworkVideoControl(
       fullScreenByDefault: false,
     );
@@ -57,7 +57,6 @@ class _WatchClasses2State extends State<WatchClasses2> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,
@@ -113,20 +112,25 @@ class _WatchClasses2State extends State<WatchClasses2> {
         child: Column(
           children: [
             Container(
-              height: ScreenUtil().setHeight(255),
+              height: ScreenUtil().setHeight(300),
               width: double.infinity,
               decoration: BoxDecoration(
                 color: hintColor,
               ),
               child: VideosPlayer(networkVideos: [
-                    NetworkVideo(
-                        id: "1",
-                        name: "Elephant Dream",
-                        videoUrl: widget.videoUrl,
-                        thumbnailUrl:
-                            "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                        videoControl: networkVideoControl),
-                  ]),
+                NetworkVideo(
+                    id: "1",
+                    name: "Elephant Dream",
+                    videoUrl: widget.videoUrl != null && widget.videoUrl != ''
+                        ? widget.videoUrl
+                        : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
+                    thumbnailUrl:
+                        "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
+                    videoControl: networkVideoControl),
+              ],
+              maxVideoPlayerHeight: ScreenUtil().setHeight(300),
+              
+              ),
 
               // Center(
               //   child: Icon(
@@ -139,7 +143,9 @@ class _WatchClasses2State extends State<WatchClasses2> {
             SizedBox(
               height: ScreenUtil().setHeight(5),
             ),
-            Container(child:
+            Container(
+              
+              child:
                 BlocBuilder<UserBloc, BlocStates>(builder: (context, state) {
               if (state is TasksLoadingState) {
                 return Center(
@@ -175,14 +181,15 @@ class _WatchClasses2State extends State<WatchClasses2> {
                     ),
                     Text(
                       "حساب الاعداد الصحيحة",
-                      style: styleTitleAppBarYears.copyWith(
-                          color: deepGreenColor),
+                      style:
+                          styleTitleAppBarYears.copyWith(color: deepGreenColor),
                     ),
                     SizedBox(
                       height: ScreenUtil().setHeight(12),
                     ),
                     Container(
-                        height: ScreenUtil().setHeight(402),
+                    
+                        height: ScreenUtil().setHeight(350),
                         width: double.infinity,
                         child: ListView.builder(
                           itemCount: videoData.length,
@@ -199,63 +206,56 @@ class _WatchClasses2State extends State<WatchClasses2> {
 
                                   // }else{
                                   if (videoData[index].type == "OFFLINE") {
-                                      BlocProvider.of<UserBloc>(this.context)
-                                          .add(IsAccessVideoEvent(
+                                    BlocProvider.of<UserBloc>(this.context)
+                                        .add(IsAccessVideoEvent(
                                             videoData[index].id.toString(),
                                             this.context,
                                             WatchClasses2(
-                                            level: widget.level,
-                                            term: widget.term,
-                                            videoUrl:
-                                                "https://api.pythagorath.com/storage/videos/${videoData[index].path}",
-                                          )
-                                          
+                                              level: widget.level,
+                                              term: widget.term,
+                                              videoUrl:
+                                                  "https://api.pythagorath.com/storage/videos/${videoData[index].path}",
+                                            ),
+                                            widget.unitId));
+                                    // Provider.of<AuthProviderUser>(context,
+                                    //         listen: false)
+                                    //     .setVideoOflineUrl(
+                                    //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
+                                    // push(
+                                    //     context,
+                                    //     WatchClasses(
+                                    //       level: widget.level,
+                                    //       term: widget.term,
+                                    //     ));
+                                    // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                                    // null));
+                                    // BlocProvider.of<UserBloc2>(context).add(
+                                    //     SetVideoEvent2(
+                                    //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
+                                    // push(
+                                    //     context,
+                                    //     WatchClasses(
+                                    //       level: widget.level,
+                                    //       term: widget.term,
+                                    //     ));
 
-                                          ));
-                                      // Provider.of<AuthProviderUser>(context,
-                                      //         listen: false)
-                                      //     .setVideoOflineUrl(
-                                      //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
-                                      // push(
-                                      //     context,
-                                      //     WatchClasses(
-                                      //       level: widget.level,
-                                      //       term: widget.term,
-                                      //     ));
-                                      // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                                      // null));
-                                      // BlocProvider.of<UserBloc2>(context).add(
-                                      //     SetVideoEvent2(
-                                      //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
-                                      // push(
-                                      //     context,
-                                      //     WatchClasses(
-                                      //       level: widget.level,
-                                      //       term: widget.term,
-                                      //     ));
-
-                                      
-                                    } else {
-                                      
-                                      // BlocProvider.of<UserBloc>(this.context).add(
-                                      //     UnitEvent(widget.term, widget.level));
-                                            BlocProvider.of<UserBloc>(this.context)
-                                          .add(IsAccessVideoEvent(
+                                  } else {
+                                    // BlocProvider.of<UserBloc>(this.context).add(
+                                    //     UnitEvent(widget.term, widget.level));
+                                    BlocProvider.of<UserBloc>(this.context)
+                                        .add(IsAccessVideoEvent(
                                             videoData[index].id.toString(),
-                                           this. context,
+                                            this.context,
                                             LiveScreen(
-                                            linkLive: videoData[index].link,
-                                            level: widget.level,
-                                            term: widget.term,
-                                          )
-                                            
-                                          
+                                              linkLive: videoData[index].link,
+                                              level: widget.level,
+                                              term: widget.term,
+                                            ),
+                                            widget.unitId));
 
-                                          ));
-                                  
-                                      // }
+                                    // }
 
-                                    }
+                                  }
                                 },
                                 child: SlideInRight(
                                     animate: true,

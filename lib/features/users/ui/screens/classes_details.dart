@@ -49,7 +49,9 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                 size: 25,
                 color: whiteColor,
               ),
-              onPressed: () {})
+              onPressed: () {
+                // push(context , NotificationSocket());
+              })
         ],
         leading: Icon(Icons.share),
         backgroundColor: pinkColor,
@@ -159,6 +161,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                     );
                   } else if (state is UnitState) {
                     List<UnitData> unitdata = state.data;
+                    
                     return ListView.builder(
                       itemCount: unitdata.length,
                       itemBuilder: (context, index) {
@@ -168,7 +171,13 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                                 onTap: () {
                                   BlocProvider.of<UserBloc>(context)
                                       .add(VideoEvent());
-                                  push(context, WatchClasses(level: widget.level,term: widget.level,));
+                                  push(
+                                      context,
+                                      WatchClasses(
+                                        level: widget.level,
+                                        term: widget.level,
+                                        unitId: unitdata[index].id,
+                                      ));
                                 },
                                 child: SlideInUp(
                                     animate: true,
