@@ -134,8 +134,9 @@ class IsAccessVideoEvent extends BlocEvents {
   String videoId;
   Widget route;
   int unitId;
+  String level;
   BuildContext context;
-  IsAccessVideoEvent(this.videoId, this.context, this.route , this.unitId);
+  IsAccessVideoEvent(this.videoId, this.context, this.route, this.unitId ,this.level);
 }
 
 class SettingsEvent extends BlocEvents {}

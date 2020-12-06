@@ -136,7 +136,7 @@ class _PaymenyScreenState extends State<PaymenyScreen> {
               Container(
                 height: ScreenUtil().setHeight(140),
                 width: double.infinity,
-                child: Image.asset(paymentbottom2,fit: BoxFit.fill,))
+                child: Image.asset(imagebottom,fit: BoxFit.fill,))
             
           ],
         ),

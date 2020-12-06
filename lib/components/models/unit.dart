@@ -71,7 +71,7 @@ class UnitData {
   int userId;
   int levelId;
   String title;
-  String description;
+  var description;
   String createdAt;
   String updatedAt;
   int price;

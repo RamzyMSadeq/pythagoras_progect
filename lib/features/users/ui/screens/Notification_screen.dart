@@ -14,6 +14,8 @@ import 'package:pythagoras/values/shadows.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class NotificationScreen extends StatelessWidget {
+  String levelId;
+  NotificationScreen({this.levelId});
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(LevelsEvent());
     return true;
@@ -58,6 +60,59 @@ class NotificationScreen extends StatelessWidget {
                   } else if (state is NotificationState) {
                     Notification1 notification = state.notification1;
                     List<DataNotification> myNotification = notification.data;
+
+                    //  levelId == "0"
+                    //     ? notification.data
+                    //         .where((element) => element.levelId == 0)
+                    //         .toList()
+                    //     : levelId == "1"
+                    //         ? notification.data
+                    //             .where((element) => element.levelId == 1)
+                    //             .toList()
+                    //         : levelId == "2"
+                    //             ? notification.data
+                    //                 .where((element) => element.levelId == 2)
+                    //                 .toList()
+                    //             : levelId == "3"
+                    //                 ? notification.data
+                    //                     .where(
+                    //                         (element) => element.levelId == 3)
+                    //                     .toList()
+                    //                 : levelId == "4"
+                    //                     ? notification.data
+                    //                         .where((element) =>
+                    //                             element.levelId == 4)
+                    //                         .toList()
+                    //                     : levelId == "5"
+                    //                         ? notification.data
+                    //                             .where((element) =>
+                    //                                 element.levelId == 5)
+                    //                             .toList()
+                    //                         : levelId == "6"
+                    //                             ? notification.data
+                    //                                 .where((element) =>
+                    //                                     element.levelId == 6)
+                    //                                 .toList()
+                    //                             : levelId == "7"
+                    //                                 ? notification.data
+                    //                                     .where((element) =>
+                    //                                         element.levelId ==
+                    //                                         7)
+                    //                                     .toList()
+                    //                                 : levelId == "8"
+                    //                                     ? notification.data
+                    //                                         .where((element) =>
+                    //                                             element
+                    //                                                 .levelId ==
+                    //                                             8)
+                    //                                         .toList()
+                    //                                     : notification.data
+                    //                                         .where((element) =>
+                    //                                             element
+                    //                                                 .levelId ==
+                    //                                             0)
+                    //                                         .toList();
+
                     SPHelper.spHelper
                         .setCountNotification(myNotification.length);
                     return ListView.builder(
@@ -69,24 +124,24 @@ class NotificationScreen extends StatelessWidget {
                               padding: EdgeInsets.symmetric(horizontal: 30),
                               margin: EdgeInsets.only(bottom: 20),
                               height: ScreenUtil().setHeight(120),
-                              width: ScreenUtil().setWidth(330),
+                              width: double.infinity,
                               decoration: BoxDecoration(
                                   borderRadius: borderRadius8,
                                   color: pinkColor,
                                   boxShadow: <BoxShadow>[boxShadow6]),
                               child: Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                              Text(
-                                myNotification[index].description,
-                                style: styleNotificationTitle,
-                              ),
-                              Text(
-                                myNotification[index].createdAt,
-                                style: styleNotificationSubTitle,
-                              )
+                                  Text(
+                                    myNotification[index].description,
+                                    style: styleNotificationTitle,
+                                  ),
+                                  Text(
+                                    myNotification[index].createdAt,
+                                    style: styleNotificationSubTitle,
+                                  )
                                 ],
                               ),
                             ),

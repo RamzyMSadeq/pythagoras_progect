@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +30,7 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
   int count2;
   @override
   void initState() {
-   BlocProvider.of<UserBloc>(context).add(LevelsEvent());
+    BlocProvider.of<UserBloc>(context).add(LevelsEvent());
 
     super.initState();
   }
@@ -37,10 +39,10 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
   String search = "";
   @override
   Widget build(BuildContext context) {
-     int count = Provider.of<AuthProviderUser>(context).countNotificationSp;
+    int count = Provider.of<AuthProviderUser>(context).countNotificationSp;
     if (Provider.of<AuthProviderUser>(context).countNotification == null) {
       count2 = 0;
-    }else{
+    } else {
       count2 = Provider.of<AuthProviderUser>(context).countNotification;
     }
 
@@ -66,12 +68,18 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
         leading: InkWell(
           onTap: () {
             BlocProvider.of<UserBloc>(context).add(NotificationEvent());
-            push(context, NotificationScreen());
+            push(
+                context,
+                NotificationScreen(
+                 // levelId: "0",
+                ));
           },
           child: Badge(
             // padding: EdgeInsets.all(10),
             position: BadgePosition(top: 1, end: 1),
-            badgeContent: Text( Provider.of<AuthProviderUser>(context).countNotification.toString()),
+            badgeContent: Text(Provider.of<AuthProviderUser>(context)
+                .countNotification
+                .toString()),
             child: Icon(
               Icons.notifications,
               size: 25,
@@ -227,19 +235,39 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                         );
                       } else if (state is LevelsState) {
                         List<LevelsData> dataLevels = state.data;
+                        List<LevelsData> dataLevels2 =
+                            dataLevels.reversed.toList();
 
                         return ListView.builder(
                           itemCount: dataLevels.length,
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                InkWell(
+                            return Container(
+                              //color: Colors.amber,
+                              child: InkWell(
                                   onTap: () {
                                     push(
                                         context,
                                         ClassesYears(
                                           level:
-                                              dataLevels[index].id.toString(),
+                                              dataLevels2[index].id.toString(),
+                                          color: index == 0
+                                              ? color5
+                                              : index == 1
+                                                  ? color6
+                                                  : index == 2
+                                                      ? color7
+                                                      : index == 3
+                                                          ? color8
+                                                          : index == 4
+                                                              ? color9
+                                                              : index == 5
+                                                                  ? color10
+                                                                  : index == 6
+                                                                      ? color11
+                                                                      : index ==
+                                                                              7
+                                                                          ? color12
+                                                                          : color12,
                                         ));
                                   },
                                   child:
@@ -264,10 +292,6 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                                   //   dataLevel: dataLevels.reversed.toList(),
                                   // )
                                 ),
-                                // SizedBox(
-                                //   height: ScreenUtil().setHeight(10),
-                                // )
-                              ],
                             );
                           },
                         );

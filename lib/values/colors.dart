@@ -14,6 +14,16 @@ final blue7 = Color(0xff47BBBA);
 final green6 = Color(0xff9EC649);
 final color999 = Color(0xff9F60A2);
 final color888 = Color(0xff7377B4);
+final color5 = Color(0xffF5645F);
+final color6 = Color(0xff9EC649);
+final color7 = Color(0xff47BBBA);
+final color8 = Color(0xff7377B4);
+final color9 = Color(0xff9F60A2);
+final color10 = Color(0xff869FBD);
+final color11 = Color(0xff4688BA);
+final color12 = Color(0xff68576A);
+
+
 
 
 

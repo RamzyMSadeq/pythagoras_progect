@@ -21,11 +21,8 @@ class CardTitleMan extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: ScreenUtil().setWidth(15)),
             height: ScreenUtil().setHeight(220),
-            width: ScreenUtil().setWidth(343),
-            child: SvgPicture.asset(
-              mancontainer,
-              fit: BoxFit.fill,
-            ),
+            width: double.infinity,
+            child: Image.asset(man , fit: BoxFit.fill,)
           ),
           Container(
             alignment: Alignment.topRight,

@@ -29,10 +29,9 @@ import 'home_screen.dart';
 class LogInScreen extends StatelessWidget {
   final GlobalKey<FormState> loginFormkey =
       GlobalKey<FormState>(debugLabel: '_loginFormKey');
-   DateTime currentBackPressTime;
+  DateTime currentBackPressTime;
 
-
-Future<bool> onWillPop() {
+  Future<bool> onWillPop() {
     DateTime now = DateTime.now();
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
@@ -49,7 +48,7 @@ Future<bool> onWillPop() {
     }
     return Future.value(true);
   }
-  
+
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
@@ -60,8 +59,8 @@ Future<bool> onWillPop() {
         resizeToAvoidBottomPadding: false,
         backgroundColor: whiteColor,
         body: WillPopScope(
-           onWillPop: onWillPop,
-                  child: Stack(
+          onWillPop: onWillPop,
+          child: Stack(
             children: [
               FadeIn(
                 animate: true,
@@ -124,9 +123,10 @@ Future<bool> onWillPop() {
                                     Icons.lock,
                                     size: 20,
                                   ),
-                                  onSaved: authProviderUserWithListen.setPassword,
-                                  onValidate:
-                                      authProviderUserWithListen.validatePassword,
+                                  onSaved:
+                                      authProviderUserWithListen.setPassword,
+                                  onValidate: authProviderUserWithListen
+                                      .validatePassword,
                                 ),
                               ),
                               SizedBox(
@@ -212,101 +212,108 @@ Future<bool> onWillPop() {
                                 ),
                               ),
                               SizedBox(
-                height: ScreenUtil().setHeight(50),
-                child: BlocBuilder<UserBloc, BlocStates>(
-                  builder: (context, state) {
-                    if (state is TasksLoadingState) {
-                      return Center(
-                           child: CircularProgressIndicator(),
-                          );
-                    } else if (state is EmptyTasksState) {
-                      return Center(
-                          // child: Text('Empty Tasks'),
-                          );
-                    } else if (state is TasksErrorState) {
-                      // Fluttertoast.showToast(
-                      //     msg: "رقم الهاتف او كلمة المرور غير صحيحة",
-                      //     toastLength: Toast.LENGTH_SHORT,
-                      //     gravity: ToastGravity.BOTTOM,
-                      //     timeInSecForIosWeb: 3,
-                      //     backgroundColor: Colors.red,
-                      //     textColor: Colors.white,
-                      //     fontSize: 16.0);
-                      return Container();
-                    } else if (state is UserLogedInState) {
-                      String tok = state.token;
-                      print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu $tok");
-                      SPHelper.spHelper.setToken(tok);
-                      BlocProvider.of<UserBloc>(context).add(SettingsEvent());
-                      Timer(Duration(seconds: 1), () async {
-                         
-                         BlocProvider.of<UserBloc>(context)
-                          .add(MeStatusEvent(context));
-                      });
-                     
-                     
-                      //push(context, HomeScreen());
-                      return Center();
-                    }
-                    if (state is MeStatusState) {
-                      int phoneV = state.phoneVerified;
+                                height: ScreenUtil().setHeight(50),
+                                child: BlocBuilder<UserBloc, BlocStates>(
+                                  builder: (context, state) {
+                                    if (state is TasksLoadingState) {
+                                      return Center(
+                                        child: CircularProgressIndicator(),
+                                      );
+                                    } else if (state is EmptyTasksState) {
+                                      return Center(
+                                          // child: Text('Empty Tasks'),
+                                          );
+                                    } else if (state is TasksErrorState) {
+                                      // Fluttertoast.showToast(
+                                      //     msg: "رقم الهاتف او كلمة المرور غير صحيحة",
+                                      //     toastLength: Toast.LENGTH_SHORT,
+                                      //     gravity: ToastGravity.BOTTOM,
+                                      //     timeInSecForIosWeb: 3,
+                                      //     backgroundColor: Colors.red,
+                                      //     textColor: Colors.white,
+                                      //     fontSize: 16.0);
+                                      return Container();
+                                    } else if (state is UserLogedInState) {
+                                      String tok = state.token;
+                                      print(
+                                          "yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu $tok");
+                                      SPHelper.spHelper.setToken(tok);
+                                      BlocProvider.of<UserBloc>(context)
+                                          .add(SettingsEvent());
 
-                      Provider.of<AuthProviderUser>(context)
-                          .setPhoneVerified(phoneV);
-                      // if (phoneV == 1) {
-                      //   push(context, HomeScreen());
-                      //   return Container();
-                      // }else{
-                      //   push(context, ConfirmPhoneScreen());
-                      //   return Container();
-                      // }
-                      // push(context, HomeScreen());
+                                      //push(context, HomeScreen());
+                                      return Center();
+                                    }
+                                    if (state is SettingsState) {
+                                      Map mySetting = state.data["setting"];
 
-                    }
-                    if (state is SettingsState) {
-                      Map mySetting = state.data["setting"];
+                                      Provider.of<AuthProviderUser>(context)
+                                          .setInitialVideo(
+                                              mySetting["guide_video_url"]);
 
-                      Provider.of<AuthProviderUser>(context)
-                          .setInitialVideo(mySetting["guide_video_url"]);
+                                      Provider.of<AuthProviderUser>(context)
+                                          .settitlePay(
+                                              mySetting["payment_guide_title"]);
+                                      Provider.of<AuthProviderUser>(context)
+                                          .setsubTitlePay(mySetting[
+                                              "payment_guide_description"]);
+                                      Provider.of<AuthProviderUser>(context)
+                                          .settitleLive(mySetting[
+                                              "online_videos_guide_title"]);
+                                      Provider.of<AuthProviderUser>(context)
+                                          .setsubTitleLive(mySetting[
+                                              "online_videos_guide_description"]);
+                                      //  Timer(Duration(seconds: 2), () async {
 
-                      Provider.of<AuthProviderUser>(context)
-                          .settitlePay(mySetting["payment_guide_title"]);
-                      Provider.of<AuthProviderUser>(context)
-                          .setsubTitlePay(mySetting["payment_guide_description"]);
-                      Provider.of<AuthProviderUser>(context)
-                          .settitleLive(mySetting["online_videos_guide_title"]);
-                      Provider.of<AuthProviderUser>(context).setsubTitleLive(
-                          mySetting["online_videos_guide_description"]);
+                                      BlocProvider.of<UserBloc>(context)
+                                          .add(MeStatusEvent(context));
+                                      // }
+                                      // );
+                                      //dpush(context, LogInScreen());
+                                      return Container();
+                                    }
 
-                      //dpush(context, LogInScreen());
-                      return Container();
-                    }
+                                    if (state is MeStatusState) {
+                                      int phoneV = state.phoneVerified;
+                                      print(
+                                          "555555555555555555555555555555555555");
+                                      Provider.of<AuthProviderUser>(context)
+                                          .setPhoneVerified(phoneV);
+                                      // if (phoneV == 1) {
+                                      //   push(context, HomeScreen());
+                                      //   return Container();
+                                      // }else{
+                                      //   push(context, ConfirmPhoneScreen());
+                                      //   return Container();
+                                      // }
+                                      // push(context, HomeScreen());
 
-                    return Container();
-                  },
-                ),
-              ),
+                                    }
 
-              Align(
-                  alignment: Alignment.bottomLeft,
-                  heightFactor: ScreenUtil().setHeight(1.2),
-                  // widthFactor: 1.9,
-                  child: Container(
-                      //flutt color: pinkColor,
-                      height: ScreenUtil().setHeight(190),
-                      width: ScreenUtil().setWidth(200),
-                      //color: orangeColor,
-                      child: Image.asset(loginBoutom0 , fit: BoxFit.fill,)
-                      )),
-
+                                    return Container();
+                                  },
+                                ),
+                              ),
+                              
                             ],
                           )),
                     ),
+                    Align(
+                                  alignment: Alignment.bottomLeft,
+                                  heightFactor: ScreenUtil().setHeight(1.15),
+                                  // widthFactor: 1.9,
+                                  child: Container(
+                                      //flutt color: pinkColor,
+                                      height: ScreenUtil().setHeight(170),
+                                      width: ScreenUtil().setWidth(180),
+                                      //color: orangeColor,
+                                      child: Image.asset(
+                                        loginBoutom0,
+                                        fit: BoxFit.fill,
+                                      ))),
                   ],
                 ),
               ),
-            
-              
             ],
           ),
         ),

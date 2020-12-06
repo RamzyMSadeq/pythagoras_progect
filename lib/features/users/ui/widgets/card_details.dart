@@ -7,14 +7,17 @@ import 'package:pythagoras/values/shadows.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardDetails extends StatelessWidget {
- UnitData unitdata;
-  CardDetails({this.unitdata});
+  UnitData unitdata;
+  Color color;
+  int index;
+  CardDetails({this.unitdata, this.color, this.index});
 
   @override
   Widget build(BuildContext context) {
+    print("1111111111111111111111111111111111111111111111111111");
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      height: ScreenUtil().setHeight(90),
+      height: ScreenUtil().setHeight(105),
       width: ScreenUtil().setWidth(350),
       decoration: BoxDecoration(
           color: whiteColor,
@@ -27,10 +30,10 @@ class CardDetails extends StatelessWidget {
             height: ScreenUtil().setHeight(90),
             width: ScreenUtil().setWidth(91),
             decoration:
-                BoxDecoration(borderRadius: borderRadius8, color: pinkColor),
+                BoxDecoration(borderRadius: borderRadius8, color: color),
             child: Center(
               child: Text(
-                "01",
+                "${index + 1}",
                 style: styleNumberDetails,
               ),
             ),
@@ -40,7 +43,7 @@ class CardDetails extends StatelessWidget {
           ),
           Container(
             alignment: Alignment.centerRight,
-            width: ScreenUtil().setWidth(155),
+            width: ScreenUtil().setWidth(250),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,7 +53,9 @@ class CardDetails extends StatelessWidget {
                   style: styleTitleDetails,
                 ),
                 Text(
-                  unitdata.description,
+                  unitdata.description == null
+                      ? "لا يوجد وصف"
+                      : unitdata.description,
                   style: styleSubTitleDetails,
                 ),
                 // Text(
@@ -60,34 +65,33 @@ class CardDetails extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            height: ScreenUtil().setHeight(80),
-            padding: EdgeInsets.only(left: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  "ساعة 25",
-                  style: styleTitleDetails.copyWith(
-                      fontSize: 10, color: pinkColor),
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.remove_red_eye,
-                      size: 12,
-                      color: hintColor,
-                    ),
-                    Text(
-                      "شوهد بواسطة 2.050 طالب",
-                      style: styleSubTitleDetails.copyWith(fontSize: 6),
-                    )
-                  ],
-                )
-              ],
-            ),
-          )
+          // Container(
+          //   height: ScreenUtil().setHeight(80),
+          //   padding: EdgeInsets.only(left: 10),
+          //   child: Column(
+          //     crossAxisAlignment: CrossAxisAlignment.end,
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Text(
+          //         "25",
+          //         style: styleTitleDetails.copyWith(fontSize: 10, color: color),
+          //       ),
+          //       Row(
+          //         children: [
+          //           Icon(
+          //             Icons.remove_red_eye,
+          //             size: 12,
+          //             color: hintColor,
+          //           ),
+          //           Text(
+          //             "شوهد بواسطة 2.050 طالب",
+          //             style: styleSubTitleDetails.copyWith(fontSize: 6),
+          //           )
+          //         ],
+          //       )
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );

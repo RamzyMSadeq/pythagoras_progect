@@ -12,7 +12,6 @@ final String titlepng = 'assets/images/title.png';
 final String classyearsimage = 'assets/images/classyearsimage.svg';
 final String man2 = 'assets/images/man2.png';
 final String paymentbuttom = 'assets/images/paymentbuttom.svg';
-final String paymentbottom2 = 'assets/images/paymentbottom2.png';
 final String profile2 = 'assets/images/profile2.svg';
 final String profile = 'assets/images/profile.png';
 final String lighticon = 'assets/images/lighticon.svg';
@@ -31,4 +30,5 @@ final String forgroundsplash1 = 'assets/images/forgroundsplash1.svg';
 final String forgroundsplash = 'assets/images/forgroundsplash.png';
 final String mancontainer = 'assets/svgs/mancontainer.svg';
 final String loginBoutom0 = 'assets/images/loginBoutom0.png';
-
+final String man = 'assets/images/man.png';
+final String imagebottom = 'assets/images/imagebottom.png';

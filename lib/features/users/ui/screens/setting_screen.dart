@@ -74,6 +74,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   MeUser myUser = state.meUser;
 
                   print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.name}");
+                  print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.avatar}");
 
                   return Column(
                     children: [
@@ -101,7 +102,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 : CircleAvatar(
                                     radius: 40,
                                     backgroundImage: CachedNetworkImageProvider(
-                                        photoPath + "${myUser.avatar}"),
+                                        "${myUser.avatar}"),
                                   ),
                             Container(
                               width: ScreenUtil().setWidth(135),
@@ -130,7 +131,15 @@ class _SettingScreenState extends State<SettingScreen> {
                               children: [
                                 InkWell(
                                     onTap: () {
-                                      push(context, EditProfile());
+                                      push(context, EditProfile(
+                                        name: myUser.name,
+                                        mobile: myUser.phone,
+                                        location: myUser.location,
+                                        supervisor: myUser.supervisor,
+                                        supervisorType: myUser.supervisorType,
+                                        gender : myUser.gender,
+                                         levelId: myUser.levelId
+                                      ));
                                     },
                                     child: Text(
                                       "عدل",

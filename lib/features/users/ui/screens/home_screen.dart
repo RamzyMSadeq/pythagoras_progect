@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: EdgeInsets.all(30),
               height: double.infinity,
               width: double.infinity,
-              child: Column(
+              child: ListView(
                 children: [
                   Text(
                     "فيديو توضيحي للتطبيق",

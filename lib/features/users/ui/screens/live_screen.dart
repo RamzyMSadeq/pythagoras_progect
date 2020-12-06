@@ -36,6 +36,7 @@ class _LiveScreenState extends State<LiveScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("rmxiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ${widget.linkLive}");
     BlocProvider.of<UserBloc>(context)
         .add(UnitEvent(widget.term, widget.level));
     return Scaffold(
@@ -43,16 +44,16 @@ class _LiveScreenState extends State<LiveScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications,
-                size: 25,
-                color: whiteColor,
-              ),
-              onPressed: () {})
-        ],
-        leading: Icon(Icons.share),
+        // actions: [
+        //   IconButton(
+        //       icon: Icon(
+        //         Icons.notifications,
+        //         size: 25,
+        //         color: whiteColor,
+        //       ),
+        //       onPressed: () {})
+        // ],
+        //   leading: Icon(Icons.share),
         backgroundColor: deepBlueColor2,
         title: Column(
           children: [
@@ -77,13 +78,16 @@ class _LiveScreenState extends State<LiveScreen> {
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
-              CardTitleMan(
-                  title: Provider.of<AuthProviderUser>(context).titleLive,
-                  subTitle1:
-                      Provider.of<AuthProviderUser>(context).subTitleLive,
-                  subTitle2:
-                      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
-                  color: deepBlueColor2),
+              Container(
+                width: double.infinity,
+                child: CardTitleMan(
+                    title: Provider.of<AuthProviderUser>(context).titleLive,
+                    subTitle1:
+                        Provider.of<AuthProviderUser>(context).subTitleLive,
+                    subTitle2:
+                        "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
+                    color: deepBlueColor2),
+              ),
               SizedBox(
                 height: ScreenUtil().setHeight(10),
               ),
@@ -91,7 +95,7 @@ class _LiveScreenState extends State<LiveScreen> {
               widget.linkLive != null || widget.linkLive != ""
                   ? Container(
                       decoration: BoxDecoration(borderRadius: borderRadius8),
-                      height: ScreenUtil().setHeight(300),
+                      height: ScreenUtil().setHeight(400),
                       width: ScreenUtil().setWidth(332),
                       child: InAppWebView(
                         initialData: InAppWebViewInitialData(data: """
@@ -104,7 +108,7 @@ class _LiveScreenState extends State<LiveScreen> {
           <title>Flutter InAppBrowser</title>
     </head>
     <body>
-          <iframe src="${widget.linkLive}" class="p-0" style="width: 100%!important;min-height: 100vh;border-style: none;"></iframe>
+      ${widget.linkLive}
     </body>
 </html>"""),
                         initialHeaders: {},
@@ -116,7 +120,9 @@ class _LiveScreenState extends State<LiveScreen> {
                           _webViewController = controller;
                         },
                         onLoadStart:
-                            (InAppWebViewController controller, String url) {},
+                            (InAppWebViewController controller, String url) {
+                              
+                        },
                         onLoadStop:
                             (InAppWebViewController controller, String url) {},
                         onConsoleMessage: (InAppWebViewController controller,
@@ -131,72 +137,72 @@ class _LiveScreenState extends State<LiveScreen> {
                       ),
                     ),
 
-              SizedBox(
-                height: ScreenUtil().setHeight(20),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      )),
-                  Text(
-                    "الدروس المسجلة",
-                    style: styleTitleSignUpLight,
-                  ),
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(5),
-              ),
-              Container(
-                height: ScreenUtil().setHeight(646),
-                width: double.infinity,
-                child: BlocBuilder<UserBloc, BlocStates>(
-                  builder: (context, state) {
-                    if (state is TasksLoadingState) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state is EmptyTasksState) {
-                      return Center(
-                        child: Text('Empty Tasks'),
-                      );
-                    } else if (state is TasksErrorState) {
-                      return Center(
-                        child: Text(state.error),
-                      );
-                    } else if (state is UnitState) {
-                      List<UnitData> unitdata = state.data;
-                      return ListView.builder(
-                        itemCount: unitdata.length,
-                        itemBuilder: (context, index) {
-                          return Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<UserBloc>(context)
-                                        .add(VideoEvent());
-                                    push(context, WatchClasses());
-                                  },
-                                  child: CardDetails(
-                                    unitdata: unitdata[index],
-                                  )));
-                        },
-                      );
-                    }
-                  },
-                ),
-              )
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(20),
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     Container(
+              //         width: ScreenUtil().setWidth(75),
+              //         child: Divider(
+              //           thickness: 2,
+              //           endIndent: 20,
+              //         )),
+              //     Text(
+              //       "الدروس المسجلة",
+              //       style: styleTitleSignUpLight,
+              //     ),
+              //     Container(
+              //         width: ScreenUtil().setWidth(75),
+              //         child: Divider(
+              //           thickness: 2,
+              //           endIndent: 20,
+              //         ))
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(5),
+              // ),
+              // Container(
+              //   height: ScreenUtil().setHeight(646),
+              //   width: double.infinity,
+              //   child: BlocBuilder<UserBloc, BlocStates>(
+              //     builder: (context, state) {
+              //       if (state is TasksLoadingState) {
+              //         return Center(
+              //           child: CircularProgressIndicator(),
+              //         );
+              //       } else if (state is EmptyTasksState) {
+              //         return Center(
+              //           child: Text('Empty Tasks'),
+              //         );
+              //       } else if (state is TasksErrorState) {
+              //         return Center(
+              //           child: Text(state.error),
+              //         );
+              //       } else if (state is UnitState) {
+              //         List<UnitData> unitdata = state.data;
+              //         return ListView.builder(
+              //           itemCount: unitdata.length,
+              //           itemBuilder: (context, index) {
+              //             return Directionality(
+              //                 textDirection: TextDirection.rtl,
+              //                 child: InkWell(
+              //                     onTap: () {
+              //                       BlocProvider.of<UserBloc>(context)
+              //                           .add(VideoEvent());
+              //                       push(context, WatchClasses());
+              //                     },
+              //                     child: CardDetails(
+              //                       unitdata: unitdata[index],
+              //                     )));
+              //           },
+              //         );
+              //       }
+              //     },
+              //   ),
+              // )
               // Directionality(
               //     textDirection: TextDirection.rtl, child: CardDetails()),
               // SizedBox(

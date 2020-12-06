@@ -11,7 +11,8 @@ import 'package:pythagoras/values/styles.dart';
 
 class CardPaymentDialog extends StatefulWidget {
   int unitId;
-  CardPaymentDialog({this.unitId});
+  String level;
+  CardPaymentDialog({this.unitId ,this.level});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();
 }
@@ -57,31 +58,32 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           width: ScreenUtil().setWidth(150),
                           decoration: BoxDecoration(
                               borderRadius: borderRadius8, color: whiteColor),
-                          child: Column(
-                            children: [
-                              Container(
-                                  margin: EdgeInsets.only(top: 20),
+                          child: Container(
+                                  //margin: EdgeInsets.only(top: 20),
                                   alignment: Alignment.centerRight,
-                                  height: ScreenUtil().setHeight(50),
-                                  width: ScreenUtil().setWidth(90),
+                                //  height: ScreenUtil().setHeight(50),
+                                 // width: ScreenUtil().setWidth(90),
                                   child: Text(
-                                    "الصف الخامس الابتدائي",
+                                   widget.level == "1"
+                  ? "الصف الخامس الابتدائي"
+                  : widget.level == "2"
+                      ? "الصف السادس الابتدائي"
+                      : widget.level == "3"
+                          ? "الصف السايع الابتدائي"
+                          : widget.level == "4"
+                              ? "الصف الثامن الابتدائي"
+                              : widget.level == "5"
+                                  ? "الصف التاسع الابتدائي"
+                                  : widget.level == "6"
+                                      ? "الصف العاشر الابتدائي"
+                                      : widget.level == "7"
+                                          ? "الصف الحادي عشر "
+                                          : widget.level == "8"
+                                              ? "الصف الثاني عشر "
+                                              : "",
                                     textAlign: TextAlign.center,
                                     style: styleTitleDialog,
                                   )),
-                              SizedBox(height: ScreenUtil().setHeight(10)),
-                              Padding(
-                                padding: EdgeInsets.only(right: 10),
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      "طالب مسجل 20.000",
-                                      style: styleSubTitleCardClasses.copyWith(
-                                          color: pinkColor),
-                                    )),
-                              )
-                            ],
-                          ),
                         ),
                       ),
                       // Transform.translate(
@@ -102,61 +104,61 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                 Column(
                   children: [
                     Container(
-                      height: ScreenUtil().setHeight(50),
+                     // height: ScreenUtil().setHeight(50),
                       child: Text(
-                        "يرجي شراء الوحدة او المنهج\n للاستمرار",
+                        "يرجي شراء الوحدة  \n للاستمرار",
                         textAlign: TextAlign.center,
                         style: styleSubDialog,
                       ),
                     ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        height: ScreenUtil().setHeight(25),
-                        child: ListTile(
-                          leading: Radio(
-                            activeColor: whiteColor,
-                            value: 0,
-                            groupValue: selectedValu,
-                            onChanged: (value) {
-                              setValu(value);
-                            },
-                          ),
-                          title: Text(
-                            "شراء الوحدة الاولي",
-                            style: styleSubDialog.copyWith(fontSize: 14),
-                          ),
-                          trailing: Text(
-                            "(200 ريال)",
-                            style: styleSubDialogLight,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Directionality(
-                      textDirection: TextDirection.rtl,
-                      child: Container(
-                        height: ScreenUtil().setHeight(25),
-                        child: ListTile(
-                          leading: Radio(
-                            activeColor: whiteColor,
-                            value: 1,
-                            groupValue: selectedValu,
-                            onChanged: (value) {
-                              setValu(value);
-                            },
-                          ),
-                          title: Text(
-                            "شراء الوحدة الاولي",
-                            style: styleSubDialog.copyWith(fontSize: 14),
-                          ),
-                          trailing: Text(
-                            "(200 ريال)",
-                            style: styleSubDialogLight,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // Directionality(
+                    //   textDirection: TextDirection.rtl,
+                    //   child: Container(
+                    //     height: ScreenUtil().setHeight(25),
+                    //     child: ListTile(
+                    //       leading: Radio(
+                    //         activeColor: whiteColor,
+                    //         value: 0,
+                    //         groupValue: selectedValu,
+                    //         onChanged: (value) {
+                    //           setValu(value);
+                    //         },
+                    //       ),
+                    //       title: Text(
+                    //         "شراء الوحدة الاولي",
+                    //         style: styleSubDialog.copyWith(fontSize: 14),
+                    //       ),
+                    //       trailing: Text(
+                    //         "(200 ريال)",
+                    //         style: styleSubDialogLight,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // Directionality(
+                    //   textDirection: TextDirection.rtl,
+                    //   child: Container(
+                    //     height: ScreenUtil().setHeight(25),
+                    //     child: ListTile(
+                    //       leading: Radio(
+                    //         activeColor: whiteColor,
+                    //         value: 1,
+                    //         groupValue: selectedValu,
+                    //         onChanged: (value) {
+                    //           setValu(value);
+                    //         },
+                    //       ),
+                    //       title: Text(
+                    //         "شراء الوحدة الاولي",
+                    //         style: styleSubDialog.copyWith(fontSize: 14),
+                    //       ),
+                    //       trailing: Text(
+                    //         "(200 ريال)",
+                    //         style: styleSubDialogLight,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                     Container(
                       margin: EdgeInsets.only(top: 20),
                       height: ScreenUtil().setHeight(37),

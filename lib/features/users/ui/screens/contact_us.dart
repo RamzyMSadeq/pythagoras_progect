@@ -42,7 +42,7 @@ class ContactUs extends StatelessWidget {
               child: Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    height: ScreenUtil().setHeight(350),
+                    height: ScreenUtil().setHeight(250),
                     width: double.infinity,
                     child: SvgPicture.asset(
                       backgroundlogin,
@@ -50,7 +50,59 @@ class ContactUs extends StatelessWidget {
                     ),
                   )),
             ),
+          //  SizedBox(
+          //    height: ScreenUtil().setHeight(20),
+
+          //  ),
+           Text("تابعنا :",style: styleForgetPassLogIn.copyWith(
+             fontSize: 22
+           ),),
+
            SizedBox(
+             height: ScreenUtil().setHeight(20),
+
+           ),
+
+           Container(
+             width: ScreenUtil().setWidth(170),
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.spaceAround,
+                 children: [
+                  
+                   InkWell(
+                       onTap: ()async{
+                        var url ="https://www.instagram.com/pythagorath_center/";
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                     },
+                                        child: Container(
+                       height: ScreenUtil().setHeight(45),
+                       width: ScreenUtil().setWidth(45),
+                       child: Image.asset(instagram,fit: BoxFit.fill,),
+                     ),
+                   ),
+                   InkWell(
+                       onTap: ()async{
+                        var url ="https://www.youtube.com/watch?v=ajHQJwuPcTc&feature=youtu.be";
+                                        if (await canLaunch(url)) {
+                                          await launch(url);
+                                        } else {
+                                          throw 'Could not launch $url';
+                                        }
+                     },
+                                        child: Container(
+                       height: ScreenUtil().setHeight(50),
+                       width: ScreenUtil().setWidth(50),
+                       child: Image.asset(youtube,fit: BoxFit.fill,),
+                     ),
+                   ),
+                 ],
+               ),
+           ),
+            SizedBox(
              height: ScreenUtil().setHeight(20),
 
            ),
@@ -78,44 +130,30 @@ class ContactUs extends StatelessWidget {
                                         }
                      },
                                         child: Container(
-                       height: ScreenUtil().setHeight(40),
-                       width: ScreenUtil().setWidth(40),
+                       height: ScreenUtil().setHeight(50),
+                       width: ScreenUtil().setWidth(50),
                        child: Image.asset(whatsapp,fit: BoxFit.fill,),
-                     ),
-                   ),
-                   InkWell(
-                       onTap: ()async{
-                        var url ="https://www.instagram.com/pythagorath_center/";
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
-                                        } else {
-                                          throw 'Could not launch $url';
-                                        }
-                     },
-                                        child: Container(
-                       height: ScreenUtil().setHeight(40),
-                       width: ScreenUtil().setWidth(40),
-                       child: Image.asset(instagram,fit: BoxFit.fill,),
-                     ),
-                   ),
-                   InkWell(
-                       onTap: ()async{
-                        var url ="https://www.youtube.com/channel/UCKTuXSeB9OeWHgJiSsEtPWQ";
-                                        if (await canLaunch(url)) {
-                                          await launch(url);
-                                        } else {
-                                          throw 'Could not launch $url';
-                                        }
-                     },
-                                        child: Container(
-                       height: ScreenUtil().setHeight(40),
-                       width: ScreenUtil().setWidth(40),
-                       child: Image.asset(youtube,fit: BoxFit.fill,),
                      ),
                    ),
                  ],
                ),
            ),
+           SizedBox(
+             height: ScreenUtil().setHeight(65),
+
+           ),
+
+
+           Container(
+             //color: Colors.amber,
+               height: ScreenUtil().setHeight(170),
+               width: double.infinity,
+               child: Image.asset(
+                 imagebottom,
+                 fit: BoxFit.fill,
+               )),
+
+
           
         ],
       ),

@@ -137,7 +137,7 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
                     height: ScreenUtil().setHeight(140),
                     width: double.infinity,
                     child: Image.asset(
-                      paymentbottom2,
+                      imagebottom,
                       fit: BoxFit.fill,
                     ))),
           ],

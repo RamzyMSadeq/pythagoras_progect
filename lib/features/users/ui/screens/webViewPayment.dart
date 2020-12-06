@@ -33,7 +33,7 @@ class _WebViewPaymentState extends State<WebViewPayment> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Paypal"),
+       // title: Text("Paypal"),
         centerTitle: true,
       ),
       body: Container(

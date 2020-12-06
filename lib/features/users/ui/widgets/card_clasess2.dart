@@ -264,6 +264,7 @@
 // }
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pythagoras/components/models/levels.dart';
 
 class YearListAddress extends StatelessWidget {
@@ -273,12 +274,17 @@ class YearListAddress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+     // color: Colors.red,
       padding: EdgeInsets.all(13),
       child: Stack(alignment: Alignment.centerRight, children: [
-        Image.asset(
-          'assets/images/${index+5}.png',
-          fit: BoxFit.cover,
-          //height: 250,
+        Container(
+          width: double.infinity,
+          height: ScreenUtil().setHeight(100),
+          child: Image.asset(
+            'assets/images/${index+5}.png',
+            fit: BoxFit.fill,
+            //height: 250,
+          ),
         ),
         Directionality(
           textDirection: TextDirection.ltr,
@@ -288,6 +294,7 @@ class YearListAddress extends StatelessWidget {
             //height: 200,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   dataLevel[index].name,
@@ -312,10 +319,10 @@ class YearListAddress extends StatelessWidget {
                   height: 5,
                 ),
                 Divider(
-                  height: 3,
+                  height: ScreenUtil().setHeight(3),
                   color: Colors.white,
                   thickness: 1,
-                  indent: 33,
+                  indent: ScreenUtil().setWidth(50),
                 ),
                 SizedBox(
                   height: 5,

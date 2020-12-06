@@ -3,7 +3,7 @@ import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/styles.dart';
 
-class CustomTextField extends StatefulWidget {
+class CustomTextFieldControler extends StatefulWidget {
   String hintTitle;
   Icon icon;
   final Function onSaved;
@@ -11,7 +11,7 @@ class CustomTextField extends StatefulWidget {
   TextInputType keyboardType;
   String initialValue;
   FocusNode focaseNode;
-  CustomTextField(
+  CustomTextFieldControler(
       {this.hintTitle,
       this.icon,
       this.onSaved,
@@ -21,10 +21,11 @@ class CustomTextField extends StatefulWidget {
       this.initialValue});
 
   @override
-  _CustomTextFieldState createState() => _CustomTextFieldState();
+  _CustomTextFieldControlerState createState() =>
+      _CustomTextFieldControlerState();
 }
 
-class _CustomTextFieldState extends State<CustomTextField> {
+class _CustomTextFieldControlerState extends State<CustomTextFieldControler> {
   bool isShow = false;
 
   @override
@@ -33,16 +34,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: TextFormField(
+        
+        initialValue: widget.initialValue,
+       // controller: widget.cont,
         maxLength: widget.hintTitle == "رقم الهاتف" ? nu : null,
         keyboardType: widget.keyboardType,
         obscureText: widget.hintTitle == "كلمة السر" && isShow == false
-                ? true
-                :  widget.hintTitle == "كلمة السر" && isShow == true
+            ? true
+            : widget.hintTitle == "كلمة السر" && isShow == true
                 ? false
                 : false,
-                
         onChanged: (value) {
+          
           widget.onSaved(value);
+
         },
         onSaved: (value) {
           widget.onSaved(value);
@@ -63,22 +68,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ? IconButton(
                     icon: Icon(Icons.visibility),
                     onPressed: () {
+                    
                       isShow = !isShow;
-                      setState(() {
-                        
-                      });
+                      setState(() {});
                     })
-                :  widget.hintTitle == "كلمة السر" && isShow == true
-                ? IconButton(
-                    icon: Icon(Icons.visibility_off),
-                    onPressed: () {
-                      isShow = !isShow;
-                      setState(() {
-                        
-                      });
-                    })
-                :
-                null),
+                : widget.hintTitle == "كلمة السر" && isShow == true
+                    ? IconButton(
+                        icon: Icon(Icons.visibility_off),
+                        onPressed: () {
+                          isShow = !isShow;
+                          setState(() {});
+                        })
+                    : null),
       ),
     );
   }

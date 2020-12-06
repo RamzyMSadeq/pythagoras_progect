@@ -1,8 +1,10 @@
 import 'dart:async';
 
+import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
@@ -11,32 +13,48 @@ import 'package:pythagoras/bloc2/bloc_class2.dart';
 import 'package:pythagoras/bloc2/bloc_events2.dart';
 import 'package:pythagoras/bloc2/bloc_states2.dart';
 import 'package:pythagoras/components/models/video.dart';
+import 'package:pythagoras/features/users/providers/user_provider.dart';
 import 'package:pythagoras/features/users/ui/screens/live_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/watch_classes2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_watch.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/styles.dart';
-import 'package:videos_player/model/control.model.dart';
-import 'package:videos_player/model/video.model.dart';
-import 'package:videos_player/videos_player.dart';
+import 'package:video_player/video_player.dart';
+
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class WatchClasses extends StatefulWidget {
   String level;
   String term;
   int unitId;
-  WatchClasses({this.level, this.term, this.unitId});
+  Color color;
+  WatchClasses({this.level, this.term, this.unitId, this.color});
   @override
   _WatchClassesState createState() => _WatchClassesState();
 }
 
 class _WatchClassesState extends State<WatchClasses> {
-  NetworkVideoControl networkVideoControl;
+  //NetworkVideoControl networkVideoControl;
+  TargetPlatform _platform;
+  VideoPlayerController _videoPlayerController1;
+  VideoPlayerController _videoPlayerController2;
+  ChewieController _chewieController;
   String video1;
 
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context)
         .add(UnitEvent(widget.term, widget.level));
+    _videoPlayerController1.pause();
+    _videoPlayerController2.pause();
     return true;
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController1.dispose();
+    _videoPlayerController2.dispose();
+    _chewieController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,36 +64,26 @@ class _WatchClassesState extends State<WatchClasses> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        actions: [
-          IconButton(
-              icon: Icon(
-                Icons.notifications,
-                size: 25,
-                color: whiteColor,
-              ),
-              onPressed: () {})
-        ],
-        leading: Icon(Icons.share),
-        backgroundColor: pinkColor,
+        backgroundColor: widget.color,
         title: Column(
           children: [
             Text(
               widget.level == "1"
-                  ? "الصف الثاني عشر "
+                  ? "الصف الخامس الابتدائي"
                   : widget.level == "2"
-                      ? "الصف الحادي عشر "
+                      ? "الصف السادس الابتدائي"
                       : widget.level == "3"
-                          ? "الصف العاشر الابتدائي"
+                          ? "الصف السايع الابتدائي"
                           : widget.level == "4"
-                              ? "الصف التاسع الابتدائي"
+                              ? "الصف الثامن الابتدائي"
                               : widget.level == "5"
-                                  ? "الصف الثامن الابتدائي"
+                                  ? "الصف التاسع الابتدائي"
                                   : widget.level == "6"
-                                      ? "الصف السايع الابتدائي"
+                                      ? "الصف العاشر الابتدائي"
                                       : widget.level == "7"
-                                          ? "الصف السادس الابتدائي"
+                                          ? "الصف الحادي عشر "
                                           : widget.level == "8"
-                                              ? "الصف الخامس الابتدائي"
+                                              ? "الصف الثاني عشر "
                                               : "",
               style: styleTitleAppBarYears,
             ),
@@ -97,13 +105,13 @@ class _WatchClassesState extends State<WatchClasses> {
         child: Container(
           height: double.infinity,
           width: double.infinity,
-          child: Column(
+          child: ListView(
             children: [
               Container(
-                height: ScreenUtil().setHeight(300),
+                height: ScreenUtil().setHeight(250),
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: hintColor,
+                  color: whiteColor,
                 ),
                 child: BlocBuilder<UserBloc2, BlocStates2>(
                     builder: (context, state) {
@@ -122,6 +130,7 @@ class _WatchClassesState extends State<WatchClasses> {
                   } else if (state is SetVideoState2) {
                     // BlocProvider.of<UserBloc>(context).add(VideoEvent());
                     String vdint = state.newVideo;
+                    print("8888888888888888888888888888888 $vdint");
                     //video1= state.newVideo;
 
                     // Provider.of<AuthProviderUser>(context)
@@ -129,23 +138,66 @@ class _WatchClassesState extends State<WatchClasses> {
 
                     print("888888888888888888888888888888 $vdint");
 
-                    return VideosPlayer(networkVideos: [
-                      NetworkVideo(
-                          id: "1",
-                          name: "Elephant Dream",
-                          videoUrl: vdint != null && vdint != ''
-                              ? vdint
-                              : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
-                          thumbnailUrl:
-                              "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                          videoControl: NetworkVideoControl(
-                            fullScreenByDefault: false,
+                    ////////////////////////////////////////////
+                    _videoPlayerController1 =
+                        VideoPlayerController.network(vdint);
+                    _videoPlayerController2 =
+                        VideoPlayerController.network(vdint);
 
-                          )),
-                    ],
-                    maxVideoPlayerHeight: ScreenUtil().setHeight(300),
+                    _videoPlayerController2.pause();
+                    _chewieController = ChewieController(
+                      videoPlayerController: _videoPlayerController1,
+                      aspectRatio: 3 / 2,
+                      autoPlay: false,
+                      showControls: true,
+                      autoInitialize: true,
 
+                      // autoPlay: true,
+                      // looping: true,
+                      // Try playing around with some of these other options:
+
+                      // showControls: false,
+                      // materialProgressColors: ChewieProgressColors(
+                      //   playedColor: Colors.red,
+                      //   handleColor: Colors.blue,
+                      //   backgroundColor: Colors.grey,
+                      //   bufferedColor: Colors.lightGreen,
+                      // ),
+                      // placeholder: Container(
+                      //   color: Colors.grey,
+                      // ),
+                      // autoInitialize: true,
                     );
+
+                    return Expanded(
+                      child: Center(
+                        child: Chewie(
+                          controller: _chewieController,
+                        ),
+                      ),
+                    );
+
+                    // return VideosPlayer(
+
+                    //   networkVideos: [
+
+                    //     NetworkVideo(
+
+                    //         id: "1",
+                    //         name: "Elephant Dream",
+                    //         videoUrl: vdint != null || vdint != ''
+                    //             ? vdint
+                    //             : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
+                    //         thumbnailUrl:
+                    //             "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
+                    //         videoControl: NetworkVideoControl(
+                    //           fullScreenByDefault: false,
+
+                    //         )),
+
+                    //   ],
+                    //   //maxVideoPlayerHeight: ScreenUtil().setHeight(250),
+                    // );
                   }
                   return Container(
                     color: Colors.red,
@@ -179,17 +231,31 @@ class _WatchClassesState extends State<WatchClasses> {
                   );
                 } else if (state is VideoState) {
                   List<VideoData> videoData = state.data;
-                  List<VideoData> videoDataOfline = videoData
+                  List<VideoData> videoDataFiltter = videoData
+                      .where((element) =>
+                          element.levelId == int.parse(widget.level) &&
+                          element.unitId == widget.unitId)
+                      .toList();
+                  List<VideoData> videoDataOfline = videoDataFiltter
                       .where((element) => element.type == "OFFLINE")
                       .toList();
-                      if(videoDataOfline[0].path == null || videoDataOfline[0].path == ''){
-                         BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                      "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
-                      }else{
+                  if(videoDataOfline.length == 0){
                        BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                      "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}"));
-                      }
+                        "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
+                  }else{
+                      if (videoDataOfline[0].path == null ||
+                      videoDataOfline[0].path == '') {
+                    BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                        "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
+                  } else {
+                    BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                        "${videoDataOfline[0].videoAccessUrl}"));
+                  }
+                  }
+                     
                   
+                
+                  print("oooooookkkkkkkkiiiiiiii ${videoDataFiltter.length}");
 
                   // videoOfline =
                   //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}";
@@ -197,14 +263,21 @@ class _WatchClassesState extends State<WatchClasses> {
 
                   // });
 
-                  return Column(
+                  return
+                  videoDataFiltter.isEmpty ?
+                  Container(
+                    child: Center(
+                      child: Text("No Videos"),
+                    ),
+                  ):
+                   Column(
                     children: [
                       Text(
                         "الدرس الاول",
                         style: styleTitleDetails.copyWith(fontSize: 12),
                       ),
                       Text(
-                        "حساب الاعداد الصحيحة",
+                        "",
                         style: styleTitleAppBarYears.copyWith(
                             color: deepGreenColor),
                       ),
@@ -212,13 +285,22 @@ class _WatchClassesState extends State<WatchClasses> {
                         height: ScreenUtil().setHeight(12),
                       ),
                       Container(
-                          height: ScreenUtil().setHeight(350),
+                          height: ScreenUtil().setHeight(400),
                           width: double.infinity,
                           child: ListView.builder(
-                            itemCount: videoData.length,
+                            itemCount: videoDataFiltter.length,
                             itemBuilder: (context, index) {
-                              return InkWell(
+                              return
+
+                              videoDataFiltter.length == 0 ? Container(
+                                child: Center(
+                                  child: Text("No Videos"),
+                                ),
+                              ) :
+                              InkWell(
                                   onTap: () {
+                                    _videoPlayerController1.pause();
+                                    _videoPlayerController2.pause();
                                     // if (videoData[index].status == "PAID") {
                                     //    showDialog(
                                     //     context: context,
@@ -228,20 +310,24 @@ class _WatchClassesState extends State<WatchClasses> {
                                     //   );
 
                                     // }else{
-                                    if (videoData[index].type == "OFFLINE") {
+                                    if (videoDataFiltter[index].type == "OFFLINE") {
                                       BlocProvider.of<UserBloc>(this.context)
                                           .add(IsAccessVideoEvent(
-                                              videoData[index].id.toString(),
+                                              videoDataFiltter[index].id.toString(),
                                               this.context,
                                               WatchClasses2(
+                                                unitId: widget.unitId,
                                                 level: widget.level,
                                                 term: widget.term,
                                                 videoUrl:
-                                                    "https://api.pythagorath.com/storage/videos/${videoData[index].path}",
+                                                    "${videoDataFiltter[index].videoAccessUrl}",
+                                                color: widget.color,
+                                                title: "الدرس ${index + 1}",
+                                                desTitle:
+                                                    videoDataFiltter[index].title,
                                               ),
-                                              widget.unitId
-                                              
-                                              ));
+                                              widget.unitId,
+                                              widget.level));
                                       // Provider.of<AuthProviderUser>(context,
                                       //         listen: false)
                                       //     .setVideoOflineUrl(
@@ -265,19 +351,27 @@ class _WatchClassesState extends State<WatchClasses> {
                                       //     ));
 
                                     } else {
-                                      Timer(Duration(seconds: 1), () async {
-                                        BlocProvider.of<UserBloc>(this.context)
+                                      Provider.of<UserProvider>(context,
+                                              listen: false)
+                                          .getVideoAccess(
+                                              videoDataFiltter[index].id.toString());
+                                      Future.delayed(Duration(seconds: 1), () {
+                                        return BlocProvider.of<UserBloc>(
+                                                this.context)
                                             .add(IsAccessVideoEvent(
-                                                videoData[index].id.toString(),
+                                                videoDataFiltter[index].id.toString(),
                                                 this.context,
                                                 LiveScreen(
                                                   linkLive:
-                                                      videoData[index].link,
+                                                      Provider.of<UserProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .link,
                                                   level: widget.level,
                                                   term: widget.term,
                                                 ),
-                                                widget.unitId
-                                                ));
+                                                widget.unitId,
+                                                widget.level));
                                       });
 
                                       // BlocProvider.of<UserBloc>(this.context).add(
@@ -291,10 +385,15 @@ class _WatchClassesState extends State<WatchClasses> {
                                       animate: true,
                                       duration: Duration(
                                           milliseconds: 1000 + (300 * index)),
-                                      child: CardWatch(
-                                        videoData: videoData[index],
-                                        index: index,
-                                      )));
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            bottom: ScreenUtil().setHeight(10)),
+                                        child: CardWatch(
+                                          videoData: videoDataFiltter[index],
+                                          index: index,
+                                        ),
+                                      ))
+                                      );
                             },
                           ))
                     ],

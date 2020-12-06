@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
+import 'package:pythagoras/values/icons_name.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardWatch extends StatelessWidget {
@@ -16,7 +18,7 @@ class CardWatch extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
-        height: ScreenUtil().setHeight(125),
+       // height: ScreenUtil().setHeight(125),
         width: double.infinity,
         color: whiteColor,
         child: Row(
@@ -67,7 +69,22 @@ class CardWatch extends StatelessWidget {
                       Container(
                     margin: EdgeInsets.only(top: 20),
                     child: Row(
-                      children: [Icon(Icons.fiber_new), Text(videoData.status)],
+
+                      children: [
+                         Container(
+                           child: SvgPicture.asset(
+                             videoData.status == "FREE" ? iconfire : iconscrown
+                           ),
+                         ),
+                         SizedBox(width: ScreenUtil().setWidth(5),),
+                        
+                         Text(videoData.status == "FREE" ? "مجانا" : "مدفوع",
+                         style: TextStyle(
+                           color: videoData.status == "FREE" ? pinkColor : orangeColor
+                         ),
+                         )
+                         
+                         ],
                     )),
                     ],
                   ),
@@ -79,7 +96,7 @@ class CardWatch extends StatelessWidget {
                       color: deepGreenColor),
                   ),
                   Text(
-                    "40 دقيقه",
+                    "",
                     style: styleTimeWatch,
                   )
                 ],

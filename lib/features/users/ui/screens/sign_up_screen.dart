@@ -4,16 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
-import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/log_in_screen.dart';
-import 'package:pythagoras/features/users/ui/screens/verification_phone_screen.dart';
+import 'package:pythagoras/features/users/ui/screens/condition.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_dropdown.dart';
@@ -194,9 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               borderRadius: 16,
                             ).then((value) {
                               selectedDate = value;
-                              setState(() {
-                                
-                              });
+                              setState(() {});
                             });
                           },
                           child: Container(
@@ -255,6 +250,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: ScreenUtil().setHeight(10),
                       ),
                       CustomTextField(
+                        keyboardType: TextInputType.number,
                         hintTitle: "رقم الهاتف",
                         icon: Icon(
                           Icons.phone,
@@ -386,10 +382,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 style: styleSubTitleSignUpLight,
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Text("الشروط والأحكام",
-                  style: styleSubTitleSignUpLight.copyWith(color: orangeColor)),
+            InkWell(
+              onTap: () {
+                push(context, Conditions());
+              },
+              child: Align(
+                alignment: Alignment.center,
+                child: Text("الشروط والأحكام",
+                    style:
+                        styleSubTitleSignUpLight.copyWith(color: orangeColor)),
+              ),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(80),

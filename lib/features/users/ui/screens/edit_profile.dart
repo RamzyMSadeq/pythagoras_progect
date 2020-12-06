@@ -7,22 +7,77 @@ import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
+import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field_controller.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_dropdown.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/styles.dart';
 
-class EditProfile extends StatelessWidget {
+class EditProfile extends StatefulWidget {
+  String name;
+  String mobile;
+  String location;
+  String supervisor;
+  String supervisorType;
+  String gender;
+  int levelId;
+  EditProfile(
+      {this.name,
+      this.mobile,
+      this.location,
+      this.supervisor,
+      this.supervisorType,
+      this.gender,
+      this.levelId});
+  @override
+  _EditProfileState createState() => _EditProfileState();
+}
+
+class _EditProfileState extends State<EditProfile> {
   DateTime selectedDate = DateTime.now();
+
   final GlobalKey<FormState> editProfileFormkey =
       GlobalKey<FormState>(debugLabel: '_editProfileFormkey');
+
+  TextEditingController textEditingControllerName;
+  TextEditingController textEditingControllerMobile;
+  TextEditingController textEditingControllerLocation;
+  TextEditingController textEditingControllerSupervisor;
+  TextEditingController textEditingControlleSupervisorType;
 
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
     final authProviderUserNoListen =
         Provider.of<AuthProviderUser>(context, listen: false);
+
+    authProviderUserWithListen.setName(widget.name);
+    authProviderUserWithListen.setMobile(widget.mobile);
+    authProviderUserWithListen.setLocation(widget.location);
+    authProviderUserWithListen.setFatherName(widget.supervisor);
+    authProviderUserWithListen.setLink(widget.supervisorType);
+    authProviderUserWithListen
+        .setValueGender(widget.gender == "MALE" ? "ذكر" : "انثى");
+
+    authProviderUserWithListen.setValueClass(widget.levelId == 1
+        ? "الصف الخامس"
+        : widget.levelId == 2
+            ? "الصف السادس"
+            : widget.levelId == 3
+                ? "الصف السابع"
+                : widget.levelId == 4
+                    ? "الصف الثامن"
+                    : widget.levelId == 5
+                        ? "الصف التاسع"
+                        : widget.levelId == 6
+                            ? "الصف العاشر"
+                            : widget.levelId == 7
+                                ? "الصف الحادي عشر"
+                                : widget.levelId == 8
+                                    ? "الصف الثاني عشر"
+                                    : "");
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,
@@ -43,8 +98,9 @@ class EditProfile extends StatelessWidget {
             SizedBox(
               height: ScreenUtil().setHeight(20),
             ),
-            CustomTextField(
-              hintTitle: "الاسم",
+            CustomTextFieldControler(
+              initialValue: widget.name,
+              hintTitle: widget.name,
               icon: Icon(
                 Icons.person,
                 size: 20,
@@ -73,7 +129,10 @@ class EditProfile extends StatelessWidget {
                     firstDate: DateTime(selectedDate.year - 100),
                     lastDate: DateTime(selectedDate.year + 10),
                     borderRadius: 16,
-                  );
+                  ).then((value) {
+                    selectedDate = value;
+                    setState(() {});
+                  });
                 },
                 child: Container(
                   height: ScreenUtil().setHeight(45),
@@ -96,7 +155,7 @@ class EditProfile extends StatelessWidget {
                           child: Container(
                             padding: EdgeInsets.only(right: 10),
                             child: Text(
-                              "تاريخ الميلاد",
+                              "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
                               style: TextStyle(
                                   color: Colors.grey[400],
                                   fontFamily: "Ithrabold",
@@ -117,40 +176,68 @@ class EditProfile extends StatelessWidget {
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-            CustomDropDown(
-              type: "state",
+            CustomTextFieldControler(
+              initialValue: widget.location,
+              hintTitle: widget.location,
+              icon: Icon(
+                Icons.location_on,
+                size: 20,
+              ),
+              onSaved: authProviderUserWithListen.setLocation,
+              onValidate: authProviderUserWithListen.validateLocation,
             ),
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-
+            CustomTextFieldControler(
+              initialValue: widget.mobile,
+              keyboardType: TextInputType.number,
+              hintTitle: widget.mobile,
+              icon: Icon(
+                Icons.phone,
+                size: 20,
+              ),
+              onSaved: authProviderUserWithListen.setMobile,
+              onValidate: authProviderUserWithListen.validateMobile,
+            ),
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-            CustomTextField(
+            CustomTextFieldControler(
               hintTitle: "كلمة السر",
               icon: Icon(
                 Icons.lock,
                 size: 20,
               ),
               onSaved: authProviderUserWithListen.setPassword,
-               onValidate: authProviderUserWithListen.validatePassword,
+              onValidate: authProviderUserWithListen.validatePassword,
             ),
-            SizedBox(
-              height: ScreenUtil().setHeight(10),
-            ),
-            CustomTextField(
-              hintTitle: "اعد كتابة كلمة السر",
-              icon: Icon(
-                Icons.lock,
-                size: 20,
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text("(اتركها فارغة لعدم التعديل)",
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: orangeColor
               ),
-              onSaved: authProviderUserWithListen.setConfirmPassword,
-               onValidate: authProviderUserWithListen.validateConfirmPassword,
+              ),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
+            // CustomTextFieldControler(
+            //   hintTitle: "اعد كتابة كلمة السر",
+            //   icon: Icon(
+            //     Icons.lock,
+            //     size: 20,
+            //   ),
+            //   onSaved: authProviderUserWithListen.setConfirmPassword,
+            //   onValidate:
+            //       authProviderUserWithListen.validateConfirmPassword,
+            // ),
+            // SizedBox(
+            //   height: ScreenUtil().setHeight(10),
+            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -175,8 +262,9 @@ class EditProfile extends StatelessWidget {
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-            CustomTextField(
-              hintTitle: "اسم ولي الامر",
+            CustomTextFieldControler(
+              initialValue: widget.supervisor,
+              hintTitle: widget.supervisor,
               icon: Icon(
                 Icons.person,
                 size: 20,
@@ -187,8 +275,9 @@ class EditProfile extends StatelessWidget {
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-            CustomTextField(
-              hintTitle: "صلة القرابة بولي الامر",
+            CustomTextFieldControler(
+              initialValue: widget.supervisorType,
+              hintTitle: widget.supervisorType,
               icon: Icon(
                 Icons.group,
                 size: 20,
@@ -216,7 +305,6 @@ class EditProfile extends StatelessWidget {
                 },
               ),
             ),
-           
           ],
         ),
       ),

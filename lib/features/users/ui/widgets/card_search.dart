@@ -46,7 +46,7 @@ class CardSearch extends StatelessWidget {
                 ),
                 Container(
                   alignment: Alignment.centerRight,
-                  width: ScreenUtil().setWidth(155),
+                  width: ScreenUtil().setWidth(200),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,25 +74,25 @@ class CardSearch extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "ساعة 25",
-                        style: styleTitleDetails.copyWith(
-                            fontSize: 10, color: whiteColor),
-                      ),
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.remove_red_eye,
-                            size: 12,
-                            color: hintColor,
-                          ),
-                          Text(
-                            "شوهد بواسطة 2.050 طالب",
-                            style: styleSubTitleDetails.copyWith(
-                                fontSize: 6, color: whiteColor),
-                          )
-                        ],
-                      )
+                      // Text(
+                      //   "ساعة 25",
+                      //   style: styleTitleDetails.copyWith(
+                      //       fontSize: 10, color: whiteColor),
+                      // ),
+                      // Row(
+                      //   children: [
+                      //     Icon(
+                      //       Icons.remove_red_eye,
+                      //       size: 12,
+                      //       color: hintColor,
+                      //     ),
+                      //     Text(
+                      //       "شوهد بواسطة 2.050 طالب",
+                      //       style: styleSubTitleDetails.copyWith(
+                      //           fontSize: 6, color: whiteColor),
+                      //     )
+                      //   ],
+                      // )
                     ],
                   ),
                 )

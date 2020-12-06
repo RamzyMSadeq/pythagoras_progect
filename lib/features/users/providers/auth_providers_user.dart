@@ -181,19 +181,19 @@ class AuthProviderUser extends ChangeNotifier {
       return "لا يمكن ان يكون هذا الحقل فارغ";
     } else if (!isNumeric(value)) {
       return "الرقم الذي ادخلته خاطئ";
-    } else if (value.length < 10) {
+    } else if (value.length < 8) {
       return "الرقم الذي ادخلته خاطئ";
     }
     notifyListeners();
   }
 
   validatePassword(String value) {
-    if (value == null || value == '') {
-      return "لا يمكن ان يكون هذا الحقل فارغ";
-    } else if (value.length < 8) {
-      return "كلمة المرور يجب انت تكون على الاقل 8 حروف";
-    }
-    notifyListeners();
+    // if (value == null || value == '') {
+    //   return "لا يمكن ان يكون هذا الحقل فارغ";
+    // } else if (value.length < 8) {
+    //   return "كلمة المرور يجب انت تكون على الاقل 8 حروف";
+    // }
+    // notifyListeners();
   }
 
   validateConfirmPassword(String value) {
@@ -269,18 +269,22 @@ class AuthProviderUser extends ChangeNotifier {
   }
 
   onSavedEditProfileForm(
+    
       BuildContext context, GlobalKey<FormState> editProfileFormkey) {
+         print("111111111111111111111111111111");
     if (editProfileFormkey.currentState.validate()) {
       editProfileFormkey.currentState.save();
-      print("111111111111111111111111111111");
-      print("objectttttttttttttttttttttttttttttt");
+       int classe1 = className.indexOf("$valueClass");
+      String valueGender11 = valueGender == "ذكر" ? "MALE" : "FEMALE";
+     
+      print("objectttttttttttttttttttttttttttttt  $classe1  $valueGender11");
       BlocProvider.of<UserBloc>(context).add(EditProfileEvent(
           name,
-          valueGender,
+          valueGender11,
           password,
-          confirmPassword,
-          "5",
-          valueState,
+          password,
+          "${classe1 + 1}",
+          location,
           fatherName,
           link,
           context));

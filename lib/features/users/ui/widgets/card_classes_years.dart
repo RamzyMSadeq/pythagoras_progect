@@ -7,7 +7,8 @@ import 'package:pythagoras/values/styles.dart';
 class CardClassesYears extends StatelessWidget {
   String number;
   String title;
-  CardClassesYears({this.number,this.title});
+  Color color;
+  CardClassesYears({this.number, this.title, this.color});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -15,7 +16,7 @@ class CardClassesYears extends StatelessWidget {
       width: ScreenUtil().setWidth(328),
       padding: EdgeInsets.only(left: 20),
       decoration: BoxDecoration(
-          color: pinkColor,
+          color: color,
           borderRadius: borderRadius8,
           boxShadow: <BoxShadow>[
             BoxShadow(

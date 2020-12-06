@@ -658,6 +658,28 @@ class ApiUserClient {
     }
   }
 
+    ///////////////////////////////////////////////////////
+  Future<Map> videoAccessById(String videoId) async {
+    try {
+      await initApi();
+      String token = await SPHelper.spHelper.getToken();
+      Response response =
+          await dio.get(basePath + "/videos/$videoId/access",
+              options: Options(headers: {
+                Headers.acceptHeader: "*/*",
+                Headers.contentTypeHeader: "multipart/form-data",
+                HttpHeaders.authorizationHeader: "bearer $token"
+              }));
+
+      print("bnnnnnnnnnnnnnnnnnnnnnnnbbbbbbbbbbbbb ${response.data}");
+      return response.data;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+
   ///////////////////////////////////////////////////////
   Future<Map> allNotification() async {
     try {
