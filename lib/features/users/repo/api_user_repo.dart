@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pythagoras/components/models/levels.dart';
 import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/unit.dart';
+import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/repo/api_user_client.dart';
@@ -61,7 +62,6 @@ class ApiRepositoryUser {
   Future<MeUser> meUser() async {
     try {
       Map map = await ApiUserClient.apiUserClient.meUser();
-       
 
       MeUser meUser = MeUser.fromJson(map);
       print('my users $meUser');
@@ -74,10 +74,10 @@ class ApiRepositoryUser {
   Future<Levels> levels() async {
     try {
       Map map = await ApiUserClient.apiUserClient.levels();
-           print('my map $map');
+      print('my map $map');
 
       Levels levels = Levels.fromJson(map);
-     print('my levels $levels');
+      print('my levels $levels');
       return levels;
     } catch (e) {
       return null;
@@ -95,6 +95,22 @@ class ApiRepositoryUser {
     }
   }
 
+  Future<UnitTwilvAlivent> unitTwilvAElevnt(
+    String level,
+    String mathType,
+    String term,
+  ) async {
+    try {
+      Map map = await ApiUserClient.apiUserClient
+          .unitsTwilvAndElevent(level, mathType, term);
+      UnitTwilvAlivent unitTwilvAlivent = UnitTwilvAlivent.fromJson(map);
+
+      return unitTwilvAlivent;
+    } catch (e) {
+      return null;
+    }
+  }
+
   Future<Video> videoUser() async {
     try {
       Map map = await ApiUserClient.apiUserClient.videosUser();
@@ -106,9 +122,7 @@ class ApiRepositoryUser {
     }
   }
 
-
-
-   Future<Notification1> allNotification() async {
+  Future<Notification1> allNotification() async {
     try {
       Map map = await ApiUserClient.apiUserClient.allNotification();
       Notification1 notification1 = Notification1.fromJson(map);

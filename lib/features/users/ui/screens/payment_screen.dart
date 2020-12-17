@@ -6,7 +6,6 @@ import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
-import 'package:video_player/video_player.dart';
 
 class PaymenyScreen extends StatefulWidget {
   @override
@@ -14,7 +13,6 @@ class PaymenyScreen extends StatefulWidget {
 }
 
 class _PaymenyScreenState extends State<PaymenyScreen> {
-  VideoPlayerController controller;
   Future<void> initializeVideo;
 
 

@@ -270,6 +270,7 @@ class Unit1 {
     return data;
   }
 }
+//<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
 class User {
   int id;

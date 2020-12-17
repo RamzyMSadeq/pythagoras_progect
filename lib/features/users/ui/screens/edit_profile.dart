@@ -59,6 +59,7 @@ class _EditProfileState extends State<EditProfile> {
     authProviderUserWithListen.setLink(widget.supervisorType);
     authProviderUserWithListen
         .setValueGender(widget.gender == "MALE" ? "ذكر" : "انثى");
+    textEditingControllerMobile = TextEditingController(text: widget.mobile);
 
     authProviderUserWithListen.setValueClass(widget.levelId == 1
         ? "الصف الخامس"
@@ -190,7 +191,8 @@ class _EditProfileState extends State<EditProfile> {
               height: ScreenUtil().setHeight(10),
             ),
             CustomTextFieldControler(
-              initialValue: widget.mobile,
+              cont:textEditingControllerMobile ,
+            //  initialValue: widget.mobile,
               keyboardType: TextInputType.number,
               hintTitle: widget.mobile,
               icon: Icon(

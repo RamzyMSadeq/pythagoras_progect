@@ -3,6 +3,7 @@ import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
 import 'package:pythagoras/components/models/token_data.dart';
 import 'package:pythagoras/components/models/unit.dart';
+import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
 
@@ -71,6 +72,11 @@ class UnitState extends BlocStates {
   List<UnitData> data;
   UnitState(this.data);
 }
+class UnitTwilvState extends BlocStates {
+  List<UnitTwilvAliventData> data;
+  UnitTwilvState(this.data);
+}
+
 
 class VideoState extends BlocStates {
   List<VideoData> data;

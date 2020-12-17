@@ -21,7 +21,13 @@ class AuthProviderUser extends ChangeNotifier {
   int phoneVerified;
   String blocked;
   String location;
+  bool isEmpty = false;
 
+
+  setIsEmpty(bool value) {
+    this.isEmpty = value;
+    notifyListeners();
+  }
   setLocation(String value) {
     this.location = value;
     notifyListeners();
@@ -269,14 +275,13 @@ class AuthProviderUser extends ChangeNotifier {
   }
 
   onSavedEditProfileForm(
-    
       BuildContext context, GlobalKey<FormState> editProfileFormkey) {
-         print("111111111111111111111111111111");
+    print("111111111111111111111111111111");
     if (editProfileFormkey.currentState.validate()) {
       editProfileFormkey.currentState.save();
-       int classe1 = className.indexOf("$valueClass");
+      int classe1 = className.indexOf("$valueClass");
       String valueGender11 = valueGender == "ذكر" ? "MALE" : "FEMALE";
-     
+
       print("objectttttttttttttttttttttttttttttt  $classe1  $valueGender11");
       BlocProvider.of<UserBloc>(context).add(EditProfileEvent(
           name,

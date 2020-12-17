@@ -19,6 +19,7 @@ class CardWatch extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Container(
        // height: ScreenUtil().setHeight(125),
+       padding: EdgeInsets.only(right: 10 ,),
         width: double.infinity,
         color: whiteColor,
         child: Row(
@@ -27,7 +28,7 @@ class CardWatch extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: Text(
-                index <= 9 ? "0${index + 1}" : "${index + 1}",
+                index < 9 ? "0${index + 1}" : "${index + 1}",
                 style: styleNumberWatch,
               ),
             ),

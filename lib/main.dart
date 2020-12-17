@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -12,18 +13,21 @@ import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
 import 'package:pythagoras/services/check_connct_internet.dart';
 import 'package:pythagoras/services/connectivity.dart';
-import 'package:pythagoras/services/notification.dart';
 import 'package:pythagoras/services/notification_handler.dart';
 import 'package:pythagoras/services/socket_class.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/splash_screen.dart';
 import 'package:pythagoras/values/images_name.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'bloc/bloc_class.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Permission.camera.request();
+  await Permission.microphone.request();
 
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   int co = await SPHelper.spHelper.getCountNotification();
 
   // initSvg();

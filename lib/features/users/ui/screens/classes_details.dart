@@ -6,6 +6,7 @@ import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/unit.dart';
+import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/features/users/ui/screens/watch_classes.dart';
 import 'package:pythagoras/features/users/ui/widgets/LinearPercentIndicator2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_details.dart';
@@ -33,6 +34,11 @@ class _ClassesDetailsState extends State<ClassesDetails> {
   //   super.initState();
   // }
 
+   isBob(BuildContext context) {
+    BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,17 +64,17 @@ class _ClassesDetailsState extends State<ClassesDetails> {
             Text(
 
               widget.level == "1"
-                  ? "الصف الخامس الابتدائي"
+                  ? "الصف الخامس الإبتدائي"
                   : widget.level == "2"
-                      ? "الصف السادس الابتدائي"
+                      ? "الصف السادس الإبتدائي"
                       : widget.level == "3"
-                          ? "الصف السايع الابتدائي"
+                          ? "الصف السابع "
                           : widget.level == "4"
-                              ? "الصف الثامن الابتدائي"
+                              ? "الصف الثامن "
                               : widget.level == "5"
-                                  ? "الصف التاسع الابتدائي"
+                                  ? "الصف التاسع "
                                   : widget.level == "6"
-                                      ? "الصف العاشر الابتدائي"
+                                      ? "الصف العاشر "
                                       : widget.level == "7"
                                           ? "الصف الحادي عشر "
                                           : widget.level == "8"
@@ -87,119 +93,162 @@ class _ClassesDetailsState extends State<ClassesDetails> {
         ),
         centerTitle: true,
       ),
-      body: Container(
-        height: double.infinity,
-        width: double.infinity,
-        child: ListView(
-          children: [
-            // Container(
-            //   margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-            //   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-            //   height: ScreenUtil().setHeight(55),
-            //   width: ScreenUtil().setWidth(350),
-            //   decoration: BoxDecoration(
-            //       color: widget.color,
-            //       borderRadius: borderRadius6,
-            //       boxShadow: <BoxShadow>[boxShadow6]),
-            //   child: Column(
-            //     children: [
-            //       Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Text(
-            //             "الفصل الدراسي الاول",
-            //             style: styleSlideDetails.copyWith(fontSize: 8),
-            //           ),
-            //           Text(
-            //             "الصف الخامس الابتدائي",
-            //             style: styleSlideDetails,
-            //           ),
-            //         ],
-            //       ),
-            //       SizedBox(
-            //         height: ScreenUtil().setHeight(5),
-            //       ),
-            //       LinearPercentIndicator2(
-            //         isRTL: true,
-            //         width: ScreenUtil().setWidth(320),
-            //         animation: true,
-            //         lineHeight: 12.0,
-            //         animationDuration: 1500,
-            //         percent: .5,
-            //         center: Text(
-            //           "50.0%",
-            //           style: TextStyle(fontSize: 9),
-            //         ),
-            //         linearStrokeCap: LinearStrokeCap2.roundAll,
-            //         progressColor: widget.color,
-            //         backgroundColor: whiteColor,
-            //         fillColor: whiteColor,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            SizedBox(
-              height: ScreenUtil().setHeight(5),
-            ),
-            Container(
-              
-              height: ScreenUtil().setHeight(646),
-              width: double.infinity,
-              child: BlocBuilder<UserBloc, BlocStates>(
-                builder: (context, state) {
-                  if (state is TasksLoadingState) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is EmptyTasksState) {
-                    return Center(
-                      child: Text('Empty Tasks'),
-                    );
-                  } else if (state is TasksErrorState) {
-                    return Center(
-                      child: Text(state.error),
-                    );
-                  } else if (state is UnitState) {
-                    List<UnitData> unitdata = state.data;
-                    print("objectdddddddddddddd ${unitdata.length}");
-
-                    return Container(
-                      child: ListView.builder(
-                        itemCount: unitdata.length,
-                        itemBuilder: (context, index) {
-                          return Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<UserBloc>(context)
-                                        .add(VideoEvent());
-                                    push(
-                                        context,
-                                        WatchClasses(
-                                          level: widget.level,
-                                          term: widget.level,
-                                          unitId: unitdata[index].id,
-                                          color: widget.color,
-                                        ));
-                                  },
-                                  child: SlideInUp(
-                                      animate: true,
-                                      duration: Duration(
-                                          milliseconds: 1000 + (300 * index)),
-                                      child: CardDetails(
-                                        unitdata: unitdata[index],
-                                        color: widget.color,
-                                        index:index
-                                      ))));
-                        },
-                      ),
-                    );
-                  }
-                  return Container();
-                },
+      body: WillPopScope(
+        onWillPop: () async {
+          return isBob(context);
+        },
+        
+              child: Container(
+          height: double.infinity,
+          width: double.infinity,
+          child: ListView(
+            children: [
+              // Container(
+              //   margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+              //   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+              //   height: ScreenUtil().setHeight(55),
+              //   width: ScreenUtil().setWidth(350),
+              //   decoration: BoxDecoration(
+              //       color: widget.color,
+              //       borderRadius: borderRadius6,
+              //       boxShadow: <BoxShadow>[boxShadow6]),
+              //   child: Column(
+              //     children: [
+              //       Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text(
+              //             "الفصل الدراسي الاول",
+              //             style: styleSlideDetails.copyWith(fontSize: 8),
+              //           ),
+              //           Text(
+              //             "الصف الخامس الابتدائي",
+              //             style: styleSlideDetails,
+              //           ),
+              //         ],
+              //       ),
+              //       SizedBox(
+              //         height: ScreenUtil().setHeight(5),
+              //       ),
+              //       LinearPercentIndicator2(
+              //         isRTL: true,
+              //         width: ScreenUtil().setWidth(320),
+              //         animation: true,
+              //         lineHeight: 12.0,
+              //         animationDuration: 1500,
+              //         percent: .5,
+              //         center: Text(
+              //           "50.0%",
+              //           style: TextStyle(fontSize: 9),
+              //         ),
+              //         linearStrokeCap: LinearStrokeCap2.roundAll,
+              //         progressColor: widget.color,
+              //         backgroundColor: whiteColor,
+              //         fillColor: whiteColor,
+              //       ),
+              //     ],
+              //   ),
+              // ),
+              SizedBox(
+                height: ScreenUtil().setHeight(5),
               ),
-            )
-          ],
+              Container(
+                
+                height: ScreenUtil().setHeight(725),
+                width: double.infinity,
+                child: BlocBuilder<UserBloc, BlocStates>(
+                  builder: (context, state) {
+                    if (state is TasksLoadingState) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is EmptyTasksState) {
+                      return Center(
+                        child: Text('Empty Tasks'),
+                      );
+                    } else if (state is TasksErrorState) {
+                      return Center(
+                        child: Text(state.error),
+                      );
+                    } else if (state is UnitState) {
+                      List<UnitData> unitdata = state.data;
+                      print("objectdddddddddddddd ${unitdata.length}");
+                            
+                      return Container(
+                        child: ListView.builder(
+                          itemCount: unitdata.length,
+                          itemBuilder: (context, index) {
+                            return Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: InkWell(
+                                    onTap: () {
+                                      BlocProvider.of<UserBloc>(context)
+                                          .add(VideoEvent());
+                                      push(
+                                          context,
+                                          WatchClasses(
+                                            level: widget.level,
+                                            term: widget.term,
+                                            unitId: unitdata[index].id,
+                                            color: widget.color,
+                                            price: unitdata[index].price,
+                                          ));
+                                    },
+                                    child: SlideInUp(
+                                        animate: true,
+                                        duration: Duration(
+                                            milliseconds: 1000 + (300 * index)),
+                                        child: CardDetails(
+                                          unitdata: unitdata[index],
+                                          color: widget.color,
+                                          index:index
+                                        ))));
+                          },
+                        ),
+                      );
+                    }else if (state is UnitTwilvState) {
+                      List<UnitTwilvAliventData> unitdata = state.data;
+                      print("objectdddddddddddddd ${unitdata.length}");
+                            
+                      return Container(
+                        child: ListView.builder(
+                          itemCount: unitdata.length,
+                          itemBuilder: (context, index) {
+                            return Directionality(
+                                textDirection: TextDirection.rtl,
+                                child: InkWell(
+                                    onTap: () {
+                                      BlocProvider.of<UserBloc>(context)
+                                          .add(VideoEvent());
+                                      push(
+                                          context,
+                                          WatchClasses(
+                                            level: widget.level,
+                                            term: widget.term,
+                                            unitId: unitdata[index].id,
+                                            color: widget.color,
+                                            price: unitdata[index].price,
+                                          ));
+                                    },
+                                    child: SlideInUp(
+                                        animate: true,
+                                        duration: Duration(
+                                            milliseconds: 1000 + (300 * index)),
+                                        child: CardDetails(
+                                          unitdata: unitdata[index],
+                                          color: widget.color,
+                                          index:index
+                                        ))));
+                          },
+                        ),
+                      );
+                    }
+                    return Container();
+                  },
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

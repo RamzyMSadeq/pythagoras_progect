@@ -40,13 +40,17 @@ class ApiUserClient {
   ) async {
     try {
       client = await initApi2();
+      print('4444444555555555555555444444444445555555');
       http.Response response = await client.post(basePath + logInPath, body: {
-        "phone": mobile,
-        "password": password,
+        'phone': mobile,
+        'password': password,
       }, headers: {
         HttpHeaders.acceptHeader: '*/*',
-        //  Headers.contentTypeHeader: 'multipart/form-data',
+       // HttpHeaders.contentTypeHeader :'application/x-www-form-urlencoded'
+        //HttpHeaders.contentTypeHeader: 'application/json'
+       // Headers.contentTypeHeader: 'multipart/form-data',
       });
+      print('666666666666666666666666666666 ${response.body}');
       if (response.statusCode == 401) {
         Fluttertoast.showToast(
             msg: "رقم الهاتف او كلمة المرور غير صحيحة",
@@ -219,35 +223,35 @@ class ApiUserClient {
     }
   }
 
-  Future<Map> logInUser(
-    String mobile,
-    String password,
-  ) async {
-    try {
-      await initApi();
-      FormData formData = FormData.fromMap(
-        {
-          "phone": mobile,
-          "password": password,
-        },
-      );
-      Response response = await dio.post(basePath + logInPath,
-          data: formData,
-          options: Options(headers: {
-            Headers.acceptHeader: "*/*",
-            // Headers.contentTypeHeader: "multipart/form-data",
-          }));
-      print(
-          "8888888888889999999999999999999999999999999 ${response.statusCode}");
-      if (response.statusCode != 200) {
-        print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
-      }
-      return response.data;
-    } catch (e) {
-      print(e.toString());
-      return null;
-    }
-  }
+  // Future<Map> logInUser(
+  //   String mobile,
+  //   String password,
+  // ) async {
+  //   try {
+  //     await initApi();
+  //     FormData formData = FormData.fromMap(
+  //       {
+  //         "phone": mobile,
+  //         "password": password,
+  //       },
+  //     );
+  //     Response response = await dio.post(basePath + logInPath,
+  //         data: formData,
+  //         options: Options(headers: {
+  //           Headers.acceptHeader: "*/*",
+  //           // Headers.contentTypeHeader: "multipart/form-data",
+  //         }));
+  //     print(
+  //         "8888888888889999999999999999999999999999999 ${response.statusCode}");
+  //     if (response.statusCode != 200) {
+  //       print("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+  //     }
+  //     return response.data;
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return null;
+  //   }
+  // }
 
   Future<Map> meStatusUser() async {
     try {
@@ -489,6 +493,31 @@ class ApiUserClient {
     }
   }
 
+  ///////////////////////////////////////////////////
+
+  Future<Map> unitsTwilvAndElevent(
+    String level,
+    String mathType,
+    String term,
+  ) async {
+    try {
+      String token = await SPHelper.spHelper.getToken();
+      await initApi();
+      Response response = await dio.get(
+          basePath + "/units?$level=7&math_type=$mathType&term=$term",
+          options: Options(headers: {
+            Headers.acceptHeader: "*/*",
+            Headers.contentTypeHeader: "multipart/form-data",
+            HttpHeaders.authorizationHeader: "bearer $token"
+          }));
+      print(response.data);
+      return response.data;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
   ////////////////////////////////////////
   Future<Map> settingsUser() async {
     try {
@@ -658,18 +687,17 @@ class ApiUserClient {
     }
   }
 
-    ///////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////
   Future<Map> videoAccessById(String videoId) async {
     try {
       await initApi();
       String token = await SPHelper.spHelper.getToken();
-      Response response =
-          await dio.get(basePath + "/videos/$videoId/access",
-              options: Options(headers: {
-                Headers.acceptHeader: "*/*",
-                Headers.contentTypeHeader: "multipart/form-data",
-                HttpHeaders.authorizationHeader: "bearer $token"
-              }));
+      Response response = await dio.get(basePath + "/videos/$videoId/access",
+          options: Options(headers: {
+            Headers.acceptHeader: "*/*",
+            Headers.contentTypeHeader: "multipart/form-data",
+            HttpHeaders.authorizationHeader: "bearer $token"
+          }));
 
       print("bnnnnnnnnnnnnnnnnnnnnnnnbbbbbbbbbbbbb ${response.data}");
       return response.data;
@@ -678,7 +706,6 @@ class ApiUserClient {
       return null;
     }
   }
-
 
   ///////////////////////////////////////////////////////
   Future<Map> allNotification() async {

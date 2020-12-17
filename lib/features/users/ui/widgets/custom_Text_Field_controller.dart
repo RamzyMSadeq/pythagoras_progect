@@ -11,6 +11,7 @@ class CustomTextFieldControler extends StatefulWidget {
   TextInputType keyboardType;
   String initialValue;
   FocusNode focaseNode;
+  TextEditingController cont;
   CustomTextFieldControler(
       {this.hintTitle,
       this.icon,
@@ -18,7 +19,9 @@ class CustomTextFieldControler extends StatefulWidget {
       this.onValidate,
       this.keyboardType,
       this.focaseNode,
-      this.initialValue});
+      this.initialValue,
+      this.cont
+      });
 
   @override
   _CustomTextFieldControlerState createState() =>
@@ -34,9 +37,8 @@ class _CustomTextFieldControlerState extends State<CustomTextFieldControler> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: TextFormField(
-        
         initialValue: widget.initialValue,
-       // controller: widget.cont,
+         controller: widget.cont,
         maxLength: widget.hintTitle == "رقم الهاتف" ? nu : null,
         keyboardType: widget.keyboardType,
         obscureText: widget.hintTitle == "كلمة السر" && isShow == false
@@ -45,9 +47,7 @@ class _CustomTextFieldControlerState extends State<CustomTextFieldControler> {
                 ? false
                 : false,
         onChanged: (value) {
-          
           widget.onSaved(value);
-
         },
         onSaved: (value) {
           widget.onSaved(value);
@@ -68,7 +68,6 @@ class _CustomTextFieldControlerState extends State<CustomTextFieldControler> {
                 ? IconButton(
                     icon: Icon(Icons.visibility),
                     onPressed: () {
-                    
                       isShow = !isShow;
                       setState(() {});
                     })

@@ -85,6 +85,14 @@ class UnitEvent extends BlocEvents {
   UnitEvent(this.term, this.level);
 }
 
+class UnitTwilvEvent extends BlocEvents {
+  String level;
+  String mathType;
+  String term;
+  
+  UnitTwilvEvent(this.level, this.mathType , this.term);
+}
+
 class VideoEvent extends BlocEvents {}
 
 class VideoViewEvent extends BlocEvents {
@@ -135,8 +143,10 @@ class IsAccessVideoEvent extends BlocEvents {
   Widget route;
   int unitId;
   String level;
+  int price;
   BuildContext context;
-  IsAccessVideoEvent(this.videoId, this.context, this.route, this.unitId ,this.level);
+  IsAccessVideoEvent(
+      this.videoId, this.context, this.route, this.unitId, this.level , this.price);
 }
 
 class SettingsEvent extends BlocEvents {}

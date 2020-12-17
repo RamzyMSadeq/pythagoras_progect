@@ -83,7 +83,7 @@ var styleNumberWatch = TextStyle(
     fontFamily: "Ithrabold",
     fontWeight: FontWeight.w900);
 var styleTimeWatch = TextStyle(
-  fontSize: 12,
+  fontSize: 10,
   color: pinkColor,
   fontFamily: "Ithralight",
 );

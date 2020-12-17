@@ -7,7 +7,7 @@ import 'package:pythagoras/values/shadows.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardDetails extends StatelessWidget {
-  UnitData unitdata;
+  final unitdata;
   Color color;
   int index;
   CardDetails({this.unitdata, this.color, this.index});

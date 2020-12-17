@@ -37,7 +37,8 @@ final levelsPath = "/levels";
 final videosPath = "/videos";
 final settingsPath = "/settings";
 final statisticsPath = "/my/statistics";
-final orderPaymentPath = "/payments";
+final orderPaymentPath = "/make/payment";
 final callMePath = "/me/request_a_call";
 final editProfilePath = "/me/update";
 final notificationPath = "/notifications";
+

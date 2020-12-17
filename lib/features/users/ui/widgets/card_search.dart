@@ -7,13 +7,20 @@ import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/shadows.dart';
 import 'package:pythagoras/values/styles.dart';
 
-class CardSearch extends StatelessWidget {
+class CardSearch extends StatefulWidget {
   VideoData myVideo;
   CardSearch({this.myVideo});
+
+  @override
+  _CardSearchState createState() => _CardSearchState();
+}
+
+class _CardSearchState extends State<CardSearch> {
   @override
   Widget build(BuildContext context) {
-    return myVideo != null || myVideo != ""
-        ? Container(
+    return widget.myVideo != null 
+        ?
+         Container(
             margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
             height: ScreenUtil().setHeight(115),
             width: ScreenUtil().setWidth(350),
@@ -33,7 +40,7 @@ class CardSearch extends StatelessWidget {
                       borderRadius: borderRadius8, 
                       color: hintColor,
                       image: DecorationImage(
-                        image: CachedNetworkImageProvider(myVideo.thumbnail != null && myVideo.thumbnail != '' ? myVideo.thumbnail : "https://i.guim.co.uk/img/media/1f88ae6599ec098c9c0e4556c68a95f01fd314fc/0_273_4287_2572/master/4287.jpg" ),
+                        image: CachedNetworkImageProvider(widget.myVideo.thumbnail != null && widget.myVideo.thumbnail != '' ? widget.myVideo.thumbnail : "https://i.guim.co.uk/img/media/1f88ae6599ec098c9c0e4556c68a95f01fd314fc/0_273_4287_2572/master/4287.jpg" ),
                       
                       fit: BoxFit.fill)
                       ),
@@ -52,18 +59,19 @@ class CardSearch extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "الخامس الابتدائي",
+                        
+                        widget.myVideo.level.name,
                         style: styleTitleDetails.copyWith(color: whiteColor),
                       ),
                       Text(
-                        myVideo.title,
+                        widget.myVideo.title,
                         style: styleSubTitleDetails.copyWith(color: whiteColor),
                       ),
-                      Text(
-                        "ستتعلم كيفية حساب المثلث و كيفية حساب الضلع الغير معلوم",
-                        style: styleSubTitleDetails.copyWith(
-                            fontSize: 9, color: whiteColor),
-                      )
+                      // Text(
+                      //   widget.myVideo.description,
+                      //   style: styleSubTitleDetails.copyWith(
+                      //       fontSize: 9, color: whiteColor),
+                      // )
                     ],
                   ),
                 ),

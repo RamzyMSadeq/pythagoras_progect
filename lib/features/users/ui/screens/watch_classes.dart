@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -21,39 +22,68 @@ import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/styles.dart';
 import 'package:video_player/video_player.dart';
 
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 class WatchClasses extends StatefulWidget {
   String level;
   String term;
   int unitId;
   Color color;
-  WatchClasses({this.level, this.term, this.unitId, this.color});
+  int price;
+  WatchClasses({this.level, this.term, this.unitId, this.color, this.price});
   @override
   _WatchClassesState createState() => _WatchClassesState();
 }
 
 class _WatchClassesState extends State<WatchClasses> {
-  //NetworkVideoControl networkVideoControl;
-  TargetPlatform _platform;
-  VideoPlayerController _videoPlayerController1;
-  VideoPlayerController _videoPlayerController2;
-  ChewieController _chewieController;
+  // NetworkVideoControl networkVideoControl;
+  //TargetPlatform _platform;
+  VideoPlayerController videoPlayerController1;
+  ChewieController chewieCont;
+//  VideoPlayerController _videoPlayerController2;
+  // ChewieController _chewieController;
+  Future<void> futureController;
+  bool isVideo = false;
+
+  setIsVideo(bool val) {
+    isVideo = val;
+    setState(() {});
+  }
+
+  //VlcPlayerController controller;
   String video1;
 
+  // bool isEmpty = false;
+
   isBob(BuildContext context) {
+    if (isVideo != false) {
+      videoPlayerController1.pause();
+      //  _videoPlayerController2.pause();
+    }
+
     BlocProvider.of<UserBloc>(context)
         .add(UnitEvent(widget.term, widget.level));
-    _videoPlayerController1.pause();
-    _videoPlayerController2.pause();
     return true;
   }
 
   @override
+  void initState() {
+    // controller = new VlcPlayerController(
+    //     // Start playing as soon as the video is loaded
+    //     );
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeRight,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    super.initState();
+  }
+
+  @override
   void dispose() {
-    _videoPlayerController1.dispose();
-    _videoPlayerController2.dispose();
-    _chewieController.dispose();
+    videoPlayerController1.dispose();
+    // _videoPlayerController2.dispose();
+    //_chewieController.dispose();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     super.dispose();
   }
 
@@ -69,17 +99,17 @@ class _WatchClassesState extends State<WatchClasses> {
           children: [
             Text(
               widget.level == "1"
-                  ? "الصف الخامس الابتدائي"
+                  ? "الصف الخامس الإبتدائي"
                   : widget.level == "2"
-                      ? "الصف السادس الابتدائي"
+                      ? "الصف السادس الإبتدائي"
                       : widget.level == "3"
-                          ? "الصف السايع الابتدائي"
+                          ? "الصف السابع "
                           : widget.level == "4"
-                              ? "الصف الثامن الابتدائي"
+                              ? "الصف الثامن "
                               : widget.level == "5"
-                                  ? "الصف التاسع الابتدائي"
+                                  ? "الصف التاسع "
                                   : widget.level == "6"
-                                      ? "الصف العاشر الابتدائي"
+                                      ? "الصف العاشر "
                                       : widget.level == "7"
                                           ? "الصف الحادي عشر "
                                           : widget.level == "8"
@@ -107,111 +137,153 @@ class _WatchClassesState extends State<WatchClasses> {
           width: double.infinity,
           child: ListView(
             children: [
-              Container(
-                height: ScreenUtil().setHeight(250),
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: whiteColor,
-                ),
-                child: BlocBuilder<UserBloc2, BlocStates2>(
-                    builder: (context, state) {
-                  if (state is TasksLoadingState2) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is EmptyTasksState2) {
-                    return Center(
-                      child: Text('Empty Tasks'),
-                    );
-                  } else if (state is TasksErrorState2) {
-                    return Center(
-                      child: Text(state.error),
-                    );
-                  } else if (state is SetVideoState2) {
-                    // BlocProvider.of<UserBloc>(context).add(VideoEvent());
-                    String vdint = state.newVideo;
-                    print("8888888888888888888888888888888 $vdint");
-                    //video1= state.newVideo;
+              // Provider.of<AuthProviderUser>(context).isEmpty == true
+              //     ? Container(
+              //         child: Center(
+              //           child: Text("No Video"),
+              //         ),
+              //       )
+              //     :
+              // isVideo == false
+              //     ? Container()
+              //     : Container(
+              //         height: ScreenUtil().setHeight(250),
+              //         width: double.infinity,
+              //         decoration: BoxDecoration(
+              //           color: whiteColor,
+              //         ),
+              //         child: BlocBuilder<UserBloc2, BlocStates2>(
+              //             builder: (context, state) {
+              //           if (state is TasksLoadingState2) {
+              //             return Center(
+              //               child: CircularProgressIndicator(),
+              //             );
+              //           } else if (state is EmptyTasksState2) {
+              //             return Center(
+              //               child: Text('Empty Tasks'),
+              //             );
+              //           } else if (state is TasksErrorState2) {
+              //             return Center(
+              //               child: Text(state.error),
+              //             );
+              //           } else if (state is SetVideoState2) {
+              //             // BlocProvider.of<UserBloc>(context).add(VideoEvent());
+              //             String vdint = state.newVideo;
+              //             print("8888888888888888888888888888888 $vdint");
 
-                    // Provider.of<AuthProviderUser>(context)
-                    //     .setVideoOflineUrl(vdint);
+              //             if (vdint == null || vdint == "") {
+              //               setIsVideo(false);
+              //             } else {
+              //               setIsVideo(true);
+              //             }
 
-                    print("888888888888888888888888888888 $vdint");
+              //             //video1= state.newVideo;
 
-                    ////////////////////////////////////////////
-                    _videoPlayerController1 =
-                        VideoPlayerController.network(vdint);
-                    _videoPlayerController2 =
-                        VideoPlayerController.network(vdint);
+              //             // Provider.of<AuthProviderUser>(context)
+              //             //     .setVideoOflineUrl(vdint);
 
-                    _videoPlayerController2.pause();
-                    _chewieController = ChewieController(
-                      videoPlayerController: _videoPlayerController1,
-                      aspectRatio: 3 / 2,
-                      autoPlay: false,
-                      showControls: true,
-                      autoInitialize: true,
+              //             print("888888888888888888888888888888 $vdint");
 
-                      // autoPlay: true,
-                      // looping: true,
-                      // Try playing around with some of these other options:
+              //             //////////////////////////////////////////
+              //             videoPlayerController1 =
+              //                 VideoPlayerController.network(vdint);
+              //             futureController =
+              //                 videoPlayerController1.initialize();
+              //             chewieCont = ChewieController(
+              //               videoPlayerController: videoPlayerController1,
+              //               //autoInitialize: true
+              //             );
+              //             // videoPlayerController1.setLooping(true);
+              //             // videoPlayerController1.setVolume(25.5);
+              //             // videoPlayerController1.play();
+              //             // _videoPlayerController2 =
+              //             //     VideoPlayerController.network(vdint);
 
-                      // showControls: false,
-                      // materialProgressColors: ChewieProgressColors(
-                      //   playedColor: Colors.red,
-                      //   handleColor: Colors.blue,
-                      //   backgroundColor: Colors.grey,
-                      //   bufferedColor: Colors.lightGreen,
-                      // ),
-                      // placeholder: Container(
-                      //   color: Colors.grey,
-                      // ),
-                      // autoInitialize: true,
-                    );
+              //             // _videoPlayerController2.pause();
+              //             //     _videoPlayerController2.setVolume(100);
+              //             // _chewieController = ChewieController(
+              //             //     allowFullScreen: true,
+              //             //     videoPlayerController: _videoPlayerController1,
+              //             //     aspectRatio: 3 / 2,
+              //             //     autoPlay: false,
+              //             //     showControls: true,
+              //             //     autoInitialize: true,
+              //             //     placeholder: Container(
+              //             //       color: whiteColor,
+              //             //     )
 
-                    return Expanded(
-                      child: Center(
-                        child: Chewie(
-                          controller: _chewieController,
-                        ),
-                      ),
-                    );
+              //             //     // autoPlay: true,
+              //             //     // looping: true,
+              //             //     // Try playing around with some of these other options:
 
-                    // return VideosPlayer(
+              //             //     // showControls: false,
+              //             //     // materialProgressColors: ChewieProgressColors(
+              //             //     //   playedColor: Colors.red,
+              //             //     //   handleColor: Colors.blue,
+              //             //     //   backgroundColor: Colors.grey,
+              //             //     //   bufferedColor: Colors.lightGreen,
+              //             //     // ),
+              //             //     // placeholder: Container(
+              //             //     //   color: Colors.grey,
+              //             //     // ),
+              //             //     // autoInitialize: true,
+              //             //     );
 
-                    //   networkVideos: [
+              //             return Container(
+              //               height: ScreenUtil().setHeight(250),
+              //               width: double.infinity,
+              //               child: FutureBuilder(
+              //                 future: futureController,
+              //                 builder: (context, snapshot) {
+              //                   if (snapshot.hasData) {
+              //                     return Chewie(
+              //                       controller: chewieCont,
+              //                     );
+              //                     //VideoPlayer(videoPlayerController1);
+              //                   } else {
+              //                     return Center(
+              //                       child: CircularProgressIndicator(),
+              //                     );
+              //                   }
+              //                 },
+              //               ),
+              //             );
 
-                    //     NetworkVideo(
+              //             // return VideosPlayer(
 
-                    //         id: "1",
-                    //         name: "Elephant Dream",
-                    //         videoUrl: vdint != null || vdint != ''
-                    //             ? vdint
-                    //             : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
-                    //         thumbnailUrl:
-                    //             "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
-                    //         videoControl: NetworkVideoControl(
-                    //           fullScreenByDefault: false,
+              //             //   networkVideos: [
 
-                    //         )),
+              //             //     NetworkVideo(
 
-                    //   ],
-                    //   //maxVideoPlayerHeight: ScreenUtil().setHeight(250),
-                    // );
-                  }
-                  return Container(
-                    color: Colors.red,
-                  );
-                }),
+              //             //         id: "1",
+              //             //         name: "Elephant Dream",
+              //             //         videoUrl: vdint != null || vdint != ''
+              //             //             ? vdint
+              //             //             : 'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4',
+              //             //         thumbnailUrl:
+              //             //             "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg",
+              //             //         videoControl: NetworkVideoControl(
+              //             //           fullScreenByDefault: false,
 
-                // Center(
-                //   child: Icon(
-                //     Icons.play_circle_filled,
-                //     size: 50,
-                //     color: whiteColor,
-                //   ),
-                // ),
-              ),
+              //             //         )),
+
+              //             //   ],
+              //             //   //maxVideoPlayerHeight: ScreenUtil().setHeight(250),
+              //             // );
+              //           }
+              //           return Container(
+              //             color: Colors.red,
+              //           );
+              //         }),
+
+              //         // Center(
+              //         //   child: Icon(
+              //         //     Icons.play_circle_filled,
+              //         //     size: 50,
+              //         //     color: whiteColor,
+              //         //   ),
+              //         // ),
+              //       ),
               SizedBox(
                 height: ScreenUtil().setHeight(5),
               ),
@@ -239,22 +311,25 @@ class _WatchClassesState extends State<WatchClasses> {
                   List<VideoData> videoDataOfline = videoDataFiltter
                       .where((element) => element.type == "OFFLINE")
                       .toList();
-                  if(videoDataOfline.length == 0){
-                       BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                        "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
-                  }else{
-                      if (videoDataOfline[0].path == null ||
-                      videoDataOfline[0].path == '') {
-                    BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                        "https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4"));
+                  List<VideoData> videoDataFiltterReverc =
+                      videoDataFiltter.reversed.toList();
+                  if (videoDataOfline.length == 0) {
+                    //Provider.of<AuthProviderUser>(context).setIsEmpty(true);
+
+                    BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(""));
                   } else {
-                    BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                        "${videoDataOfline[0].videoAccessUrl}"));
+                    // Provider.of<AuthProviderUser>(context).setIsEmpty(true);
+                    if (videoDataOfline[0].path == null ||
+                        videoDataOfline[0].path == '') {
+                      BlocProvider.of<UserBloc2>(context)
+                          .add(SetVideoEvent2(""));
+                    } else {
+                      //   Provider.of<AuthProviderUser>(context).setIsEmpty(false);
+                      BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                          "${videoDataOfline[0].videoAccessUrl}"));
+                    }
                   }
-                  }
-                     
-                  
-                
+
                   print("oooooookkkkkkkkiiiiiiii ${videoDataFiltter.length}");
 
                   // videoOfline =
@@ -263,141 +338,170 @@ class _WatchClassesState extends State<WatchClasses> {
 
                   // });
 
-                  return
-                  videoDataFiltter.isEmpty ?
-                  Container(
-                    child: Center(
-                      child: Text("No Videos"),
-                    ),
-                  ):
-                   Column(
-                    children: [
-                      Text(
-                        "الدرس الاول",
-                        style: styleTitleDetails.copyWith(fontSize: 12),
-                      ),
-                      Text(
-                        "",
-                        style: styleTitleAppBarYears.copyWith(
-                            color: deepGreenColor),
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(12),
-                      ),
-                      Container(
-                          height: ScreenUtil().setHeight(400),
-                          width: double.infinity,
-                          child: ListView.builder(
-                            itemCount: videoDataFiltter.length,
-                            itemBuilder: (context, index) {
-                              return
+                  return videoDataFiltter.isEmpty
+                      ? Container(
+                          child: Center(
+                            child: Text("No Videos"),
+                          ),
+                        )
+                      : Column(
+                          children: [
+                            // isVideo != false
+                            //     ? Text(
+                            //         "الدرس الاول",
+                            //         style: styleTitleDetails.copyWith(
+                            //             fontSize: 12),
+                            //       )
+                            //     : Container(),
+                            // Text(
+                            //   "",
+                            //   style: styleTitleAppBarYears.copyWith(
+                            //       color: deepGreenColor),
+                            // ),
+                            SizedBox(
+                              height: ScreenUtil().setHeight(12),
+                            ),
+                            Container(
+                                height: ScreenUtil().setHeight(700),
+                                width: double.infinity,
+                                child: ListView.builder(
+                                  itemCount: videoDataFiltter.length,
+                                  itemBuilder: (context, index) {
+                                    return videoDataFiltter.length == 0
+                                        ? Container(
+                                            child: Center(
+                                              child: Text("No Videos"),
+                                            ),
+                                          )
+                                        : InkWell(
+                                            onTap: () {
+                                              print(
+                                                  "ssssssssssssssssttttttttttttttttt ${widget.unitId}");
+                                              if (isVideo != false) {
+                                                videoPlayerController1.pause();
+                                                //   _videoPlayerController2.pause();
+                                              }
 
-                              videoDataFiltter.length == 0 ? Container(
-                                child: Center(
-                                  child: Text("No Videos"),
-                                ),
-                              ) :
-                              InkWell(
-                                  onTap: () {
-                                    _videoPlayerController1.pause();
-                                    _videoPlayerController2.pause();
-                                    // if (videoData[index].status == "PAID") {
-                                    //    showDialog(
-                                    //     context: context,
-                                    //     builder: (context) {
-                                    //       return CardPaymentDialog();
-                                    //     },
-                                    //   );
+                                              // if (videoData[index].status == "PAID") {
+                                              //    showDialog(
+                                              //     context: context,
+                                              //     builder: (context) {
+                                              //       return CardPaymentDialog();
+                                              //     },
+                                              //   );
 
-                                    // }else{
-                                    if (videoDataFiltter[index].type == "OFFLINE") {
-                                      BlocProvider.of<UserBloc>(this.context)
-                                          .add(IsAccessVideoEvent(
-                                              videoDataFiltter[index].id.toString(),
-                                              this.context,
-                                              WatchClasses2(
-                                                unitId: widget.unitId,
-                                                level: widget.level,
-                                                term: widget.term,
-                                                videoUrl:
-                                                    "${videoDataFiltter[index].videoAccessUrl}",
-                                                color: widget.color,
-                                                title: "الدرس ${index + 1}",
-                                                desTitle:
-                                                    videoDataFiltter[index].title,
-                                              ),
-                                              widget.unitId,
-                                              widget.level));
-                                      // Provider.of<AuthProviderUser>(context,
-                                      //         listen: false)
-                                      //     .setVideoOflineUrl(
-                                      //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
-                                      // push(
-                                      //     context,
-                                      //     WatchClasses(
-                                      //       level: widget.level,
-                                      //       term: widget.term,
-                                      //     ));
-                                      // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                                      // null));
-                                      // BlocProvider.of<UserBloc2>(context).add(
-                                      //     SetVideoEvent2(
-                                      //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
-                                      // push(
-                                      //     context,
-                                      //     WatchClasses(
-                                      //       level: widget.level,
-                                      //       term: widget.term,
-                                      //     ));
+                                              // }else{
+                                              if (videoDataFiltter[index]
+                                                      .type ==
+                                                  "OFFLINE") {
+                                                BlocProvider.of<UserBloc>(
+                                                        this.context)
+                                                    .add(IsAccessVideoEvent(
+                                                        videoDataFiltter[index]
+                                                            .id
+                                                            .toString(),
+                                                        this.context,
+                                                        WatchClasses2(
+                                                          unitId: widget.unitId,
+                                                          level: widget.level,
+                                                          term: widget.term,
+                                                          videoUrl:
+                                                              "${videoDataFiltter[index].videoAccessUrl}",
+                                                          color: widget.color,
+                                                          title:
+                                                              "الدرس ${index + 1}",
+                                                          desTitle:
+                                                              videoDataFiltter[
+                                                                      index]
+                                                                  .title,
+                                                          price: widget.price,
+                                                        ),
+                                                        widget.unitId,
+                                                        widget.level,
+                                                        widget.price));
+                                                // Provider.of<AuthProviderUser>(context,
+                                                //         listen: false)
+                                                //     .setVideoOflineUrl(
+                                                //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
+                                                // push(
+                                                //     context,
+                                                //     WatchClasses(
+                                                //       level: widget.level,
+                                                //       term: widget.term,
+                                                //     ));
+                                                // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                                                // null));
+                                                // BlocProvider.of<UserBloc2>(context).add(
+                                                //     SetVideoEvent2(
+                                                //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
+                                                // push(
+                                                //     context,
+                                                //     WatchClasses(
+                                                //       level: widget.level,
+                                                //       term: widget.term,
+                                                //     ));
 
-                                    } else {
-                                      Provider.of<UserProvider>(context,
-                                              listen: false)
-                                          .getVideoAccess(
-                                              videoDataFiltter[index].id.toString());
-                                      Future.delayed(Duration(seconds: 1), () {
-                                        return BlocProvider.of<UserBloc>(
-                                                this.context)
-                                            .add(IsAccessVideoEvent(
-                                                videoDataFiltter[index].id.toString(),
-                                                this.context,
-                                                LiveScreen(
-                                                  linkLive:
-                                                      Provider.of<UserProvider>(
-                                                              context,
-                                                              listen: false)
-                                                          .link,
-                                                  level: widget.level,
-                                                  term: widget.term,
-                                                ),
-                                                widget.unitId,
-                                                widget.level));
-                                      });
+                                              } else {
+                                                Provider.of<UserProvider>(
+                                                        context,
+                                                        listen: false)
+                                                    .getVideoAccess(
+                                                        videoDataFiltter[index]
+                                                            .id
+                                                            .toString());
+                                                Future.delayed(
+                                                    Duration(seconds: 1), () {
+                                                  return BlocProvider.of<
+                                                              UserBloc>(
+                                                          this.context)
+                                                      .add(IsAccessVideoEvent(
+                                                          videoDataFiltter[
+                                                                  index]
+                                                              .id
+                                                              .toString(),
+                                                          this.context,
+                                                          LiveScreen(
+                                                            linkLive: Provider.of<
+                                                                        UserProvider>(
+                                                                    context,
+                                                                    listen:
+                                                                        false)
+                                                                .link,
+                                                            level: widget.level,
+                                                            term: widget.term,
+                                                            color: widget.color,
+                                                          ),
+                                                          widget.unitId,
+                                                          widget.level,
+                                                          widget.price));
+                                                });
 
-                                      // BlocProvider.of<UserBloc>(this.context).add(
-                                      // UnitEvent(widget.term, widget.level));
+                                                // BlocProvider.of<UserBloc>(this.context).add(
+                                                // UnitEvent(widget.term, widget.level));
 
-                                      // }
+                                                // }
 
-                                    }
+                                              }
+                                            },
+                                            child: SlideInRight(
+                                                animate: true,
+                                                duration: Duration(
+                                                    milliseconds:
+                                                        1000 + (300 * index)),
+                                                child: Container(
+                                                  margin: EdgeInsets.only(
+                                                      bottom: ScreenUtil()
+                                                          .setHeight(10)),
+                                                  child: CardWatch(
+                                                    videoData:
+                                                        videoDataFiltterReverc[index],
+                                                    index: index,
+                                                  ),
+                                                )));
                                   },
-                                  child: SlideInRight(
-                                      animate: true,
-                                      duration: Duration(
-                                          milliseconds: 1000 + (300 * index)),
-                                      child: Container(
-                                        margin: EdgeInsets.only(
-                                            bottom: ScreenUtil().setHeight(10)),
-                                        child: CardWatch(
-                                          videoData: videoDataFiltter[index],
-                                          index: index,
-                                        ),
-                                      ))
-                                      );
-                            },
-                          ))
-                    ],
-                  );
+                                ))
+                          ],
+                        );
                 }
                 return Container();
               })),

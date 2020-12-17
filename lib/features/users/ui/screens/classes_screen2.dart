@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +14,7 @@ import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/screens/Notification_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_years.dart';
+import 'package:pythagoras/features/users/ui/screens/classes_years11&12.dart';
 import 'package:pythagoras/features/users/ui/screens/setting_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_clasess2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_search.dart';
@@ -71,8 +73,8 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
             push(
                 context,
                 NotificationScreen(
-                 // levelId: "0",
-                ));
+                    // levelId: "0",
+                    ));
           },
           child: Badge(
             // padding: EdgeInsets.all(10),
@@ -197,7 +199,12 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                 textDirection: TextDirection.rtl,
                 child: TextFormField(
                   onChanged: (value) {
-                    BlocProvider.of<UserBloc>(context).add(VideoEvent());
+                    if(value != null || value != ""){
+                       BlocProvider.of<UserBloc>(context).add(VideoEvent());
+                    }else{
+                       BlocProvider.of<UserBloc>(context).add(LevelsEvent());
+                    }
+                   
                     search = value;
                     setState(() {});
                   },
@@ -244,54 +251,78 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                             return Container(
                               //color: Colors.amber,
                               child: InkWell(
-                                  onTap: () {
+                                onTap: () {
+                                  BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+                                  if(index == 6 || index == 7 ){
                                     push(
-                                        context,
-                                        ClassesYears(
-                                          level:
-                                              dataLevels2[index].id.toString(),
-                                          color: index == 0
-                                              ? color5
-                                              : index == 1
-                                                  ? color6
-                                                  : index == 2
-                                                      ? color7
-                                                      : index == 3
-                                                          ? color8
-                                                          : index == 4
-                                                              ? color9
-                                                              : index == 5
-                                                                  ? color10
-                                                                  : index == 6
-                                                                      ? color11
-                                                                      : index ==
-                                                                              7
-                                                                          ? color12
-                                                                          : color12,
-                                        ));
-                                  },
-                                  child:
-                                      // Container(
-                                      //   height: ScreenUtil().setHeight(250),
-                                      //   width: ScreenUtil().setWidth(350),
-                                      //   child: SvgPicture.asset(container5,fit: BoxFit.fill,),
-                                      // )
-                                      YearListAddress(
-                                    index: index,
-                                    dataLevel: dataLevels.reversed.toList(),
-                                    // address: 'الصف الخامس الابتدائي',
-                                    // des:
-                                    //     'هذا النص هو مثال لنص يمكن ان يستبدل في نفس المساحة، لقد تم توليد هذا النص من مواد النص العربي، حيث يمكنك ان تولد مثل هذا ',
-                                    // image: 'assets/images/5.png',
-                                    // num1: '20.000 طالب مسجل',
-                                    // year: 5,
-                                  ),
-
-                                  //     CardClasess(
-                                  //   index: index,
-                                  //   dataLevel: dataLevels.reversed.toList(),
-                                  // )
+                                      context,
+                                      ClassesYears2(
+                                        level: dataLevels2[index].id.toString(),
+                                        color: index == 0
+                                            ? color5
+                                            : index == 1
+                                                ? color6
+                                                : index == 2
+                                                    ? color7
+                                                    : index == 3
+                                                        ? color8
+                                                        : index == 4
+                                                            ? color9
+                                                            : index == 5
+                                                                ? color10
+                                                                : index == 6
+                                                                    ? color11
+                                                                    : index == 7
+                                                                        ? color12
+                                                                        : color12,
+                                      ));
+                                  }else{
+                                    push(
+                                      context,
+                                      ClassesYears(
+                                        level: dataLevels2[index].id.toString(),
+                                        color: index == 0
+                                            ? color5
+                                            : index == 1
+                                                ? color6
+                                                : index == 2
+                                                    ? color7
+                                                    : index == 3
+                                                        ? color8
+                                                        : index == 4
+                                                            ? color9
+                                                            : index == 5
+                                                                ? color10
+                                                                : index == 6
+                                                                    ? color11
+                                                                    : index == 7
+                                                                        ? color12
+                                                                        : color12,
+                                      ));
+                                  }
+                                },
+                                child:
+                                    // Container(
+                                    //   height: ScreenUtil().setHeight(250),
+                                    //   width: ScreenUtil().setWidth(350),
+                                    //   child: SvgPicture.asset(container5,fit: BoxFit.fill,),
+                                    // )
+                                    YearListAddress(
+                                  index: index,
+                                  dataLevel: dataLevels.reversed.toList(),
+                                  // address: 'الصف الخامس الابتدائي',
+                                  // des:
+                                  //     'هذا النص هو مثال لنص يمكن ان يستبدل في نفس المساحة، لقد تم توليد هذا النص من مواد النص العربي، حيث يمكنك ان تولد مثل هذا ',
+                                  // image: 'assets/images/5.png',
+                                  // num1: '20.000 طالب مسجل',
+                                  // year: 5,
                                 ),
+
+                                //     CardClasess(
+                                //   index: index,
+                                //   dataLevel: dataLevels.reversed.toList(),
+                                // )
+                              ),
                             );
                           },
                         );
@@ -329,6 +360,8 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                           return ListView.builder(
                             itemCount: searchVideo.length,
                             itemBuilder: (context, index) {
+                          //    print(
+                                //  "sssssddddddcccccccccccccccccccc ${searchVideo[index].title}");
                               return CardSearch(
                                 myVideo: searchVideo[index],
                               );

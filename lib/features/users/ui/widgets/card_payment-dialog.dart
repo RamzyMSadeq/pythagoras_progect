@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:pythagoras/animate_do.dart';
+import 'package:pythagoras/bloc/bloc_class.dart';
+import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/features/users/ui/screens/payment_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/webViewPayment.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
@@ -12,7 +15,8 @@ import 'package:pythagoras/values/styles.dart';
 class CardPaymentDialog extends StatefulWidget {
   int unitId;
   String level;
-  CardPaymentDialog({this.unitId ,this.level});
+  int price;
+  CardPaymentDialog({this.unitId, this.level ,this.price});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();
 }
@@ -59,31 +63,32 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           decoration: BoxDecoration(
                               borderRadius: borderRadius8, color: whiteColor),
                           child: Container(
-                                  //margin: EdgeInsets.only(top: 20),
-                                  alignment: Alignment.centerRight,
-                                //  height: ScreenUtil().setHeight(50),
-                                 // width: ScreenUtil().setWidth(90),
-                                  child: Text(
-                                   widget.level == "1"
-                  ? "الصف الخامس الابتدائي"
-                  : widget.level == "2"
-                      ? "الصف السادس الابتدائي"
-                      : widget.level == "3"
-                          ? "الصف السايع الابتدائي"
-                          : widget.level == "4"
-                              ? "الصف الثامن الابتدائي"
-                              : widget.level == "5"
-                                  ? "الصف التاسع الابتدائي"
-                                  : widget.level == "6"
-                                      ? "الصف العاشر الابتدائي"
-                                      : widget.level == "7"
-                                          ? "الصف الحادي عشر "
-                                          : widget.level == "8"
-                                              ? "الصف الثاني عشر "
-                                              : "",
-                                    textAlign: TextAlign.center,
-                                    style: styleTitleDialog,
-                                  )),
+                              //margin: EdgeInsets.only(top: 20),
+                              alignment: Alignment.center,
+                              //  height: ScreenUtil().setHeight(50),
+                              // width: ScreenUtil().setWidth(90),
+                              child: Text(
+                                widget.level == "1"
+                                    ? "الصف الخامس الإبتدائي"
+                                    : widget.level == "2"
+                                        ? "الصف السادس الإبتدائي"
+                                        : widget.level == "3"
+                                            ? "الصف السابع "
+                                            : widget.level == "4"
+                                                ? "الصف الثامن "
+                                                : widget.level == "5"
+                                                    ? "الصف التاسع "
+                                                    : widget.level == "6"
+                                                        ? "الصف العاشر "
+                                                        : widget.level == "7"
+                                                            ? "الصف الحادي عشر "
+                                                            : widget.level ==
+                                                                    "8"
+                                                                ? "الصف الثاني عشر "
+                                                                : "",
+                                textAlign: TextAlign.center,
+                                style: styleTitleDialog,
+                              )),
                         ),
                       ),
                       // Transform.translate(
@@ -104,7 +109,16 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                 Column(
                   children: [
                     Container(
-                     // height: ScreenUtil().setHeight(50),
+                      // height: ScreenUtil().setHeight(50),
+                      child: Text(
+                        "سعر الوحده :     ${widget.price} ريال",
+                        textAlign: TextAlign.center,
+                        style: styleSubDialog,
+                      ),
+                    ),
+                    SizedBox(height: ScreenUtil().setHeight(10),),
+                    Container(
+                      // height: ScreenUtil().setHeight(50),
                       child: Text(
                         "يرجي شراء الوحدة  \n للاستمرار",
                         textAlign: TextAlign.center,
@@ -185,8 +199,10 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           ),
                           InkWell(
                             onTap: () {
+                              print("vvvvvvvvvvuvvvvvvvuuuuvvvvvv ${widget.unitId}");
+                               BlocProvider.of<UserBloc>(context).add(OrderPaymebtEvent("credit", widget.unitId));
                               Navigator.of(context).pop();
-                              push(context, WebViewPayment());
+                              pushReplecment(context, WebViewPayment());
                             },
                             child: Container(
                               height: ScreenUtil().setHeight(35),

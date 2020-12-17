@@ -6,6 +6,7 @@ import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
 import 'package:pythagoras/components/models/token_data.dart';
 import 'package:pythagoras/components/models/unit.dart';
+import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
@@ -29,6 +30,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
   TokenData tokenData;
   Levels allLevels;
   Unit allUnit;
+  UnitTwilvAlivent unitTwilvAlivent;
   Video allVideo;
   MeUser meUser;
   String videoIni;
@@ -59,27 +61,42 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     }
   }
 
-///////////////////////////////////////////////////
-  Future<Video> getAllVideo() async {
-    if (allVideo == null) {
-      Video video = await ApiRepositoryUser.apiRepositoryUser.videoUser();
-      allVideo = video;
-      return video;
+  ///////////////////////////////////////////////////
+  Future<UnitTwilvAlivent> getAllUnitTwilv(
+    String level,
+    String mathType,
+    String term,
+  ) async {
+    if (unitTwilvAlivent == null) {
+      UnitTwilvAlivent unit = await ApiRepositoryUser.apiRepositoryUser
+          .unitTwilvAElevnt(level, mathType, term);
+      unitTwilvAlivent = unit;
+      return unit;
     } else {
-      return allVideo;
+      return unitTwilvAlivent;
     }
   }
 
 ///////////////////////////////////////////////////
-  Future<MeUser> getMeUser() async {
-    if (meUser == null) {
-      MeUser user1 = await ApiRepositoryUser.apiRepositoryUser.meUser();
-      meUser = user1;
-      return user1;
-    } else {
-      return meUser;
-    }
-  }
+  // Future<Video> getAllVideo() async {
+  //   if (allVideo == null) {
+  //     Video video = await ApiRepositoryUser.apiRepositoryUser.videoUser();
+  //     allVideo = video;
+  //     return video;
+  //   } else {
+  //     return allVideo;
+  //   }
+  // }
+///////////////////////////////////////////////////
+  // Future<MeUser> getMeUser() async {
+  //   if (meUser == null) {
+  //     MeUser user1 = await ApiRepositoryUser.apiRepositoryUser.meUser();
+  //     meUser = user1;
+  //     return user1;
+  //   } else {
+  //     return meUser;
+  //   }
+  // }
 
   ///////////////////////////////////////////
   Future<Map> getAllSetting() async {
@@ -132,6 +149,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
             .loginUser2(event.mobile, event.password);
         String token = login["access_token"];
         print("i89999911111111111111112222222222222");
+         print("dooooooooooooooooooooooone $token");
         if (login["message"] == "success") {
           print("dooooooooooooooooooooooone $token");
           yield UserLogedInState(token);
@@ -196,7 +214,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     if (event is MeUserEvent) {
       try {
         yield TasksLoadingState();
-        MeUser user2 = await getMeUser();
+        MeUser user2 = await ApiRepositoryUser.apiRepositoryUser.meUser();
         if (user2.name != "") {
           yield MeUserState(user2);
           print("Done Me User ${user2.name}");
@@ -323,14 +341,29 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     ////////////////////////////////////////////
     if (event is UnitEvent) {
       try {
-        print("unit 11111111111111111111111111111111");
         yield TasksLoadingState();
         Unit unit1 = await ApiRepositoryUser.apiRepositoryUser
             .unit(event.term, event.level);
         if (unit1.data != null) {
-          print("unit 2222222222222222222222222222222222222");
           print("unit ${unit1.data}");
           yield UnitState(unit1.data);
+        } else {}
+      } catch (e) {
+        yield TasksErrorState(e.toString());
+      }
+    }
+
+    ////////////////////////////////////////////
+    if (event is UnitTwilvEvent) {
+      try {
+        print("unit 11111111111111111111111111111111");
+        yield TasksLoadingState();
+        UnitTwilvAlivent unit1 = await ApiRepositoryUser.apiRepositoryUser
+            .unitTwilvAElevnt(event.level, event.mathType, event.term);
+        if (unit1.data != null) {
+          print("unit 2222222222222222222222222222222222222");
+          print("unit ${unit1.data}");
+          yield UnitTwilvState(unit1.data);
         } else {
           print("unit 33333333333333333333333333333333333");
         }
@@ -342,7 +375,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     if (event is VideoEvent) {
       try {
         yield TasksLoadingState();
-        Video video1 = await getAllVideo();
+        Video video1 = await ApiRepositoryUser.apiRepositoryUser.videoUser();
         // Provider.of(context).setVideoOflineUrl("https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}");
         // List<VideoData> videoDataOfline =
         //     video1.data.where((element) => element.type == "OFFLINE").toList();
@@ -448,7 +481,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
             event.confirmPassword);
         if (map["message"] == "success") {
           yield EditProfileState(map["message"]);
-            Fluttertoast.showToast(
+          Fluttertoast.showToast(
               msg: "تم تعديل البيانات بنجاح",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
@@ -480,9 +513,11 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
           showDialog(
             context: event.context,
             builder: (context) {
+              print("raaaaaaaaam ccccccccccccc ${event.unitId}");
               return CardPaymentDialog(
                 unitId: event.unitId,
                 level: event.level,
+                price: event.price,
               );
             },
           );

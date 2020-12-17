@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,8 +19,8 @@ import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
-import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:flutter/services.dart' ;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -27,7 +28,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  VideoPlayerController controller;
+//  VideoPlayerController controller;
   Future<void> initializeVideo;
   DateTime currentBackPressTime;
 
@@ -87,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // mute: true,
       ),
     );
+    
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -101,9 +103,12 @@ class _HomeScreenState extends State<HomeScreen> {
               width: double.infinity,
               child: ListView(
                 children: [
-                  Text(
-                    "فيديو توضيحي للتطبيق",
-                    style: styleTitleSignUp,
+                  Align(
+                    alignment: Alignment.center,
+                                      child: Text(
+                      "فيديو توضيحي للتطبيق",
+                      style: styleTitleSignUp,
+                    ),
                   ),
                   SizedBox(
                     height: ScreenUtil().setHeight(10),
@@ -136,7 +141,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: "إبدأ الان",
                       route: () async {
                         BlocProvider.of<UserBloc>(context).add(LevelsEvent());
-                        
+                      
 
                         _controller.pause();
 
