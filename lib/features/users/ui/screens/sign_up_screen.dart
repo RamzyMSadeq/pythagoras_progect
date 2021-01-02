@@ -143,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Align(
               alignment: Alignment.center,
               child: Text(
-                "اختر الصورة الخاصة بك",
+                "إختر الصورة الخاصة بك",
                 style: styleTitleSignUp,
               ),
             ),
@@ -160,7 +160,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Column(
                     children: [
                       CustomTextField(
-                        hintTitle: "الاسم",
+                        hintTitle: "الإسم",
                         icon: Icon(
                           Icons.person,
                           size: 20,
@@ -190,7 +190,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               lastDate: DateTime(selectedDate.year + 10),
                               borderRadius: 16,
                             ).then((value) {
-                              selectedDate = value;
+                              if (value != null) {
+                                selectedDate = value;
+                              } else {
+                                selectedDate = DateTime.now();
+                              }
+
                               setState(() {});
                             });
                           },
@@ -216,7 +221,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: Container(
                                       padding: EdgeInsets.only(right: 10),
                                       child: Text(
-                                        "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
+                                       
+                                             "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
+                                          
                                         style: TextStyle(
                                             color: Colors.grey[400],
                                             fontFamily: "Ithrabold",
@@ -297,7 +304,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 endIndent: 20,
                               )),
                           Text(
-                            "معلومات ولي الامر",
+                            "معلومات ولي الأمر",
                             style: styleTitleSignUpLight,
                           ),
                           Container(
@@ -312,7 +319,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: ScreenUtil().setHeight(10),
                       ),
                       CustomTextField(
-                        hintTitle: "اسم ولي الامر",
+                        hintTitle: "إسم ولي الأمر",
                         icon: Icon(
                           Icons.person,
                           size: 20,
@@ -325,7 +332,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: ScreenUtil().setHeight(10),
                       ),
                       CustomTextField(
-                        hintTitle: "صلة القرابة بولي الامر",
+                        hintTitle: "صلة القرابة بولي الأمر",
                         icon: Icon(
                           Icons.group,
                           size: 20,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
+import 'package:pythagoras/components/models/video.dart';
 import 'package:string_validator/string_validator.dart';
 
 class AuthProviderUser extends ChangeNotifier {
@@ -22,12 +23,13 @@ class AuthProviderUser extends ChangeNotifier {
   String blocked;
   String location;
   bool isEmpty = false;
-
+ 
 
   setIsEmpty(bool value) {
     this.isEmpty = value;
     notifyListeners();
   }
+
   setLocation(String value) {
     this.location = value;
     notifyListeners();

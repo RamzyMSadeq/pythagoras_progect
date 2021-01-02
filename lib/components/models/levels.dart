@@ -1,16 +1,16 @@
 class Levels {
-  int currentPage;
+  var currentPage;
   List<LevelsData> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
+  var firstPageUrl;
+  var from;
+  var lastPage;
+  var lastPageUrl;
   var nextPageUrl;
-  String path;
-  int perPage;
+  var path;
+  var perPage;
   var prevPageUrl;
-  int to;
-  int total;
+  var to;
+  var total;
 
   Levels(
       {this.currentPage,
@@ -67,17 +67,16 @@ class Levels {
 }
 
 class LevelsData {
-  int id;
-  String name;
-  String color;
-  String nameEn;
-  String description;
-  String createdAt;
-  String updatedAt;
-  int videosCount;
-  int unitsCount;
-  int usersCount;
-  List<Videos> videos;
+  var id;
+  var name;
+  var color;
+  var nameEn;
+  var description;
+  var createdAt;
+  var updatedAt;
+  var videosCount;
+  var unitsCount;
+  var usersCount;
   List<Units> units;
   List<Users> users;
 
@@ -92,7 +91,6 @@ class LevelsData {
       this.videosCount,
       this.unitsCount,
       this.usersCount,
-      this.videos,
       this.units,
       this.users});
 
@@ -107,12 +105,6 @@ class LevelsData {
     videosCount = json['videos_count'];
     unitsCount = json['units_count'];
     usersCount = json['users_count'];
-    if (json['videos'] != null) {
-      videos = new List<Videos>();
-      json['videos'].forEach((v) {
-        videos.add(new Videos.fromJson(v));
-      });
-    }
     if (json['units'] != null) {
       units = new List<Units>();
       json['units'].forEach((v) {
@@ -139,9 +131,6 @@ class LevelsData {
     data['videos_count'] = this.videosCount;
     data['units_count'] = this.unitsCount;
     data['users_count'] = this.usersCount;
-    if (this.videos != null) {
-      data['videos'] = this.videos.map((v) => v.toJson()).toList();
-    }
     if (this.units != null) {
       data['units'] = this.units.map((v) => v.toJson()).toList();
     }
@@ -152,110 +141,18 @@ class LevelsData {
   }
 }
 
-class Videos {
-  int id;
-  int userId;
-  int levelId;
-  int unitId;
-  String slug;
-  var path;
-  String title;
-  String status;
-  String type;
-  String availableAt;
-  String description;
-  String origin;
-  String link;
-  String createdAt;
-  String updatedAt;
-  int isMeetingRunning;
-  String meetingEndedAt;
-  String thumbnail;
-  String sentNotificationAt;
-  var videoAccessUrl;
-
-  Videos(
-      {this.id,
-      this.userId,
-      this.levelId,
-      this.unitId,
-      this.slug,
-      this.path,
-      this.title,
-      this.status,
-      this.type,
-      this.availableAt,
-      this.description,
-      this.origin,
-      this.link,
-      this.createdAt,
-      this.updatedAt,
-      this.isMeetingRunning,
-      this.meetingEndedAt,
-      this.thumbnail,
-      this.sentNotificationAt,
-      this.videoAccessUrl});
-
-  Videos.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    levelId = json['level_id'];
-    unitId = json['unit_id'];
-    slug = json['slug'];
-    path = json['path'];
-    title = json['title'];
-    status = json['status'];
-    type = json['type'];
-    availableAt = json['available_at'];
-    description = json['description'];
-    origin = json['origin'];
-    link = json['link'];
-    createdAt = json['created_at'];
-    updatedAt = json['updated_at'];
-    isMeetingRunning = json['is_meeting_running'];
-    meetingEndedAt = json['meeting_ended_at'];
-    thumbnail = json['thumbnail'];
-    sentNotificationAt = json['sent_notification_at'];
-    videoAccessUrl = json['video_access_url'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['user_id'] = this.userId;
-    data['level_id'] = this.levelId;
-    data['unit_id'] = this.unitId;
-    data['slug'] = this.slug;
-    data['path'] = this.path;
-    data['title'] = this.title;
-    data['status'] = this.status;
-    data['type'] = this.type;
-    data['available_at'] = this.availableAt;
-    data['description'] = this.description;
-    data['origin'] = this.origin;
-    data['link'] = this.link;
-    data['created_at'] = this.createdAt;
-    data['updated_at'] = this.updatedAt;
-    data['is_meeting_running'] = this.isMeetingRunning;
-    data['meeting_ended_at'] = this.meetingEndedAt;
-    data['thumbnail'] = this.thumbnail;
-    data['sent_notification_at'] = this.sentNotificationAt;
-    data['video_access_url'] = this.videoAccessUrl;
-    return data;
-  }
-}
-
 class Units {
-  int id;
-  int userId;
-  int levelId;
-  String title;
-  String description;
-  String createdAt;
-  String updatedAt;
-  int price;
+  var id;
+  var userId;
+  var levelId;
+  var title;
+  var description;
+  var createdAt;
+  var updatedAt;
+  var price;
   var itemDeletedAt;
-  int term;
+  var term;
+  var mathType;
 
   Units(
       {this.id,
@@ -267,7 +164,8 @@ class Units {
       this.updatedAt,
       this.price,
       this.itemDeletedAt,
-      this.term});
+      this.term,
+      this.mathType});
 
   Units.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -280,6 +178,7 @@ class Units {
     price = json['price'];
     itemDeletedAt = json['item_deleted_at'];
     term = json['term'];
+    mathType = json['math_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -294,26 +193,27 @@ class Units {
     data['price'] = this.price;
     data['item_deleted_at'] = this.itemDeletedAt;
     data['term'] = this.term;
+    data['math_type'] = this.mathType;
     return data;
   }
 }
 
 class Users {
-  int id;
-  String name;
-  String phone;
-  String phoneVerifiedAt;
-  String gender;
+  var id;
+  var name;
+  var phone;
+  var phoneVerifiedAt;
+  var gender;
   var dateOfBirth;
-  String location;
-  String supervisor;
+  var location;
+  var supervisor;
   var supervisorType;
-  bool blockedAt;
-  String createdAt;
-  String updatedAt;
-  int levelId;
-  String power;
-  String avatar;
+  var blockedAt;
+  var createdAt;
+  var updatedAt;
+  var levelId;
+  var power;
+  var avatar;
 
   Users(
       {this.id,

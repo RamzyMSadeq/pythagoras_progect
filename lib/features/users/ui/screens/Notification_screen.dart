@@ -35,7 +35,7 @@ class NotificationScreen extends StatelessWidget {
             backgroundColor: whiteColor,
             appBar: AppBar(
               title: Text(
-                "الاشعارات",
+                "الإشعارات",
                 style: styleTitlePayment,
               ),
               backgroundColor: orangeColor,
@@ -135,7 +135,7 @@ class NotificationScreen extends StatelessWidget {
                               Container(
                                 padding: EdgeInsets.symmetric(horizontal: 30),
                                 margin: EdgeInsets.only(bottom: 20),
-                                height: ScreenUtil().setHeight(120),
+                               // height: ScreenUtil().setHeight(120),
                                 width: double.infinity,
                                 decoration: BoxDecoration(
                                     borderRadius: borderRadius8,
@@ -151,6 +151,16 @@ class NotificationScreen extends StatelessWidget {
                                       myNotification[index].description,
                                       style: styleNotificationTitle,
                                     ),
+                                    myNotification[index].link != null
+                                    ?
+                                    Text(
+                                      
+                                      myNotification[index].link,
+                                      style: styleNotificationTitle,
+                                    )
+                                    :
+                                    Text(""),
+
                                     Text(
                                       myNotification[index].createdAt,
                                       style: styleNotificationSubTitle,

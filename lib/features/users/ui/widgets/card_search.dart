@@ -60,11 +60,11 @@ class _CardSearchState extends State<CardSearch> {
                     children: [
                       Text(
                         
-                        widget.myVideo.level.name,
+                        widget.myVideo.title,
                         style: styleTitleDetails.copyWith(color: whiteColor),
                       ),
                       Text(
-                        widget.myVideo.title,
+                        widget.myVideo.description == null ? "null" :  widget.myVideo.description,
                         style: styleSubTitleDetails.copyWith(color: whiteColor),
                       ),
                       // Text(

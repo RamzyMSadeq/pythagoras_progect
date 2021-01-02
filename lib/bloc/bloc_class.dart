@@ -42,7 +42,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     if (allLevels == null) {
       print("11111111111111111111111111111");
       Levels levels = await ApiRepositoryUser.apiRepositoryUser.levels();
-      print("1111111122222222222222222222222221");
+      print("1111111122222222222222222222222221  $levels");
       allLevels = levels;
       return levels;
     } else {
@@ -149,7 +149,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
             .loginUser2(event.mobile, event.password);
         String token = login["access_token"];
         print("i89999911111111111111112222222222222");
-         print("dooooooooooooooooooooooone $token");
+        print("dooooooooooooooooooooooone $token");
         if (login["message"] == "success") {
           print("dooooooooooooooooooooooone $token");
           yield UserLogedInState(token);
@@ -358,10 +358,12 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
       try {
         print("unit 11111111111111111111111111111111");
         yield TasksLoadingState();
+        print(
+            "xbxbxbbxbxbxbxbxxbbxbxbx  ${event.level} , ${event.mathType} , ${event.term}");
         UnitTwilvAlivent unit1 = await ApiRepositoryUser.apiRepositoryUser
             .unitTwilvAElevnt(event.level, event.mathType, event.term);
         if (unit1.data != null) {
-          print("unit 2222222222222222222222222222222222222");
+          print("unit 2222222222222222 ${unit1.data.first.title}");
           print("unit ${unit1.data}");
           yield UnitTwilvState(unit1.data);
         } else {
@@ -532,7 +534,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     if (event is SettingsEvent) {
       try {
         yield TasksLoadingState();
-        Map data1 = await getAllSetting();
+        Map data1 = await ApiUserClient.apiUserClient.settingsUser();
         if (data1 != null) {
           yield SettingsState(data1);
         } else {}

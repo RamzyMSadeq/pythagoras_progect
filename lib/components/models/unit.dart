@@ -1,16 +1,16 @@
 class Unit {
-  int currentPage;
+  var currentPage;
   List<UnitData> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
+  var firstPageUrl;
+  var from;
+  var lastPage;
+  var lastPageUrl;
   var nextPageUrl;
-  String path;
-  int perPage;
+  var path;
+  var perPage;
   var prevPageUrl;
-  int to;
-  int total;
+  var to;
+  var total;
 
   Unit(
       {this.currentPage,
@@ -67,17 +67,18 @@ class Unit {
 }
 
 class UnitData {
-  int id;
-  int userId;
-  int levelId;
-  String title;
+  var id;
+  var userId;
+  var levelId;
+  var title;
   var description;
-  String createdAt;
-  String updatedAt;
-  int price;
+  var createdAt;
+  var updatedAt;
+  var price;
   var itemDeletedAt;
-  int term;
-  int videosCount;
+  var term;
+  var mathType;
+  var videosCount;
   Level level;
 
   UnitData(
@@ -91,6 +92,7 @@ class UnitData {
       this.price,
       this.itemDeletedAt,
       this.term,
+      this.mathType,
       this.videosCount,
       this.level});
 
@@ -105,6 +107,7 @@ class UnitData {
     price = json['price'];
     itemDeletedAt = json['item_deleted_at'];
     term = json['term'];
+    mathType = json['math_type'];
     videosCount = json['videos_count'];
     level = json['level'] != null ? new Level.fromJson(json['level']) : null;
   }
@@ -121,6 +124,7 @@ class UnitData {
     data['price'] = this.price;
     data['item_deleted_at'] = this.itemDeletedAt;
     data['term'] = this.term;
+    data['math_type'] = this.mathType;
     data['videos_count'] = this.videosCount;
     if (this.level != null) {
       data['level'] = this.level.toJson();
@@ -130,13 +134,13 @@ class UnitData {
 }
 
 class Level {
-  int id;
-  String name;
-  String color;
-  String nameEn;
-  String description;
-  String createdAt;
-  String updatedAt;
+  var id;
+  var name;
+  var color;
+  var nameEn;
+  var description;
+  var createdAt;
+  var updatedAt;
 
   Level(
       {this.id,

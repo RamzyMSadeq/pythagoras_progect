@@ -43,7 +43,7 @@ class _SettingScreenState extends State<SettingScreen> {
         backgroundColor: whiteColor,
         appBar: AppBar(
           title: Text(
-            "الاعدادات",
+            "الإعدادات",
             style: styleTitlePayment,
           ),
           backgroundColor: orangeColor,
@@ -142,7 +142,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                       ));
                                     },
                                     child: Text(
-                                      "عدل",
+                                      "تحديث",
                                       style: styleSettingName,
                                     )),
                                 Image.asset(
@@ -184,7 +184,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   size: 20,
                                 ),
                                 title: Text(
-                                  "هل انت معلم وتود الانضمام لنا  ؟",
+                                  "هل أنت معلم وتود الإنضمام لنا  ؟",
                                   style: styleSettingTitle,
                                 ),
                                 trailing: Icon(

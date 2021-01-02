@@ -28,19 +28,21 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(Duration(seconds: 3), () async {
       String token = await SPHelper.spHelper.getToken();
       print("rrrrrrrrrrrraaaaaaaaaaaammmmmmmmmmmm $token");
-      if (token != null) {
-        BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+      if (token == null || token == '') {
+        pushAndRemoveUntil(
+          context,
+          LogInScreen(),
+        );
+       
+      } else {
+         BlocProvider.of<UserBloc>(context).add(SettingsEvent());
         Timer(Duration(seconds: 3), () async {
           pushAndRemoveUntil(
             context,
             HomeScreen(),
           );
         });
-      } else {
-        pushAndRemoveUntil(
-          context,
-          LogInScreen(),
-        );
+        
       }
     });
   }

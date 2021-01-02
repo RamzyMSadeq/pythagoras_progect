@@ -38,17 +38,7 @@ void main() async {
   await precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoder, classes), null);
   await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, paymentbuttom), null);
-  await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, tlgb), null);
-  await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, backgroundsplash), null);
-  await precachePicture(
       ExactAssetPicture(SvgPicture.svgStringDecoder, logospalsh), null);
-  await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, container5), null);
-  await precachePicture(
-      ExactAssetPicture(SvgPicture.svgStringDecoder, splashback), null);
   runApp(co == null ? MyApp(0) : MyApp(co));
 }
 

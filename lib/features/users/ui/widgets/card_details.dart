@@ -17,7 +17,7 @@ class CardDetails extends StatelessWidget {
     print("1111111111111111111111111111111111111111111111111111");
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-      height: ScreenUtil().setHeight(105),
+      //height: ScreenUtil().setHeight(105),
       width: ScreenUtil().setWidth(350),
       decoration: BoxDecoration(
           color: whiteColor,

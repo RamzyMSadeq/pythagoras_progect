@@ -49,6 +49,8 @@ class SocketHandel {
       'client': pusherClient,
     });
 
+  
+
     print("1111111111111111111111111111111111111111111");
     pusherClient.connect(
       onConnectionStateChange: this.onConnectionStateChange,

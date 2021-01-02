@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
@@ -10,6 +11,7 @@ import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
+import 'package:pythagoras/features/users/repo/api_user_repo.dart';
 import 'package:pythagoras/features/users/ui/screens/live_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_watch.dart';
 import 'package:pythagoras/values/colors.dart';
@@ -24,7 +26,7 @@ class WatchClasses2 extends StatefulWidget {
   Color color;
   String title;
   String desTitle;
-  int price;
+  double price;
   WatchClasses2(
       {this.level,
       this.term,
@@ -46,18 +48,40 @@ class _WatchClasses2State extends State<WatchClasses2> {
   //       .add(UnitEvent(widget.term, widget.level));
   //   return true;
   // }
-  TargetPlatform _platform;
   VideoPlayerController videoPlayerCont;
   Future<void> futureCont;
   ChewieController chewieController;
 
   //VideoPlayerController _videoPlayerController2;
   //ChewieController _chewieController;
+  static const _pageSize = 20;
+
+  final PagingController<int, VideoData> _pagingController =
+      PagingController(firstPageKey: 0);
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = await ApiRepositoryUser.apiRepositoryUser
+          .videoUserPage(widget.level, widget.unitId.toString());
+      final newItems1 = newItems.reversed.toList();
+      final isLastPage = newItems1.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(newItems1);
+      } else {
+        final nextPageKey = pageKey + newItems1.length;
+        _pagingController.appendPage(newItems1, nextPageKey);
+      }
+    } catch (error) {
+      _pagingController.error = error;
+    }
+  }
 
   @override
   void initState() {
     BlocProvider.of<UserBloc>(context).add(VideoEvent());
-
+    _pagingController.addPageRequestListener((pageKey) {
+      _fetchPage(pageKey);
+    });
     ////////////////////////////////////////////
     videoPlayerCont = VideoPlayerController.network(widget.videoUrl);
     futureCont = videoPlayerCont.initialize();
@@ -65,8 +89,7 @@ class _WatchClasses2State extends State<WatchClasses2> {
 
     chewieController = ChewieController(
       videoPlayerController: videoPlayerCont,
-     // autoInitialize: true
-
+      // autoInitialize: true
     );
     //  _videoPlayerController2 = VideoPlayerController.network(widget.videoUrl);
     // _chewieController = ChewieController(
@@ -112,6 +135,8 @@ class _WatchClasses2State extends State<WatchClasses2> {
   @override
   void dispose() {
     videoPlayerCont.dispose();
+    chewieController.dispose();
+    _pagingController.dispose();
     // _videoPlayerController2.dispose();
     // _chewieController.dispose();
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -237,181 +262,291 @@ class _WatchClasses2State extends State<WatchClasses2> {
             SizedBox(
               height: ScreenUtil().setHeight(5),
             ),
-            Container(child:
-                BlocBuilder<UserBloc, BlocStates>(builder: (context, state) {
-              if (state is TasksLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is EmptyTasksState) {
-                return Center(
-                  child: Text('Empty Tasks'),
-                );
-              } else if (state is TasksErrorState) {
-                return Center(
-                  child: Text(state.error),
-                );
-              } else if (state is VideoState) {
-                List<VideoData> videoData = state.data;
-                // List<VideoData> videoDataOfline = videoData
-                //     .where((element) => element.type == "OFFLINE")
-                //     .toList();
-                List<VideoData> videoDataFiltter = videoData
-                    .where((element) =>
-                        element.levelId == int.parse(widget.level) &&
-                        element.unitId == widget.unitId)
-                    .toList();
-                // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}"));
+            Text(
+              widget.title,
+              style: styleTitleDetails.copyWith(fontSize: 12),
+            ),
+            Text(
+              widget.desTitle,
+              style: styleTitleAppBarYears.copyWith(color: deepGreenColor),
+            ),
 
-                // videoOfline =
-                //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}";
-                // setState(() {
+            Container(
+              height: ScreenUtil().setHeight(500),
+              child: PagedListView<int, VideoData>(
+                  pagingController: _pagingController,
+                  builderDelegate: PagedChildBuilderDelegate<VideoData>(
+                    itemBuilder: (context, item, index) {
+                      return Container(
+                        margin:
+                            EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
+                        child: InkWell(
+                          onTap: () {
+                            videoPlayerCont.pause();
+                            //  _videoPlayerController2.pause();
+                            // if (videoData[index].status == "PAID") {
+                            //    showDialog(
+                            //     context: context,
+                            //     builder: (context) {
+                            //       return CardPaymentDialog();
+                            //     },
+                            //   );
 
-                // });
+                            // }else{
+                            if (item.type == "OFFLINE") {
+                              BlocProvider.of<UserBloc>(this.context)
+                                  .add(IsAccessVideoEvent(
+                                      item.id.toString(),
+                                      this.context,
+                                      WatchClasses2(
+                                        unitId: widget.unitId,
+                                        level: widget.level,
+                                        term: widget.term,
+                                        videoUrl: "${item.videoAccessUrl}",
+                                        color: widget.color,
+                                        title: "الدرس ${index + 1}",
+                                        desTitle: item.title,
+                                        price: widget.price,
+                                      ),
+                                      widget.unitId,
+                                      widget.level,
+                                      widget.price));
+                              // Provider.of<AuthProviderUser>(context,
+                              //         listen: false)
+                              //     .setVideoOflineUrl(
+                              //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
+                              // push(
+                              //     context,
+                              //     WatchClasses(
+                              //       level: widget.level,
+                              //       term: widget.term,
+                              //     ));
+                              // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                              // null));
+                              // BlocProvider.of<UserBloc2>(context).add(
+                              //     SetVideoEvent2(
+                              //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
+                              // push(
+                              //     context,
+                              //     WatchClasses(
+                              //       level: widget.level,
+                              //       term: widget.term,
+                              //     ));
 
-                return videoDataFiltter.isEmpty
-                    ? Container(
-                        child: Center(
-                          child: Text("No Video"),
+                            } else {
+                              // BlocProvider.of<UserBloc>(this.context).add(
+                              //     UnitEvent(widget.term, widget.level));
+                              Provider.of<UserProvider>(context, listen: false)
+                                  .getVideoAccess(item.id.toString());
+                              Future.delayed(Duration(seconds: 1), () {
+                                return BlocProvider.of<UserBloc>(this.context)
+                                  .add(IsAccessVideoEvent(
+                                      item.id.toString(),
+                                      this.context,
+                                      LiveScreen(
+                                        linkLive: Provider.of<UserProvider>(
+                                                context,
+                                                listen: false)
+                                            .link,
+                                        level: widget.level,
+                                        term: widget.term,
+                                        color: widget.color,
+                                      ),
+                                      widget.unitId,
+                                      widget.level,
+                                      widget.price));
+                              });
+                              
+
+                              // }
+
+                            }
+                          },
+                          child: CardWatch(
+                            videoData: item,
+                            index: index,
+                          ),
                         ),
-                      )
-                    : Column(
-                        children: [
-                          Text(
-                            widget.title,
-                            style: styleTitleDetails.copyWith(fontSize: 12),
-                          ),
-                          Text(
-                            widget.desTitle,
-                            style: styleTitleAppBarYears.copyWith(
-                                color: deepGreenColor),
-                          ),
-                          SizedBox(
-                            height: ScreenUtil().setHeight(12),
-                          ),
-                          Container(
-                              height: ScreenUtil().setHeight(400),
-                              width: double.infinity,
-                              child: ListView.builder(
-                                itemCount: videoDataFiltter.length,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                      onTap: () {
-                                        videoPlayerCont.pause();
-                                        //  _videoPlayerController2.pause();
-                                        // if (videoData[index].status == "PAID") {
-                                        //    showDialog(
-                                        //     context: context,
-                                        //     builder: (context) {
-                                        //       return CardPaymentDialog();
-                                        //     },
-                                        //   );
-
-                                        // }else{
-                                        if (videoDataFiltter[index].type ==
-                                            "OFFLINE") {
-                                          BlocProvider.of<UserBloc>(
-                                                  this.context)
-                                              .add(IsAccessVideoEvent(
-                                                  videoDataFiltter[index]
-                                                      .id
-                                                      .toString(),
-                                                  this.context,
-                                                  WatchClasses2(
-                                                    unitId: widget.unitId,
-                                                    level: widget.level,
-                                                    term: widget.term,
-                                                    videoUrl:
-                                                        "${videoDataFiltter[index].videoAccessUrl}",
-                                                    title:
-                                                        videoDataFiltter[index]
-                                                            .title,
-                                                    desTitle:
-                                                        videoDataFiltter[index]
-                                                            .description,
-                                                  ),
-                                                  widget.unitId,
-                                                  widget.level,
-                                                  widget.price));
-                                          // Provider.of<AuthProviderUser>(context,
-                                          //         listen: false)
-                                          //     .setVideoOflineUrl(
-                                          //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
-                                          // push(
-                                          //     context,
-                                          //     WatchClasses(
-                                          //       level: widget.level,
-                                          //       term: widget.term,
-                                          //     ));
-                                          // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
-                                          // null));
-                                          // BlocProvider.of<UserBloc2>(context).add(
-                                          //     SetVideoEvent2(
-                                          //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
-                                          // push(
-                                          //     context,
-                                          //     WatchClasses(
-                                          //       level: widget.level,
-                                          //       term: widget.term,
-                                          //     ));
-
-                                        } else {
-                                          // BlocProvider.of<UserBloc>(this.context).add(
-                                          //     UnitEvent(widget.term, widget.level));
-                                          Provider.of<UserProvider>(context,
-                                                  listen: false)
-                                              .getVideoAccess(
-                                                  videoDataFiltter[index]
-                                                      .id
-                                                      .toString());
-                                          BlocProvider.of<UserBloc>(
-                                                  this.context)
-                                              .add(IsAccessVideoEvent(
-                                                  videoDataFiltter[index]
-                                                      .id
-                                                      .toString(),
-                                                  this.context,
-                                                  LiveScreen(
-                                                    linkLive: Provider.of<
-                                                                UserProvider>(
-                                                            context,
-                                                            listen: false)
-                                                        .link,
-                                                    level: widget.level,
-                                                    term: widget.term,
-                                                    color: widget.color,
-                                                  ),
-                                                  widget.unitId,
-                                                  widget.level,
-                                                  widget.price));
-
-                                          // }
-
-                                        }
-                                      },
-                                      child: SlideInRight(
-                                          animate: true,
-                                          duration: Duration(
-                                              milliseconds:
-                                                  1000 + (300 * index)),
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                bottom:
-                                                    ScreenUtil().setHeight(10)),
-                                            child: CardWatch(
-                                              videoData:
-                                                  videoDataFiltter[index],
-                                              index: index,
-                                            ),
-                                          )));
-                                },
-                              ))
-                        ],
                       );
-              }
-              return Container();
-            })),
+                    },
+                  )),
+            )
+
+            // Container(child:
+            //     BlocBuilder<UserBloc, BlocStates>(builder: (context, state) {
+            //   if (state is TasksLoadingState) {
+            //     return Center(
+            //       child: CircularProgressIndicator(),
+            //     );
+            //   } else if (state is EmptyTasksState) {
+            //     return Center(
+            //       child: Text('Empty Tasks'),
+            //     );
+            //   } else if (state is TasksErrorState) {
+            //     return Center(
+            //       child: Text(state.error),
+            //     );
+            //   } else if (state is VideoState) {
+            //     List<VideoData> videoData = state.data;
+            //     // List<VideoData> videoDataOfline = videoData
+            //     //     .where((element) => element.type == "OFFLINE")
+            //     //     .toList();
+            //     List<VideoData> videoDataFiltter = videoData
+            //         .where((element) =>
+            //             element.levelId == int.parse(widget.level) &&
+            //             element.unitId == widget.unitId)
+            //         .toList();
+            //     // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+            //     //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}"));
+
+            //     // videoOfline =
+            //     //     "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}";
+            //     // setState(() {
+
+            //     // });
+
+            //     return videoDataFiltter.isEmpty
+            //         ? Container(
+            //             child: Center(
+            //               child: Text("No Video"),
+            //             ),
+            //           )
+            //         : Column(
+            //             children: [
+            //               Text(
+            //                 widget.title,
+            //                 style: styleTitleDetails.copyWith(fontSize: 12),
+            //               ),
+            //               Text(
+            //                 widget.desTitle,
+            //                 style: styleTitleAppBarYears.copyWith(
+            //                     color: deepGreenColor),
+            //               ),
+            //               SizedBox(
+            //                 height: ScreenUtil().setHeight(12),
+            //               ),
+            //               Container(
+            //                   height: ScreenUtil().setHeight(400),
+            //                   width: double.infinity,
+            //                   child: ListView.builder(
+            //                     itemCount: videoDataFiltter.length,
+            //                     itemBuilder: (context, index) {
+            //                       return InkWell(
+            //                           onTap: () {
+            //                             videoPlayerCont.pause();
+            //                             //  _videoPlayerController2.pause();
+            //                             // if (videoData[index].status == "PAID") {
+            //                             //    showDialog(
+            //                             //     context: context,
+            //                             //     builder: (context) {
+            //                             //       return CardPaymentDialog();
+            //                             //     },
+            //                             //   );
+
+            //                             // }else{
+            //                             if (videoDataFiltter[index].type ==
+            //                                 "OFFLINE") {
+            //                               BlocProvider.of<UserBloc>(
+            //                                       this.context)
+            //                                   .add(IsAccessVideoEvent(
+            //                                       videoDataFiltter[index]
+            //                                           .id
+            //                                           .toString(),
+            //                                       this.context,
+            //                                       WatchClasses2(
+            //                                         unitId: widget.unitId,
+            //                                         level: widget.level,
+            //                                         term: widget.term,
+            //                                         videoUrl:
+            //                                             "${videoDataFiltter[index].videoAccessUrl}",
+            //                                         title:
+            //                                             videoDataFiltter[index]
+            //                                                 .title,
+            //                                         desTitle:
+            //                                             videoDataFiltter[index]
+            //                                                 .description,
+            //                                       ),
+            //                                       widget.unitId,
+            //                                       widget.level,
+            //                                       widget.price));
+            //                               // Provider.of<AuthProviderUser>(context,
+            //                               //         listen: false)
+            //                               //     .setVideoOflineUrl(
+            //                               //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
+            //                               // push(
+            //                               //     context,
+            //                               //     WatchClasses(
+            //                               //       level: widget.level,
+            //                               //       term: widget.term,
+            //                               //     ));
+            //                               // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+            //                               // null));
+            //                               // BlocProvider.of<UserBloc2>(context).add(
+            //                               //     SetVideoEvent2(
+            //                               //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
+            //                               // push(
+            //                               //     context,
+            //                               //     WatchClasses(
+            //                               //       level: widget.level,
+            //                               //       term: widget.term,
+            //                               //     ));
+
+            //                             } else {
+            //                               // BlocProvider.of<UserBloc>(this.context).add(
+            //                               //     UnitEvent(widget.term, widget.level));
+            //                               Provider.of<UserProvider>(context,
+            //                                       listen: false)
+            //                                   .getVideoAccess(
+            //                                       videoDataFiltter[index]
+            //                                           .id
+            //                                           .toString());
+            //                               BlocProvider.of<UserBloc>(
+            //                                       this.context)
+            //                                   .add(IsAccessVideoEvent(
+            //                                       videoDataFiltter[index]
+            //                                           .id
+            //                                           .toString(),
+            //                                       this.context,
+            //                                       LiveScreen(
+            //                                         linkLive: Provider.of<
+            //                                                     UserProvider>(
+            //                                                 context,
+            //                                                 listen: false)
+            //                                             .link,
+            //                                         level: widget.level,
+            //                                         term: widget.term,
+            //                                         color: widget.color,
+            //                                       ),
+            //                                       widget.unitId,
+            //                                       widget.level,
+            //                                       widget.price));
+
+            //                               // }
+
+            //                             }
+            //                           },
+            //                           child: SlideInRight(
+            //                               animate: true,
+            //                               duration: Duration(
+            //                                   milliseconds:
+            //                                       1000 + (300 * index)),
+            //                               child: Container(
+            //                                 margin: EdgeInsets.only(
+            //                                     bottom:
+            //                                         ScreenUtil().setHeight(10)),
+            //                                 child: CardWatch(
+            //                                   videoData:
+            //                                       videoDataFiltter[index],
+            //                                   index: index,
+            //                                 ),
+            //                               )));
+            //                     },
+            //                   ))
+            //             ],
+            //           );
+            //   }
+            //   return Container();
+            // })),
           ],
         ),
 

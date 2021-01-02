@@ -437,7 +437,7 @@ class ApiUserClient {
             HttpHeaders.authorizationHeader: "bearer $token"
           }));
       print(
-          "rtrtrtrttttttteeeeeeeeeeeeeeeeeeeeeeetttttttrtrt ${response.data}");
+          " ${response.data}");
       return response.data;
     } catch (e) {
       print(e.toString());
@@ -453,6 +453,33 @@ class ApiUserClient {
       String token = await SPHelper.spHelper.getToken();
       print("ppppppppppppppppppppppppppppppppppppppp");
       Response response = await dio.get(basePath + videosPath,
+          options: Options(headers: {
+            Headers.acceptHeader: "*/*",
+            Headers.contentTypeHeader: "multipart/form-data",
+            HttpHeaders.authorizationHeader: "bearer $token"
+          }));
+      print("oooooooooooooooooooooooooooooooooooooooooooo");
+      print(response.data);
+      //  List<VideoData> videoDataOfline = response.data
+      //         .where((element) => element.type == "OFFLINE")
+      //         .toList();
+      //     Provider.of<AuthProviderUser>(context,listen: false).setVideoOflineUrl(
+      //         "https://api.pythagorath.com/storage/videos/${videoDataOfline[0].path}");
+      return response.data;
+    } catch (e) {
+      print(e.toString());
+      return null;
+    }
+  }
+
+    ////////////////////////////////////////////////////////////
+
+  Future<Map> videosUserPage(String levelId , String unitId) async {
+    try {
+      await initApi();
+      String token = await SPHelper.spHelper.getToken();
+      print("ppppppppppppppppppppppppppppppppppppppp");
+      Response response = await dio.get(basePath + "/videos?unit_id=$unitId&level_id=$levelId",
           options: Options(headers: {
             Headers.acceptHeader: "*/*",
             Headers.contentTypeHeader: "multipart/form-data",
@@ -504,7 +531,7 @@ class ApiUserClient {
       String token = await SPHelper.spHelper.getToken();
       await initApi();
       Response response = await dio.get(
-          basePath + "/units?$level=7&math_type=$mathType&term=$term",
+          basePath + "/units?level_id=$level&math_type=$mathType&term=$term",
           options: Options(headers: {
             Headers.acceptHeader: "*/*",
             Headers.contentTypeHeader: "multipart/form-data",

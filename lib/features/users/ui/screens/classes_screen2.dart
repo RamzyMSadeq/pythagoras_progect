@@ -12,10 +12,13 @@ import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/levels.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
+import 'package:pythagoras/features/users/providers/user_provider.dart';
 import 'package:pythagoras/features/users/ui/screens/Notification_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_years.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_years11&12.dart';
+import 'package:pythagoras/features/users/ui/screens/live_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/setting_screen.dart';
+import 'package:pythagoras/features/users/ui/screens/watch_classes2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_clasess2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_search.dart';
 import 'package:pythagoras/values/borders.dart';
@@ -199,12 +202,12 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                 textDirection: TextDirection.rtl,
                 child: TextFormField(
                   onChanged: (value) {
-                    if(value != null || value != ""){
-                       BlocProvider.of<UserBloc>(context).add(VideoEvent());
-                    }else{
-                       BlocProvider.of<UserBloc>(context).add(LevelsEvent());
+                    if (value != null || value != "") {
+                      BlocProvider.of<UserBloc>(context).add(VideoEvent());
+                    } else {
+                      BlocProvider.of<UserBloc>(context).add(LevelsEvent());
                     }
-                   
+
                     search = value;
                     setState(() {});
                   },
@@ -252,53 +255,58 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                               //color: Colors.amber,
                               child: InkWell(
                                 onTap: () {
-                                  BlocProvider.of<UserBloc>(context).add(SettingsEvent());
-                                  if(index == 6 || index == 7 ){
+                                  BlocProvider.of<UserBloc>(context)
+                                      .add(SettingsEvent());
+                                  if (index == 6 || index == 7) {
                                     push(
-                                      context,
-                                      ClassesYears2(
-                                        level: dataLevels2[index].id.toString(),
-                                        color: index == 0
-                                            ? color5
-                                            : index == 1
-                                                ? color6
-                                                : index == 2
-                                                    ? color7
-                                                    : index == 3
-                                                        ? color8
-                                                        : index == 4
-                                                            ? color9
-                                                            : index == 5
-                                                                ? color10
-                                                                : index == 6
-                                                                    ? color11
-                                                                    : index == 7
-                                                                        ? color12
-                                                                        : color12,
-                                      ));
-                                  }else{
+                                        context,
+                                        ClassesYears2(
+                                          level:
+                                              dataLevels2[index].id.toString(),
+                                          color: index == 0
+                                              ? color5
+                                              : index == 1
+                                                  ? color6
+                                                  : index == 2
+                                                      ? color7
+                                                      : index == 3
+                                                          ? color8
+                                                          : index == 4
+                                                              ? color9
+                                                              : index == 5
+                                                                  ? color10
+                                                                  : index == 6
+                                                                      ? color11
+                                                                      : index ==
+                                                                              7
+                                                                          ? color12
+                                                                          : color12,
+                                        ));
+                                  } else {
                                     push(
-                                      context,
-                                      ClassesYears(
-                                        level: dataLevels2[index].id.toString(),
-                                        color: index == 0
-                                            ? color5
-                                            : index == 1
-                                                ? color6
-                                                : index == 2
-                                                    ? color7
-                                                    : index == 3
-                                                        ? color8
-                                                        : index == 4
-                                                            ? color9
-                                                            : index == 5
-                                                                ? color10
-                                                                : index == 6
-                                                                    ? color11
-                                                                    : index == 7
-                                                                        ? color12
-                                                                        : color12,
-                                      ));
+                                        context,
+                                        ClassesYears(
+                                          level:
+                                              dataLevels2[index].id.toString(),
+                                          color: index == 0
+                                              ? color5
+                                              : index == 1
+                                                  ? color6
+                                                  : index == 2
+                                                      ? color7
+                                                      : index == 3
+                                                          ? color8
+                                                          : index == 4
+                                                              ? color9
+                                                              : index == 5
+                                                                  ? color10
+                                                                  : index == 6
+                                                                      ? color11
+                                                                      : index ==
+                                                                              7
+                                                                          ? color12
+                                                                          : color12,
+                                        ));
                                   }
                                 },
                                 child:
@@ -360,10 +368,105 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                           return ListView.builder(
                             itemCount: searchVideo.length,
                             itemBuilder: (context, index) {
-                          //    print(
-                                //  "sssssddddddcccccccccccccccccccc ${searchVideo[index].title}");
-                              return CardSearch(
-                                myVideo: searchVideo[index],
+                              //    print(
+                              //  "sssssddddddcccccccccccccccccccc ${searchVideo[index].title}");
+                              return InkWell(
+                                onTap: () {
+                                  if (searchVideo[index].type == "OFFLINE") {
+                                    BlocProvider.of<UserBloc>(this.context).add(
+                                        IsAccessVideoEvent(
+                                            searchVideo[index].id.toString(),
+                                            this.context,
+                                            WatchClasses2(
+                                              unitId: searchVideo[index].unitId,
+                                              level: searchVideo[index]
+                                                  .levelId
+                                                  .toString(),
+                                              term: searchVideo[index]
+                                                  .unit
+                                                  .term
+                                                  .toString(),
+                                              videoUrl:
+                                                  "${searchVideo[index].videoAccessUrl}",
+                                              color: pinkColor,
+                                              title: "الدرس ${index + 1}",
+                                              desTitle:
+                                                  searchVideo[index].title,
+                                              price: double.parse(
+                                                  "${searchVideo[index].unit.price}"),
+                                            ),
+                                            searchVideo[index].unitId,
+                                            searchVideo[index]
+                                                .levelId
+                                                .toString(),
+                                            double.parse(
+                                                "${searchVideo[index].unit.price}")));
+                                    // Provider.of<AuthProviderUser>(context,
+                                    //         listen: false)
+                                    //     .setVideoOflineUrl(
+                                    //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4');
+                                    // push(
+                                    //     context,
+                                    //     WatchClasses(
+                                    //       level: widget.level,
+                                    //       term: widget.term,
+                                    //     ));
+                                    // BlocProvider.of<UserBloc2>(context).add(SetVideoEvent2(
+                                    // null));
+                                    // BlocProvider.of<UserBloc2>(context).add(
+                                    //     SetVideoEvent2(
+                                    //         'https://www.sample-videos.com/video123/mp4/240/big_buck_bunny_240p_1mb.mp4'));
+                                    // push(
+                                    //     context,
+                                    //     WatchClasses(
+                                    //       level: widget.level,
+                                    //       term: widget.term,
+                                    //     ));
+
+                                  } else {
+                                    // BlocProvider.of<UserBloc>(this.context).add(
+                                    //     UnitEvent(widget.term, widget.level));
+                                    Provider.of<UserProvider>(context,
+                                            listen: false)
+                                        .getVideoAccess(
+                                            searchVideo[index].id.toString());
+                                    Future.delayed(Duration(seconds: 1), () {
+
+                                      return BlocProvider.of<UserBloc>(this.context).add(
+                                        IsAccessVideoEvent(
+                                            searchVideo[index].id.toString(),
+                                            this.context,
+                                            LiveScreen(
+                                              linkLive:
+                                                  Provider.of<UserProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .link,
+                                              level: searchVideo[index]
+                                                  .levelId
+                                                  .toString(),
+                                              term: searchVideo[index]
+                                                  .unit
+                                                  .term
+                                                  .toString(),
+                                              color: pinkColor,
+                                            ),
+                                            searchVideo[index].unitId,
+                                            searchVideo[index]
+                                                .levelId
+                                                .toString(),
+                                            double.parse(
+                                                "${searchVideo[index].unit.price}")));
+                                    });
+                                    
+
+                                    // }
+
+                                  }
+                                },
+                                child: CardSearch(
+                                  myVideo: searchVideo[index],
+                                ),
                               );
                             },
                           );

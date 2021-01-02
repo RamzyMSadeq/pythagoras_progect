@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 
@@ -20,7 +21,7 @@ class LiveScreen extends StatefulWidget {
   String level;
   String term;
   Color color;
-  LiveScreen({this.linkLive, this.level, this.term  , this.color});
+  LiveScreen({this.linkLive, this.level, this.term, this.color});
   @override
   _LiveScreenState createState() => _LiveScreenState();
 }
@@ -46,7 +47,7 @@ class _LiveScreenState extends State<LiveScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-  //  if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
+    //  if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     super.initState();
   }
 
@@ -62,7 +63,7 @@ class _LiveScreenState extends State<LiveScreen> {
   //       base64Encode(const Utf8Encoder().convert(data));
   //   this.finalV = 'data:text/html;base64,$contentBase64';
   //   setState(() {
-      
+
   //   });
   // }
 
@@ -72,7 +73,7 @@ class _LiveScreenState extends State<LiveScreen> {
 
     String dataBr = """${widget.linkLive}""";
 
-   // _onNavigationDelegateExample(webViewController1, context, dataBr);
+    // _onNavigationDelegateExample(webViewController1, context, dataBr);
     BlocProvider.of<UserBloc>(context)
         .add(UnitEvent(widget.term, widget.level));
     return Scaffold(
@@ -115,36 +116,48 @@ class _LiveScreenState extends State<LiveScreen> {
                   decoration: BoxDecoration(borderRadius: borderRadius8),
                   height: ScreenUtil().setHeight(400),
                   width: ScreenUtil().setWidth(332),
-                  child: 
-                  InAppWebView(
-                    
-                    
-                initialData: InAppWebViewInitialData(
-                  data: """${widget.linkLive}""",
-                ),
-                initialHeaders: {},
-                androidOnPermissionRequest: (InAppWebViewController controller, String origin, List<String> resources) async {
-                        return PermissionRequestResponse(resources: resources, action: PermissionRequestResponseAction.GRANT);
-                      },
-                initialOptions: InAppWebViewGroupOptions(
-                    crossPlatform: InAppWebViewOptions(
-                  debuggingEnabled: true,
-                  userAgent:  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
-                  mediaPlaybackRequiresUserGesture: true
-                )),
-                onWebViewCreated: (InAppWebViewController controller) {
-                  webViewController = controller;
-                  
-                },
-                onLoadStart:
-                    (InAppWebViewController controller, String url) {},
-                onLoadStop:
-                    (InAppWebViewController controller, String url) {},
-                onConsoleMessage: (InAppWebViewController controller,
-                    ConsoleMessage consoleMessage) {
-                  print("console message: ${consoleMessage.message}");
-                },
-              ),
+                  child: InAppWebView(
+                    initialData: InAppWebViewInitialData(
+                      data: """${widget.linkLive}""",
+                    ),
+                    initialHeaders: {},
+                    androidOnPermissionRequest:
+                        (InAppWebViewController controller, String origin,
+                            List<String> resources) async {
+                      return PermissionRequestResponse(
+                          resources: resources,
+                          action: PermissionRequestResponseAction.GRANT);
+                    },
+                    initialOptions: InAppWebViewGroupOptions(
+                        crossPlatform: InAppWebViewOptions(
+                            debuggingEnabled: true,
+                            userAgent:
+                                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
+                            mediaPlaybackRequiresUserGesture: true)),
+                    onWebViewCreated: (InAppWebViewController controller) {
+                      webViewController = controller;
+                    },
+                    onLoadStart:
+                        (InAppWebViewController controller, String url) {
+                      if (url.contains("bigbluebutton")) {
+                        controller.goBack();
+                        Fluttertoast.showToast(
+                            msg: "هذه الميزة غير متاحة لك",
+                            toastLength: Toast.LENGTH_SHORT,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 3,
+                            backgroundColor: Colors.red,
+                            textColor: Colors.white,
+                            fontSize: 16.0);
+                      }
+                    },
+                    onLoadStop:
+                        (InAppWebViewController controller, String url) {},
+                    onConsoleMessage: (InAppWebViewController controller,
+                        ConsoleMessage consoleMessage) {
+                      print("console message: ${consoleMessage.message}");
+                    },
+                  ),
 
                   // WebView(
                   //   initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
@@ -154,7 +167,7 @@ class _LiveScreenState extends State<LiveScreen> {
                   //   onWebViewCreated: (WebViewController webViewController) {
 
                   //     webViewController1 = webViewController;
-                      
+
                   //   },
 
                   // ),

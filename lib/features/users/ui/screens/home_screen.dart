@@ -138,7 +138,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: ScreenUtil().setWidth(202),
                     child: CustomBottom(
                       color: orangeColor,
-                      title: "إبدأ الان",
+                      title: "إبدأ الآن",
                       route: () async {
                         BlocProvider.of<UserBloc>(context).add(LevelsEvent());
                       
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          "باستخدام :",
+                          "بإستخدام :",
                           style: styleTitleSignUp,
                         ),
                         SizedBox(

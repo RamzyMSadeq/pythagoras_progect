@@ -45,7 +45,7 @@ class CardPhoneDialog extends StatelessWidget {
               Align(
                   alignment: Alignment.center,
                   child: Text(
-                    "ادخل رقم الهاتف وسيتم ارسال لك",
+                    "أدخل رقم الهاتف وسيتم إرسال لك",
                     style: styleSubTitleBlue,
                   )),
               Align(

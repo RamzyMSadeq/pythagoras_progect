@@ -30,10 +30,7 @@ class _WebViewPaymentState extends State<WebViewPayment> {
   //   super.initState();
   // }
 
-  isBob(BuildContext context) {
-    pushReplecment(context, HomeScreen());
-    return true;
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -42,41 +39,36 @@ class _WebViewPaymentState extends State<WebViewPayment> {
         // title: Text("Paypal"),
         centerTitle: true,
       ),
-      body: WillPopScope(
-        onWillPop: () async {
-          return isBob(context);
-        },
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          child: BlocBuilder<UserBloc, BlocStates>(
-            builder: (context, state) {
-              if (state is TasksLoadingState) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else if (state is EmptyTasksState) {
-                return Center(
-                  child: Text('Empty Tasks'),
-                );
-              } else if (state is TasksErrorState) {
-                return Center(
-                  child: Text(state.error),
-                );
-              } else if (state is OrderPaymentState) {
-                String redirect = state.redirect;
-                print("ssssssssssssssssssssssssss $redirect");
-                return WebView(
-                  initialUrl: "$redirect",
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onWebViewCreated: (WebViewController webViewController) {
-                    _controller.complete(webViewController);
-                  },
-                );
-              }
-              return null;
-            },
-          ),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        child: BlocBuilder<UserBloc, BlocStates>(
+          builder: (context, state) {
+            if (state is TasksLoadingState) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            } else if (state is EmptyTasksState) {
+              return Center(
+                child: Text('Empty Tasks'),
+              );
+            } else if (state is TasksErrorState) {
+              return Center(
+                child: Text(state.error),
+              );
+            } else if (state is OrderPaymentState) {
+              String redirect = state.redirect;
+              print("ssssssssssssssssssssssssss $redirect");
+              return WebView(
+                initialUrl: "$redirect",
+                javascriptMode: JavascriptMode.unrestricted,
+                onWebViewCreated: (WebViewController webViewController) {
+                  _controller.complete(webViewController);
+                },
+              );
+            }
+            return null;
+          },
         ),
       ),
     );

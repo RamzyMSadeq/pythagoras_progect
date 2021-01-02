@@ -136,7 +136,7 @@ class ClassesYears extends StatelessWidget {
                             ? InkWell(
                                 onTap: () {
                                   if (level == "7" || level == "8") {
-                                    print("leeeeeeeeevel $level");
+                                    print("leeeeeeeeبببببببببببببevel $level , $mathType");
                                     BlocProvider.of<UserBloc>(context).add(
                                         UnitTwilvEvent(level, mathType, "1"));
                                   } else {
@@ -151,6 +151,7 @@ class ClassesYears extends StatelessWidget {
                                         level: level,
                                         term: "1",
                                         color: color,
+                                        mathType: mathType,
                                       ));
                                 },
                                 child: CardClassesYears(
@@ -177,7 +178,7 @@ class ClassesYears extends StatelessWidget {
                                 ?
                          InkWell(
                           onTap: () {
-                            if (level == "6" || level == "7") {
+                            if (level == "7" || level == "8") {
                               print("leeeeeeeeevel $level");
                               BlocProvider.of<UserBloc>(context)
                                   .add(UnitTwilvEvent(level, mathType, "2"));
@@ -192,6 +193,7 @@ class ClassesYears extends StatelessWidget {
                                   level: level,
                                   term: "2",
                                   color: color,
+                                  mathType: mathType,
                                 ));
                           },
                           child: CardClassesYears(

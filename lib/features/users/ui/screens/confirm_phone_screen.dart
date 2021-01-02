@@ -62,7 +62,7 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                   subTitle1:
                       Provider.of<AuthProviderUser>(context).subTitlePay,
                   subTitle2:
-                      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
+                       Provider.of<AuthProviderUser>(context).subTitlePay,
                   color: blueColor),
             ),
             SizedBox(
@@ -70,41 +70,45 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
             ),
             Container(
               width: ScreenUtil().setWidth(300),
-              child: PinCodeTextField(
-                appContext: context,
-                length: 6,
-                obscureText: false,
-                animationType: AnimationType.fade,
-                pinTheme: PinTheme(
-                  shape: PinCodeFieldShape.circle,
-                  activeColor: blueColor,
-                  disabledColor: orangeColor,
-                  inactiveColor: orangeColor,
-                  fieldHeight: 46,
-                  fieldWidth: 46,
-                  activeFillColor: Colors.white,
+              child: Directionality(
+                textDirection: TextDirection.ltr,
+                              child: PinCodeTextField(
+                  appContext: context,
+                  length: 6,
+                  
+                  obscureText: false,
+                  animationType: AnimationType.fade,
+                  pinTheme: PinTheme(
+                    shape: PinCodeFieldShape.circle,
+                    activeColor: blueColor,
+                    disabledColor: orangeColor,
+                    inactiveColor: orangeColor,
+                    fieldHeight: 46,
+                    fieldWidth: 46,
+                    activeFillColor: Colors.white,
+                  ),
+                  animationDuration: Duration(milliseconds: 300),
+                  enableActiveFill: false,
+                  errorAnimationController: errorController,
+                  controller: textEditingController,
+                  onCompleted: (v) {
+                    print("Completed");
+                  },
+                  onChanged: (value) {
+                    print(value);
+                    setState(() {
+                      currentText = value;
+                      print(
+                          "hhhhhhhhhhhhhhhhhhhhyyyyyyyyyyyyyyyyyyyy  $currentText");
+                    });
+                  },
+                  beforeTextPaste: (text) {
+                    print("Allowing to paste $text");
+                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
+                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
+                    return true;
+                  },
                 ),
-                animationDuration: Duration(milliseconds: 300),
-                enableActiveFill: false,
-                errorAnimationController: errorController,
-                controller: textEditingController,
-                onCompleted: (v) {
-                  print("Completed");
-                },
-                onChanged: (value) {
-                  print(value);
-                  setState(() {
-                    currentText = value;
-                    print(
-                        "hhhhhhhhhhhhhhhhhhhhyyyyyyyyyyyyyyyyyyyy  $currentText");
-                  });
-                },
-                beforeTextPaste: (text) {
-                  print("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
-                  return true;
-                },
               ),
             ),
             SizedBox(

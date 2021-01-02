@@ -34,7 +34,7 @@ class CardWatch extends StatelessWidget {
             ),
             Container(
               height: ScreenUtil().setHeight(84),
-              width: ScreenUtil().setWidth(117),
+              width: ScreenUtil().setWidth(95),
               decoration: BoxDecoration(
                   borderRadius: borderRadius5,
                   color: hintColor,
@@ -50,8 +50,8 @@ class CardWatch extends StatelessWidget {
               // ),
             ),
             Container(
-              padding: EdgeInsets.only(right: 10),
-              width: ScreenUtil().setWidth(220),
+            //  padding: EdgeInsets.only(right: 10),
+              width: ScreenUtil().setWidth(250),
               //color: pinkColor,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,28 +60,55 @@ class CardWatch extends StatelessWidget {
                   //   height: ScreenUtil().setHeight(20),
                   // ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                       Text(
-                    "الدرس ${index+1}",
-                    style: styleTitleDetails.copyWith(fontSize: 12),
+                       Container(
+                         width: ScreenUtil().setWidth(170),
+                         child: Text(
+                           videoData.title!=null?
+                    "${videoData.title}"
+                    :
+                    "",
+                    style: styleTitleDetails.copyWith(fontSize: 11 , fontWeight: FontWeight.w600),
                   ),
+                       ),
 
                       Container(
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 20 , ),
                     child: Row(
-
+         
                       children: [
                          Container(
                            child: SvgPicture.asset(
-                             videoData.status == "FREE" ? iconfire : iconscrown
+                             videoData.statusType == "FREE" 
+                         ? iconfire
+                         : videoData.statusType == "PAID"
+                         ?iconscrown
+                         :videoData.statusType == "AVAILABLE"
+                         ?iconfire
+                         :iconfire,
+                         
                            ),
                          ),
                          SizedBox(width: ScreenUtil().setWidth(5),),
                         
-                         Text(videoData.status == "FREE" ? "مجانا" : "مدفوع",
+                         Text(videoData.statusType == "FREE" 
+                         ? "مجانا" 
+                         : videoData.statusType == "PAID"
+                         ?"مدفوع"
+                         :videoData.statusType == "AVAILABLE"
+                         ?"متاح"
+                         :"",
                          style: TextStyle(
-                           color: videoData.status == "FREE" ? pinkColor : orangeColor
+
+                           color:videoData.statusType == "FREE" 
+                         ? pinkColor 
+                         : videoData.statusType == "PAID"
+                         ?orangeColor
+                         :videoData.statusType == "AVAILABLE"
+                         ?blueColor
+                         :pinkColor,
+                           
                          ),
                          )
                          
@@ -90,11 +117,19 @@ class CardWatch extends StatelessWidget {
                     ],
                   ),
                   
-                  Text(
-                    videoData.title,
-                    style: styleTitleAppBarYears.copyWith(
-                      fontSize: 13,
-                      color: deepGreenColor),
+                  Container(
+                     margin: EdgeInsets.only(right: 10),
+                    width: ScreenUtil().setWidth(170),
+                                      child: Text(
+                                        videoData.description!=null 
+                                        ?
+                      videoData.description
+                      :
+                      "null",
+                      style: styleTitleAppBarYears.copyWith(
+                        fontSize: 9,
+                        color: deepGreenColor),
+                    ),
                   ),
                   Text(
                     "",

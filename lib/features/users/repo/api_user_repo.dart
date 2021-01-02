@@ -77,7 +77,7 @@ class ApiRepositoryUser {
       print('my map $map');
 
       Levels levels = Levels.fromJson(map);
-      print('my levels $levels');
+      print('rtrtrtrttttttteeeeeeeeeeeeeeeeeeeeeeetttttttrtrts $levels');
       return levels;
     } catch (e) {
       return null;
@@ -117,6 +117,19 @@ class ApiRepositoryUser {
       Video video = Video.fromJson(map);
 
       return video;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  Future<List<VideoData>> videoUserPage(String levelId, String unitId) async {
+    try {
+      Map map =
+          await ApiUserClient.apiUserClient.videosUserPage(levelId, unitId);
+      Video video = Video.fromJson(map);
+      List<VideoData> myVideo = video.data;
+
+      return myVideo;
     } catch (e) {
       return null;
     }

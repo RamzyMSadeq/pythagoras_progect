@@ -68,7 +68,7 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
                   subTitle1:
                       Provider.of<AuthProviderUser>(context).subTitlePay,
                   subTitle2:
-                      "هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد ",
+                      Provider.of<AuthProviderUser>(context).subTitlePay,
                   color: blueColor),
             ),
             SizedBox(

@@ -31,7 +31,7 @@ class CardContactUsDialog extends StatelessWidget {
             Align(
                 alignment: Alignment.center,
                 child: Text(
-                  "هل انت معلم وتود الانضمام لنا  ؟",
+                  "هل أنت معلم وتود الإنضمام لنا  ؟",
                   style: styleSubTitleBlue,
                 )),
 

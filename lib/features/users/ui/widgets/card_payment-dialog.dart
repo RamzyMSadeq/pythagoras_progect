@@ -15,7 +15,7 @@ import 'package:pythagoras/values/styles.dart';
 class CardPaymentDialog extends StatefulWidget {
   int unitId;
   String level;
-  int price;
+  double price;
   CardPaymentDialog({this.unitId, this.level ,this.price});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();

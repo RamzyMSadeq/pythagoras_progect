@@ -20,7 +20,8 @@ class ClassesDetails extends StatefulWidget {
   String level;
   String term;
   Color color;
-  ClassesDetails({this.level, this.term, this.color});
+  String mathType;
+  ClassesDetails({this.level, this.term, this.color , this.mathType});
 
   @override
   _ClassesDetailsState createState() => _ClassesDetailsState();
@@ -34,7 +35,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
   //   super.initState();
   // }
 
-   isBob(BuildContext context) {
+  isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(SettingsEvent());
     return true;
   }
@@ -62,7 +63,6 @@ class _ClassesDetailsState extends State<ClassesDetails> {
         title: Column(
           children: [
             Text(
-
               widget.level == "1"
                   ? "الصف الخامس الإبتدائي"
                   : widget.level == "2"
@@ -97,8 +97,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
         onWillPop: () async {
           return isBob(context);
         },
-        
-              child: Container(
+        child: Container(
           height: double.infinity,
           width: double.infinity,
           child: ListView(
@@ -153,7 +152,6 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                 height: ScreenUtil().setHeight(5),
               ),
               Container(
-                
                 height: ScreenUtil().setHeight(725),
                 width: double.infinity,
                 child: BlocBuilder<UserBloc, BlocStates>(
@@ -173,7 +171,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                     } else if (state is UnitState) {
                       List<UnitData> unitdata = state.data;
                       print("objectdddddddddddddd ${unitdata.length}");
-                            
+
                       return Container(
                         child: ListView.builder(
                           itemCount: unitdata.length,
@@ -192,6 +190,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                                             unitId: unitdata[index].id,
                                             color: widget.color,
                                             price: unitdata[index].price,
+                                            
                                           ));
                                     },
                                     child: SlideInUp(
@@ -199,17 +198,16 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                                         duration: Duration(
                                             milliseconds: 1000 + (300 * index)),
                                         child: CardDetails(
-                                          unitdata: unitdata[index],
-                                          color: widget.color,
-                                          index:index
-                                        ))));
+                                            unitdata: unitdata[index],
+                                            color: widget.color,
+                                            index: index))));
                           },
                         ),
                       );
-                    }else if (state is UnitTwilvState) {
+                    } else if (state is UnitTwilvState) {
                       List<UnitTwilvAliventData> unitdata = state.data;
                       print("objectdddddddddddddd ${unitdata.length}");
-                            
+
                       return Container(
                         child: ListView.builder(
                           itemCount: unitdata.length,
@@ -227,7 +225,8 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                                             term: widget.term,
                                             unitId: unitdata[index].id,
                                             color: widget.color,
-                                            price: unitdata[index].price,
+                                            price: double.parse("${unitdata[index].price}"),
+                                            mathType: widget.mathType,
                                           ));
                                     },
                                     child: SlideInUp(
@@ -235,10 +234,9 @@ class _ClassesDetailsState extends State<ClassesDetails> {
                                         duration: Duration(
                                             milliseconds: 1000 + (300 * index)),
                                         child: CardDetails(
-                                          unitdata: unitdata[index],
-                                          color: widget.color,
-                                          index:index
-                                        ))));
+                                            unitdata: unitdata[index],
+                                            color: widget.color,
+                                            index: index))));
                           },
                         ),
                       );

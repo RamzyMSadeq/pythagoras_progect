@@ -143,7 +143,7 @@ class IsAccessVideoEvent extends BlocEvents {
   Widget route;
   int unitId;
   String level;
-  int price;
+  double price;
   BuildContext context;
   IsAccessVideoEvent(
       this.videoId, this.context, this.route, this.unitId, this.level , this.price);

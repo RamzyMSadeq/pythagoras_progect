@@ -1,16 +1,16 @@
 class Video {
-  int currentPage;
+  var currentPage;
   List<VideoData> data;
-  String firstPageUrl;
-  int from;
-  int lastPage;
-  String lastPageUrl;
+  var firstPageUrl;
+  var from;
+  var lastPage;
+  var lastPageUrl;
   var nextPageUrl;
-  String path;
-  int perPage;
+  var path;
+  var perPage;
   var prevPageUrl;
-  int to;
-  int total;
+  var to;
+  var total;
 
   Video(
       {this.currentPage,
@@ -67,26 +67,28 @@ class Video {
 }
 
 class VideoData {
-  int id;
-  int userId;
-  int levelId;
-  int unitId;
-  String slug;
+  var id;
+  var userId;
+  var levelId;
+  var unitId;
+  var slug;
   var path;
-  String title;
-  String status;
-  String type;
-  String availableAt;
-  String description;
-  String origin;
-  String link;
-  String createdAt;
-  String updatedAt;
-  int isMeetingRunning;
-  String meetingEndedAt;
-  String thumbnail;
-  String sentNotificationAt;
+  var title;
+  var status;
+  var type;
+  var availableAt;
+  var description;
+  var origin;
+  var link;
+  var createdAt;
+  var updatedAt;
+  var isMeetingRunning;
+  var meetingEndedAt;
+  var thumbnail;
+  var sentNotificationAt;
+  var gotRecordAt;
   var videoAccessUrl;
+  var statusType;
   Level level;
   Unit1 unit;
   User user;
@@ -111,7 +113,9 @@ class VideoData {
       this.meetingEndedAt,
       this.thumbnail,
       this.sentNotificationAt,
+      this.gotRecordAt,
       this.videoAccessUrl,
+      this.statusType,
       this.level,
       this.unit,
       this.user});
@@ -136,7 +140,9 @@ class VideoData {
     meetingEndedAt = json['meeting_ended_at'];
     thumbnail = json['thumbnail'];
     sentNotificationAt = json['sent_notification_at'];
+    gotRecordAt = json['got_record_at'];
     videoAccessUrl = json['video_access_url'];
+    statusType = json['status_type'];
     level = json['level'] != null ? new Level.fromJson(json['level']) : null;
     unit = json['unit'] != null ? new Unit1.fromJson(json['unit']) : null;
     user = json['user'] != null ? new User.fromJson(json['user']) : null;
@@ -163,7 +169,9 @@ class VideoData {
     data['meeting_ended_at'] = this.meetingEndedAt;
     data['thumbnail'] = this.thumbnail;
     data['sent_notification_at'] = this.sentNotificationAt;
+    data['got_record_at'] = this.gotRecordAt;
     data['video_access_url'] = this.videoAccessUrl;
+    data['status_type'] = this.statusType;
     if (this.level != null) {
       data['level'] = this.level.toJson();
     }
@@ -178,13 +186,13 @@ class VideoData {
 }
 
 class Level {
-  int id;
-  String name;
-  String color;
-  String nameEn;
-  String description;
-  String createdAt;
-  String updatedAt;
+  var id;
+  var name;
+  var color;
+  var nameEn;
+  var description;
+  var createdAt;
+  var updatedAt;
 
   Level(
       {this.id,
@@ -219,16 +227,17 @@ class Level {
 }
 
 class Unit1 {
-  int id;
-  int userId;
-  int levelId;
-  String title;
-  String description;
-  String createdAt;
-  String updatedAt;
-  int price;
+  var id;
+  var userId;
+  var levelId;
+  var title;
+  var description;
+  var createdAt;
+  var updatedAt;
+  var price;
   var itemDeletedAt;
-  int term;
+  var term;
+  var mathType;
 
   Unit1(
       {this.id,
@@ -240,7 +249,8 @@ class Unit1 {
       this.updatedAt,
       this.price,
       this.itemDeletedAt,
-      this.term});
+      this.term,
+      this.mathType});
 
   Unit1.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -253,6 +263,7 @@ class Unit1 {
     price = json['price'];
     itemDeletedAt = json['item_deleted_at'];
     term = json['term'];
+    mathType = json['math_type'];
   }
 
   Map<String, dynamic> toJson() {
@@ -267,27 +278,27 @@ class Unit1 {
     data['price'] = this.price;
     data['item_deleted_at'] = this.itemDeletedAt;
     data['term'] = this.term;
+    data['math_type'] = this.mathType;
     return data;
   }
 }
-//<uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
 class User {
-  int id;
-  String name;
-  String phone;
-  String phoneVerifiedAt;
-  String gender;
+  var id;
+  var name;
+  var phone;
+  var phoneVerifiedAt;
+  var gender;
   var dateOfBirth;
   var location;
   var supervisor;
   var supervisorType;
-  bool blockedAt;
-  String createdAt;
-  String updatedAt;
-  int levelId;
-  String power;
-  String avatar;
+  var blockedAt;
+  var createdAt;
+  var updatedAt;
+  var levelId;
+  var power;
+  var avatar;
 
   User(
       {this.id,
