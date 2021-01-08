@@ -8,12 +8,9 @@ import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/features/users/ui/screens/watch_classes.dart';
-import 'package:pythagoras/features/users/ui/widgets/LinearPercentIndicator2.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_details.dart';
-import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
-import 'package:pythagoras/values/shadows.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class ClassesDetails extends StatefulWidget {
@@ -28,12 +25,7 @@ class ClassesDetails extends StatefulWidget {
 }
 
 class _ClassesDetailsState extends State<ClassesDetails> {
-  // @override
-  // void initState() {
-  //   BlocProvider.of<UserBloc>(context)
-  //       .add(UnitEvent(widget.term, widget.level));
-  //   super.initState();
-  // }
+
 
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(SettingsEvent());
@@ -47,18 +39,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        // actions: [
-        //   IconButton(
-        //       icon: Icon(
-        //         Icons.notifications,
-        //         size: 25,
-        //         color: whiteColor,
-        //       ),
-        //       onPressed: () {
-        //         // push(context , NotificationSocket());
-        //       })
-        // ],
-        // leading: Icon(Icons.share),
+     
         backgroundColor: widget.color,
         title: Column(
           children: [
@@ -102,52 +83,7 @@ class _ClassesDetailsState extends State<ClassesDetails> {
           width: double.infinity,
           child: ListView(
             children: [
-              // Container(
-              //   margin: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-              //   padding: EdgeInsets.symmetric(vertical: 5, horizontal: 15),
-              //   height: ScreenUtil().setHeight(55),
-              //   width: ScreenUtil().setWidth(350),
-              //   decoration: BoxDecoration(
-              //       color: widget.color,
-              //       borderRadius: borderRadius6,
-              //       boxShadow: <BoxShadow>[boxShadow6]),
-              //   child: Column(
-              //     children: [
-              //       Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           Text(
-              //             "الفصل الدراسي الاول",
-              //             style: styleSlideDetails.copyWith(fontSize: 8),
-              //           ),
-              //           Text(
-              //             "الصف الخامس الابتدائي",
-              //             style: styleSlideDetails,
-              //           ),
-              //         ],
-              //       ),
-              //       SizedBox(
-              //         height: ScreenUtil().setHeight(5),
-              //       ),
-              //       LinearPercentIndicator2(
-              //         isRTL: true,
-              //         width: ScreenUtil().setWidth(320),
-              //         animation: true,
-              //         lineHeight: 12.0,
-              //         animationDuration: 1500,
-              //         percent: .5,
-              //         center: Text(
-              //           "50.0%",
-              //           style: TextStyle(fontSize: 9),
-              //         ),
-              //         linearStrokeCap: LinearStrokeCap2.roundAll,
-              //         progressColor: widget.color,
-              //         backgroundColor: whiteColor,
-              //         fillColor: whiteColor,
-              //       ),
-              //     ],
-              //   ),
-              // ),
+            
               SizedBox(
                 height: ScreenUtil().setHeight(5),
               ),

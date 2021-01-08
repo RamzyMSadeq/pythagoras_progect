@@ -4,19 +4,17 @@ import 'package:flutter_screenutil/screenutil.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
-import 'package:pythagoras/features/users/ui/screens/payment_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/webViewPayment.dart';
-import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardPaymentDialog extends StatefulWidget {
-  int unitId;
-  String level;
-  double price;
-  CardPaymentDialog({this.unitId, this.level ,this.price});
+  var unitId;
+  var level;
+  var price;
+  CardPaymentDialog({this.unitId, this.level, this.price});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();
 }
@@ -63,10 +61,7 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           decoration: BoxDecoration(
                               borderRadius: borderRadius8, color: whiteColor),
                           child: Container(
-                              //margin: EdgeInsets.only(top: 20),
                               alignment: Alignment.center,
-                              //  height: ScreenUtil().setHeight(50),
-                              // width: ScreenUtil().setWidth(90),
                               child: Text(
                                 widget.level == "1"
                                     ? "الصف الخامس الإبتدائي"
@@ -91,18 +86,6 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                               )),
                         ),
                       ),
-                      // Transform.translate(
-                      //   offset: Offset(-140, 85),
-                      //   child: CircleAvatar(
-                      //     backgroundColor: pinkColor,
-                      //   ),
-                      // ),
-                      // Transform.translate(
-                      //     offset: Offset(-110, -25),
-                      //     child: Text(
-                      //       "5",
-                      //       style: styleNumberDialog,
-                      //     )),
                     ],
                   ),
                 ),
@@ -116,7 +99,9 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                         style: styleSubDialog,
                       ),
                     ),
-                    SizedBox(height: ScreenUtil().setHeight(10),),
+                    SizedBox(
+                      height: ScreenUtil().setHeight(10),
+                    ),
                     Container(
                       // height: ScreenUtil().setHeight(50),
                       child: Text(
@@ -125,54 +110,6 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                         style: styleSubDialog,
                       ),
                     ),
-                    // Directionality(
-                    //   textDirection: TextDirection.rtl,
-                    //   child: Container(
-                    //     height: ScreenUtil().setHeight(25),
-                    //     child: ListTile(
-                    //       leading: Radio(
-                    //         activeColor: whiteColor,
-                    //         value: 0,
-                    //         groupValue: selectedValu,
-                    //         onChanged: (value) {
-                    //           setValu(value);
-                    //         },
-                    //       ),
-                    //       title: Text(
-                    //         "شراء الوحدة الاولي",
-                    //         style: styleSubDialog.copyWith(fontSize: 14),
-                    //       ),
-                    //       trailing: Text(
-                    //         "(200 ريال)",
-                    //         style: styleSubDialogLight,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // Directionality(
-                    //   textDirection: TextDirection.rtl,
-                    //   child: Container(
-                    //     height: ScreenUtil().setHeight(25),
-                    //     child: ListTile(
-                    //       leading: Radio(
-                    //         activeColor: whiteColor,
-                    //         value: 1,
-                    //         groupValue: selectedValu,
-                    //         onChanged: (value) {
-                    //           setValu(value);
-                    //         },
-                    //       ),
-                    //       title: Text(
-                    //         "شراء الوحدة الاولي",
-                    //         style: styleSubDialog.copyWith(fontSize: 14),
-                    //       ),
-                    //       trailing: Text(
-                    //         "(200 ريال)",
-                    //         style: styleSubDialogLight,
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
                     Container(
                       margin: EdgeInsets.only(top: 20),
                       height: ScreenUtil().setHeight(37),
@@ -199,8 +136,10 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           ),
                           InkWell(
                             onTap: () {
-                              print("vvvvvvvvvvuvvvvvvvuuuuvvvvvv ${widget.unitId}");
-                               BlocProvider.of<UserBloc>(context).add(OrderPaymebtEvent("credit", widget.unitId));
+                              print(
+                                  "vvvvvvvvvvuvvvvvvvuuuuvvvvvv ${widget.unitId}");
+                              BlocProvider.of<UserBloc>(context).add(
+                                  OrderPaymebtEvent("credit", widget.unitId));
                               Navigator.of(context).pop();
                               pushReplecment(context, WebViewPayment());
                             },

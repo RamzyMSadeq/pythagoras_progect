@@ -50,10 +50,7 @@ class ContactUs extends StatelessWidget {
                     ),
                   )),
             ),
-          //  SizedBox(
-          //    height: ScreenUtil().setHeight(20),
-
-          //  ),
+        
            Text("تابعنا :",style: styleForgetPassLogIn.copyWith(
              fontSize: 22
            ),),

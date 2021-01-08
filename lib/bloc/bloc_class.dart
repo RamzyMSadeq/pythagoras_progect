@@ -9,7 +9,6 @@ import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
-import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/features/users/repo/api_user_repo.dart';
 import 'package:pythagoras/features/users/ui/screens/confirm_phone_screen.dart';
@@ -77,27 +76,6 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     }
   }
 
-///////////////////////////////////////////////////
-  // Future<Video> getAllVideo() async {
-  //   if (allVideo == null) {
-  //     Video video = await ApiRepositoryUser.apiRepositoryUser.videoUser();
-  //     allVideo = video;
-  //     return video;
-  //   } else {
-  //     return allVideo;
-  //   }
-  // }
-///////////////////////////////////////////////////
-  // Future<MeUser> getMeUser() async {
-  //   if (meUser == null) {
-  //     MeUser user1 = await ApiRepositoryUser.apiRepositoryUser.meUser();
-  //     meUser = user1;
-  //     return user1;
-  //   } else {
-  //     return meUser;
-  //   }
-  // }
-
   ///////////////////////////////////////////
   Future<Map> getAllSetting() async {
     if (allSettings == null) {
@@ -109,39 +87,8 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
     }
   }
 
-  ///////////////////////////////////////////
-  // Future<Notification1> getAllNotification() async {
-  //   if (allNotificaton == null) {
-  //     Notification1 notification =
-  //         await ApiRepositoryUser.apiRepositoryUser.allNotification();
-  //     allNotificaton = notification;
-  //     return notification;
-  //   } else {
-  //     return allNotificaton;
-  //   }
-  // }
-  // Future<List<Task>> getAllTasks() async {
-  //   if (allTasks == null) {
-  //     List<Task> tasks = await DBHelper.dbHelper.getAllTasks();
-  //     allTasks = tasks;
-  //     return tasks;
-  //   } else {
-  //     return allTasks;
-  //   }
-  // }
-
   @override
   Stream<BlocStates> mapEventToState(BlocEvents event) async* {
-    // if (event is GetAllTasksEvent) {
-    //   yield TasksLoadingState();
-    //   List<Task> tasks = await getAllTasks();
-    //   if (tasks.isEmpty) {
-    //     yield EmptyTasksState();
-    //   } else {
-    //     yield TasksLoadedState(tasks);
-    //   }
-    // }
-    // ////////////////////////////////////////////////////////////////////
     if (event is LogInEvent) {
       try {
         yield TasksLoadingState();

@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_pusher_client/flutter_pusher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:laravel_echo/laravel_echo.dart';
+import 'package:provider/provider.dart';
+import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/services/notification_handler.dart';
+import 'package:pythagoras/services/sp_helper.dart';
 
 class SocketHandel {
   Echo echo;
@@ -24,10 +27,11 @@ class SocketHandel {
 
   FlutterPusher getPusherClient() {
     PusherOptions options = PusherOptions(
-      host: 'api.pythagorath.com/app/123?protocol=7&client=js&version=7.0.0&flash=false',
+      host:
+          'api.pythagorath.com/app/123?protocol=7&client=js&version=7.0.0&flash=false',
       port: 6001,
       cluster: null,
-        encrypted: true,
+      encrypted: true,
     );
     return FlutterPusher(
       '123',
@@ -42,14 +46,12 @@ class SocketHandel {
     );
   }
 
-  ini() {
+  ini(BuildContext context) {
     pusherClient = getPusherClient();
     echo = new Echo({
       'broadcaster': 'pusher',
       'client': pusherClient,
     });
-
-  
 
     print("1111111111111111111111111111111111111111111");
     pusherClient.connect(
@@ -86,6 +88,10 @@ class SocketHandel {
                                               ? "الصف الثاني عشر"
                                               : "الصف الخامس",
           "${e['notification']['description']}");
+      Future.delayed(Duration(milliseconds: 100), () async {
+        int c1 = await SPHelper.spHelper.getCountNotification();
+        Provider.of<AuthProviderUser>(context).setCountNotification(c1+1);
+      });
       Fluttertoast.showToast(
           msg: "${e['notification']['description']}",
           toastLength: Toast.LENGTH_SHORT,

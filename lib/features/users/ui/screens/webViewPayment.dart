@@ -3,15 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
-import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
-import 'package:pythagoras/features/users/ui/screens/classes_years.dart';
-import 'package:pythagoras/features/users/ui/screens/home_screen.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebViewPayment extends StatefulWidget {
-  int unitId;
+  var unitId;
   WebViewPayment({this.unitId});
   @override
   _WebViewPaymentState createState() => _WebViewPaymentState();
@@ -20,17 +16,6 @@ class WebViewPayment extends StatefulWidget {
 class _WebViewPaymentState extends State<WebViewPayment> {
   final Completer<WebViewController> _controller =
       Completer<WebViewController>();
-
-  // @override
-  // void initState() {
-  //    print("vvvvvvvvvvuvvvvvvvuuuuvvvvvv ${widget.unitId}");
-  //     BlocProvider.of<UserBloc>(context)
-  //         .add(OrderPaymebtEvent("credit", widget.unitId));
-
-  //   super.initState();
-  // }
-
- 
 
   @override
   Widget build(BuildContext context) {

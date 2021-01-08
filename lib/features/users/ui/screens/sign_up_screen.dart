@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
@@ -37,7 +36,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         Provider.of<AuthProviderUser>(context, listen: false);
 
     return Scaffold(
-      //   resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         backgroundColor: whiteColor,
@@ -221,9 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     child: Container(
                                       padding: EdgeInsets.only(right: 10),
                                       child: Text(
-                                       
-                                             "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
-                                          
+                                        "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
                                         style: TextStyle(
                                             color: Colors.grey[400],
                                             fontFamily: "Ithrabold",
@@ -281,19 +277,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: ScreenUtil().setHeight(10),
                       ),
-                      // CustomTextField(
-                      //   hintTitle: "اعد كتابة كلمة السر",
-                      //   icon: Icon(
-                      //     Icons.lock,
-                      //     size: 20,
-                      //   ),
-                      //   onSaved: authProviderUserWithListen.setConfirmPassword,
-                      //   onValidate:
-                      //       authProviderUserWithListen.validateConfirmPassword,
-                      // ),
-                      // SizedBox(
-                      //   height: ScreenUtil().setHeight(10),
-                      // ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
@@ -365,23 +348,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-            // SizedBox(
-            //   height: ScreenUtil().setHeight(50),
-            //   child: BlocBuilder<UserBloc, BlocStates>(
-            //     builder: (context, state) {
-            //       if (state is TasksLoadingState) {
-            //         return Center(
-            //           child: CircularProgressIndicator(),
-            //         );
-            //       } else if (state is SuccessState) {
-            //         push(context, VerificationPhoneScreen());
-            //         return null;
-            //       } else {
-            //         return Container();
-            //       }
-            //     },
-            //   ),
-            // ),
             Align(
               alignment: Alignment.center,
               child: Text(
@@ -419,14 +385,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Center(
                       child: Text(state.error),
                     );
-                    // Fluttertoast.showToast(
-                    //   msg: "تاكد من المدخلات",
-                    //   toastLength: Toast.LENGTH_SHORT,
-                    //   gravity: ToastGravity.BOTTOM,
-                    //   timeInSecForIosWeb: 3,
-                    //   backgroundColor: Colors.red,
-                    //   textColor: Colors.white,
-                    //   fontSize: 16.0);
+
                     return Center(
                       child: Container(),
                     );

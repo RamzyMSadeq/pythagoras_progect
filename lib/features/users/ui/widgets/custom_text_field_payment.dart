@@ -53,11 +53,9 @@ class _CustomTextFiledPaymentState extends State<CustomTextFiledPayment> {
           
         ),
         onSaved: (value) {
-          // FocusScope.of(context).unfocus();
           widget.onSaved(value);
         },
         validator: (value) {
-          // FocusScope.of(context).unfocus();
           return widget.onValidate(value);
         },
       ),

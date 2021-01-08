@@ -26,8 +26,6 @@ class SettingScreen extends StatefulWidget {
 }
 
 class _SettingScreenState extends State<SettingScreen> {
-  bool _lights = false;
-
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(LevelsEvent());
     return true;
@@ -49,10 +47,10 @@ class _SettingScreenState extends State<SettingScreen> {
           backgroundColor: orangeColor,
         ),
         body: WillPopScope(
-           onWillPop: () async {
-          return isBob(context);
-        },
-                  child: Container(
+          onWillPop: () async {
+            return isBob(context);
+          },
+          child: Container(
             width: double.infinity,
             height: double.infinity,
             margin: EdgeInsets.all(10),
@@ -74,7 +72,8 @@ class _SettingScreenState extends State<SettingScreen> {
                   MeUser myUser = state.meUser;
 
                   print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.name}");
-                  print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.avatar}");
+                  print(
+                      "yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu ${myUser.avatar}");
 
                   return Column(
                     children: [
@@ -108,7 +107,8 @@ class _SettingScreenState extends State<SettingScreen> {
                               width: ScreenUtil().setWidth(135),
                               height: ScreenUtil().setHeight(85),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
@@ -131,24 +131,32 @@ class _SettingScreenState extends State<SettingScreen> {
                               children: [
                                 InkWell(
                                     onTap: () {
-                                      push(context, EditProfile(
-                                        name: myUser.name,
-                                        mobile: myUser.phone,
-                                        location: myUser.location,
-                                        supervisor: myUser.supervisor,
-                                        supervisorType: myUser.supervisorType,
-                                        gender : myUser.gender,
-                                         levelId: myUser.levelId
-                                      ));
+                                      push(
+                                          context,
+                                          EditProfile(
+                                              name: myUser.name,
+                                              mobile: myUser.phone,
+                                              location: myUser.location,
+                                              supervisor: myUser.supervisor,
+                                              supervisorType:
+                                                  myUser.supervisorType,
+                                              gender: myUser.gender,
+                                              levelId: myUser.levelId));
                                     },
                                     child: Text(
                                       "تحديث",
                                       style: styleSettingName,
                                     )),
-                                Image.asset(
-                                  profile,
-                                  fit: BoxFit.fill,
-                                )
+                              Container(
+                                width: ScreenUtil().setWidth(120),
+                                height: ScreenUtil().setHeight(100),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: AssetImage(profile),
+                                    fit: BoxFit.fill
+                                  )
+                                ),
+                              )
                               ],
                             )
                           ],

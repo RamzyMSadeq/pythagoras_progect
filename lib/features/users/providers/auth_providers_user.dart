@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
-import 'package:pythagoras/components/models/video.dart';
 import 'package:string_validator/string_validator.dart';
 
 class AuthProviderUser extends ChangeNotifier {
@@ -104,12 +104,12 @@ class AuthProviderUser extends ChangeNotifier {
 
   setCountNotification(int value) {
     this.countNotification = value;
-    //notifyListeners();
+    notifyListeners();
   }
 
   setCountNotificationSp(int value) {
     this.countNotificationSp = value;
-    //notifyListeners();
+    notifyListeners();
   }
 
   settitlePay(String value) {
@@ -258,7 +258,17 @@ class AuthProviderUser extends ChangeNotifier {
       registerFormkey.currentState.save();
       int classe = className.indexOf("$valueClass");
       String valueGender1 = valueGender == "ذكر" ? "MALE" : "FEMALE";
-      BlocProvider.of<UserBloc>(context).add(RegisterUserEvent(
+      if(imageProfile == null){
+          Fluttertoast.showToast(
+              msg: "الرجاء ادخال صوره ",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+      }else{
+        BlocProvider.of<UserBloc>(context).add(RegisterUserEvent(
           name,
           valueGender1,
           password,
@@ -269,6 +279,9 @@ class AuthProviderUser extends ChangeNotifier {
           link,
           imageProfile,
           context));
+
+      }
+      
       //  push(context, LogInScreen());
 
       // notifyListeners();

@@ -12,8 +12,6 @@ class CustomDropDown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
-    final authProviderUserNoListen =
-        Provider.of<AuthProviderUser>(context, listen: false);
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -73,7 +71,6 @@ class CustomDropDown extends StatelessWidget {
                                       textDirection: TextDirection.rtl,
                                     ),
                                     onTap: () {
-                                      // focaseNode.requestFocus();
                                     },
                                     value: e),
                               )
@@ -88,7 +85,6 @@ class CustomDropDown extends StatelessWidget {
                                           textDirection: TextDirection.rtl,
                                         ),
                                         onTap: () {
-                                          // focaseNode.requestFocus();
                                         },
                                         value: e),
                                   )
@@ -103,7 +99,6 @@ class CustomDropDown extends StatelessWidget {
                                               textDirection: TextDirection.rtl,
                                             ),
                                             onTap: () {
-                                              // focaseNode.requestFocus();
                                             },
                                             value: e),
                                       )

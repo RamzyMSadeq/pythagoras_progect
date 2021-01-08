@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:path/path.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -46,9 +45,6 @@ class ApiUserClient {
         'password': password,
       }, headers: {
         HttpHeaders.acceptHeader: '*/*',
-       // HttpHeaders.contentTypeHeader :'application/x-www-form-urlencoded'
-        //HttpHeaders.contentTypeHeader: 'application/json'
-       // Headers.contentTypeHeader: 'multipart/form-data',
       });
       print('666666666666666666666666666666 ${response.body}');
       if (response.statusCode == 401) {
@@ -71,114 +67,7 @@ class ApiUserClient {
     }
   }
 
-//////////////////////////////////////////////////////////
 
-  // Future<Map> registerUser3(
-  //     String name,
-  //     String gender,
-  //     String password,
-  //     String mobile,
-  //     String levelId,
-  //     String location,
-  //     String supervisor,
-  //     String supervisorType,
-  //     File avatar) async {
-  //   var uri = Uri.parse(basePath + regesterPath);
-  //   var request = new http.MultipartRequest("POST", uri);
-  //   var multipartFile = await http.MultipartFile.fromPath(
-  //     "image",
-  //     avatar.path,
-  //      filename: basename(avatar.path),
-  //     contentType: MediaType("image", "jpg"),
-  //   );
-
-  //   request.files.add(multipartFile);
-  //   request.headers.addAll({
-  //     HttpHeaders.acceptHeader: '*/*',
-  //     Headers.contentTypeHeader: 'multipart/form-data'
-  //   });
-
-  //   request.fields['name'] = name;
-  //   request.fields['gender'] = gender;
-  //   request.fields['mobile'] = mobile;
-  //   request.fields['password'] = password;
-  //   request.fields['mobile'] = mobile;
-  //   request.fields['level_id'] = levelId;
-  //   request.fields['location'] = location;
-  //   request.fields['supervisor'] = supervisor;
-  //   request.fields['supervisor_type'] = supervisorType;
-
-  //   try {
-  //     http.StreamedResponse response = await request.send();
-  //    // var responseByteArray = await response.stream.toBytes();
-
-  //     final respStr = await response.stream.bytesToString();
-  //     print("tttttttttttttttttttiiiiiiiiiiiiiiiii ${respStr} ");
-  //     //  Map map = json.decode(respStr) as Map;
-  //   //  Map map = json.decode(utf8.decode(responseByteArray));
-  //     // print("tttttttttttttttttttiiiiiiiiiiiiiiiii $map");
-
-  //     return Map();
-  //   } catch (e) {
-  //     print(e);
-  //     return null;
-  //   }
-  // }
-
-  // Future<Map> registerUser2(
-  //   String name,
-  //     String gender,
-  //     String password,
-  //     String mobile,
-  //     String levelId,
-  //     String location,
-  //     String supervisor,
-  //     String supervisorType,
-  //     File avatar
-  // ) async {
-  //   try {
-  //     client = await initApi2();
-  //      print("222222222222222222222222222");
-  //     http.Response response = await client.post(basePath + regesterPath, body: {
-  //         'name': name,
-  //         'gender': gender,
-  //         'password': password,
-  //         'phone': mobile,
-  //         'level_id': levelId,
-  //         'location': location,
-  //         'supervisor': supervisor,
-  //         'supervisor_type': supervisorType,
-  //         // 'avatar': await MultipartFile.fromFile(
-  //         //   avatar.path,
-  //         //   filename: avatar.path.split('/').last,
-  //         //   contentType: MediaType("image", "jpg"),
-  //         // )
-  //     }, headers: {
-  //       HttpHeaders.acceptHeader: '*/*',
-  //       // Headers.contentTypeHeader: 'multipart/form-data',
-  //       // HttpHeaders.connectionHeader:"keep-alive"
-  //      });
-  //     print("333333333333333333333333333333333333333");
-  //     if (response.statusCode == 401) {
-  //       Fluttertoast.showToast(
-  //           msg: "تأكد من المدخلات",
-  //           toastLength: Toast.LENGTH_SHORT,
-  //           gravity: ToastGravity.BOTTOM,
-  //           timeInSecForIosWeb: 3,
-  //           backgroundColor: Colors.red,
-  //           textColor: Colors.white,
-  //           fontSize: 16.0);
-  //     }
-
-  //     Map map = json.decode(response.body) as Map;
-  //     print("4444444444444444444444444444444444444444444");
-  //     return map;
-  //   } catch (e) {
-  //     print(e.message);
-
-  //     return null;
-  //   }
-  // }
 
   Future<Map> registerUser(
       String name,

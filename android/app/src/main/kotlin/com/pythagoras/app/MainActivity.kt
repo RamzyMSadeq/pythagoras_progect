@@ -1,4 +1,4 @@
-package com.example.pythagoras
+package com.pythagoras.app
 
 import io.flutter.embedding.android.FlutterActivity
 

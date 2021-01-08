@@ -19,11 +19,13 @@ class CardTitleMan extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(right: ScreenUtil().setWidth(15)),
-            height: ScreenUtil().setHeight(220),
-            width: double.infinity,
-            child: Image.asset(man , fit: BoxFit.fill,)
-          ),
+              margin: EdgeInsets.only(right: ScreenUtil().setWidth(15)),
+              height: ScreenUtil().setHeight(220),
+              width: double.infinity,
+              child: Image.asset(
+                man,
+                fit: BoxFit.fill,
+              )),
           Container(
             alignment: Alignment.topRight,
             padding: EdgeInsets.only(
@@ -41,14 +43,8 @@ class CardTitleMan extends StatelessWidget {
                 SizedBox(
                   height: ScreenUtil().setHeight(30),
                 ),
-
                 Text(title,
                     style: styleTitlePayment, textDirection: TextDirection.rtl),
-                // Text(
-                //   title,
-                //   textDirection: TextDirection.rtl,
-                //   style: styleSubTitlePayment,
-                // ),
                 Divider(
                   thickness: 2,
                   color: Colors.blue[700],
@@ -61,22 +57,6 @@ class CardTitleMan extends StatelessWidget {
               ],
             ),
           ),
-          // Transform.translate(
-          //   offset: Offset(0, ScreenUtil().setHeight(-25)),
-          //             child: Container(
-          //     margin: EdgeInsets.only(
-          //       right: ScreenUtil().setWidth(220),
-
-          //       ),
-          //     height: ScreenUtil().setHeight(220),
-          //     width:ScreenUtil().setWidth(117) ,
-          //     child: Image.asset(
-          //       man2,
-          //       fit: BoxFit.fill,
-          //       height: ScreenUtil().setHeight(195),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );

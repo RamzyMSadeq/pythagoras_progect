@@ -7,20 +7,15 @@ import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/verification_phone_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CardPhoneDialog extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
-    final authProviderUserNoListen =
-        Provider.of<AuthProviderUser>(context, listen: false);
+    final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
 
     return ZoomIn(
       animate: true,
@@ -63,21 +58,16 @@ class CardPhoneDialog extends StatelessWidget {
                       size: 20,
                     ),
                     onSaved: authProviderUserWithListen.setMobile,
-                     
                   )),
               Divider(
                 thickness: 2,
               ),
               InkWell(
                 onTap: () {
-                  if(authProviderUserWithListen.mobile != null){
-                     BlocProvider.of<UserBloc>(context)
-                      .add(ResetEvent(
-                         authProviderUserWithListen.mobile,
-                         context
-                      ));
-
-                  }else{
+                  if (authProviderUserWithListen.mobile != null) {
+                    BlocProvider.of<UserBloc>(context).add(
+                        ResetEvent(authProviderUserWithListen.mobile, context));
+                  } else {
                     Fluttertoast.showToast(
                         msg: "رقم الهاتف غير صحيحة",
                         toastLength: Toast.LENGTH_SHORT,
@@ -87,9 +77,6 @@ class CardPhoneDialog extends StatelessWidget {
                         textColor: Colors.white,
                         fontSize: 16.0);
                   }
-                 
-                 // Navigator.of(context).pop();
-                //  push(context, VerificationPhoneScreen());
                 },
                 child: Align(
                   alignment: Alignment.center,

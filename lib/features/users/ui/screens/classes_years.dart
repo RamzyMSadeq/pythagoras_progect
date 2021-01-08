@@ -1,4 +1,3 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +8,6 @@ import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/Notification_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_details.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_classes_years.dart';
 import 'package:pythagoras/values/colors.dart';
@@ -51,32 +49,6 @@ class ClassesYears extends StatelessWidget {
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        // actions: [
-        //   Icon(Icons.share),
-        // ],
-        // leading: InkWell(
-        //   // onTap: () {
-        //   //   print("lllllllllllle  $level");
-        //   //   BlocProvider.of<UserBloc>(context).add(NotificationEvent());
-        //   //   pushReplecment(
-        //   //       context,
-        //   //       NotificationScreen(
-        //   //         levelId: level,
-        //   //       ));
-        //   // },
-        //   child: Badge(
-        //     // padding: EdgeInsets.all(10),
-        //     position: BadgePosition(top: 1, end: 1),
-        //     badgeContent: Text(Provider.of<AuthProviderUser>(context)
-        //         .countNotification
-        //         .toString()),
-        //     child: Icon(
-        //       Icons.notifications,
-        //       size: 25,
-        //       color: whiteColor,
-        //     ),
-        //   ),
-        // ),
         backgroundColor: color,
         title: Column(
           children: [
@@ -136,7 +108,8 @@ class ClassesYears extends StatelessWidget {
                             ? InkWell(
                                 onTap: () {
                                   if (level == "7" || level == "8") {
-                                    print("leeeeeeeeبببببببببببببevel $level , $mathType");
+                                    print(
+                                        "leeeeeeeeبببببببببببببevel $level , $mathType");
                                     BlocProvider.of<UserBloc>(context).add(
                                         UnitTwilvEvent(level, mathType, "1"));
                                   } else {
@@ -172,37 +145,35 @@ class ClassesYears extends StatelessWidget {
                       SlideInRight(
                         animate: true,
                         duration: Duration(milliseconds: 1000),
-                        child:
-                        mySetting["term_enabled"] == 0 ||
+                        child: mySetting["term_enabled"] == 0 ||
                                 mySetting["term_enabled"] == 2
-                                ?
-                         InkWell(
-                          onTap: () {
-                            if (level == "7" || level == "8") {
-                              print("leeeeeeeeevel $level");
-                              BlocProvider.of<UserBloc>(context)
-                                  .add(UnitTwilvEvent(level, mathType, "2"));
-                            } else {
-                              print("leeeeeeeeevel $level");
-                              BlocProvider.of<UserBloc>(context)
-                                  .add(UnitEvent("2", level));
-                            }
-                            push(
-                                context,
-                                ClassesDetails(
-                                  level: level,
-                                  term: "2",
+                            ? InkWell(
+                                onTap: () {
+                                  if (level == "7" || level == "8") {
+                                    print("leeeeeeeeevel $level");
+                                    BlocProvider.of<UserBloc>(context).add(
+                                        UnitTwilvEvent(level, mathType, "2"));
+                                  } else {
+                                    print("leeeeeeeeevel $level");
+                                    BlocProvider.of<UserBloc>(context)
+                                        .add(UnitEvent("2", level));
+                                  }
+                                  push(
+                                      context,
+                                      ClassesDetails(
+                                        level: level,
+                                        term: "2",
+                                        color: color,
+                                        mathType: mathType,
+                                      ));
+                                },
+                                child: CardClassesYears(
+                                  number: "02",
+                                  title: "الفصل الدراسي الثاني",
                                   color: color,
-                                  mathType: mathType,
-                                ));
-                          },
-                          child: CardClassesYears(
-                            number: "02",
-                            title: "الفصل الدراسي الثاني",
-                            color: color,
-                          ),
-                        )
-                        : CardClassesYears(
+                                ),
+                              )
+                            : CardClassesYears(
                                 number: "02",
                                 title: " الفصل الثاني غير مفعل",
                                 color: Colors.grey,
@@ -234,106 +205,7 @@ class ClassesYears extends StatelessWidget {
                 }
                 return Container();
               },
-            )
-
-            // ListView(
-            //   children: [
-            //     Align(
-            //       alignment: Alignment.center,
-            //       child: Text(
-            //         "اختر الفصل الدراسي",
-            //         style: styleClassesYears,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       height: ScreenUtil().setHeight(10),
-            //     ),
-            //     SlideInLeft(
-            //       animate: true,
-            //       duration: Duration(milliseconds: 1000),
-            //       child: InkWell(
-            //         onTap: () {
-            //           if(level == "6" || level == "7"){
-            //               print("leeeeeeeeevel $level");
-            //           BlocProvider.of<UserBloc>(context)
-            //               .add(UnitTwilvEvent(level , mathType , "1"));
-            //           }else{
-            //                    print("leeeeeeeeevel $level");
-            //           BlocProvider.of<UserBloc>(context)
-            //               .add(UnitEvent("1", level));
-            //           }
-
-            //           push(
-            //               context,
-            //               ClassesDetails(
-            //                 level: level,
-            //                 term: "1",
-            //                 color: color,
-            //               ));
-            //         },
-            //         child: CardClassesYears(
-            //           number: "01",
-            //           title: "الفصل الدراسي الأول",
-            //           color: color,
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       height: ScreenUtil().setHeight(30),
-            //     ),
-            //     SlideInRight(
-            //       animate: true,
-            //       duration: Duration(milliseconds: 1000),
-            //       child: InkWell(
-            //         onTap: () {
-            //         if(level == "6" || level == "7"){
-            //               print("leeeeeeeeevel $level");
-            //           BlocProvider.of<UserBloc>(context)
-            //               .add(UnitTwilvEvent(level , mathType , "2"));
-            //           }else{
-            //                    print("leeeeeeeeevel $level");
-            //           BlocProvider.of<UserBloc>(context)
-            //               .add(UnitEvent("2", level));
-            //           }
-            //           push(
-            //               context,
-            //               ClassesDetails(
-            //                 level: level,
-            //                 term: "2",
-            //                 color: color,
-            //               ));
-            //         },
-            //         child: CardClassesYears(
-            //           number: "02",
-            //           title: "الفصل الدراسي الثاني",
-            //           color: color,
-            //         ),
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       height: ScreenUtil().setHeight(70),
-            //     ),
-            //     Container(
-            //       height: ScreenUtil().setHeight(252),
-            //       width: ScreenUtil().setWidth(352),
-            //       child: SvgPicture.asset(
-            //         classes,
-            //         fit: BoxFit.fill,
-            //       ),
-            //     ),
-            //     SizedBox(
-            //       height: ScreenUtil().setHeight(30),
-            //     ),
-            //     Align(
-            //       alignment: Alignment.center,
-            //       child: Text(
-            //         "متعة تعلم الرياضيات",
-            //         style: styleTitleButClassesYears,
-            //       ),
-            //     )
-            //   ],
-            // ),
-            ),
+            )),
       ),
     );
   }

@@ -1,7 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:pythagoras/features/users/ui/screens/home_screen.dart';
-import 'package:pythagoras/values/constants.dart';
 
 class NotificationHandler{
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

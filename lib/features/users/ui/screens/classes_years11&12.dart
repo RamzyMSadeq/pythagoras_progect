@@ -1,15 +1,10 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
-import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/Notification_screen.dart';
-import 'package:pythagoras/features/users/ui/screens/classes_details.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_years.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_classes_years.dart';
 import 'package:pythagoras/values/colors.dart';
@@ -32,38 +27,12 @@ class ClassesYears2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print("object        $color");
-   
+
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        // actions: [
-        //   Icon(Icons.share),
-        // ],
-        // leading: InkWell(
-        //   // onTap: () {
-        //   //   print("lllllllllllle  $level");
-        //   //   BlocProvider.of<UserBloc>(context).add(NotificationEvent());
-        //   //   pushReplecment(
-        //   //       context,
-        //   //       NotificationScreen(
-        //   //         levelId: level,
-        //   //       ));
-        //   // },
-        //   child: Badge(
-        //     // padding: EdgeInsets.all(10),
-        //     position: BadgePosition(top: 1, end: 1),
-        //     badgeContent: Text(Provider.of<AuthProviderUser>(context)
-        //         .countNotification
-        //         .toString()),
-        //     child: Icon(
-        //       Icons.notifications,
-        //       size: 25,
-        //       color: whiteColor,
-        //     ),
-        //   ),
-        // ),
         backgroundColor: color,
         title: Column(
           children: [
@@ -89,7 +58,7 @@ class ClassesYears2 extends StatelessWidget {
             children: [
               Align(
                 alignment: Alignment.center,
-                              child: Text(
+                child: Text(
                   "اختر القسم",
                   style: styleClassesYears,
                 ),
@@ -130,9 +99,7 @@ class ClassesYears2 extends StatelessWidget {
                 child: InkWell(
                   onTap: () {
                     BlocProvider.of<UserBloc>(context).add(SettingsEvent());
-                    // BlocProvider.of<UserBloc>(context)
-                    //     .add(UnitEvent("2", level));
-                    // push(
+
                     push(
                         context,
                         ClassesYears(
@@ -164,7 +131,7 @@ class ClassesYears2 extends StatelessWidget {
               ),
               Align(
                 alignment: Alignment.center,
-                              child: Text(
+                child: Text(
                   "متعة تعلم الرياضيات",
                   style: styleTitleButClassesYears,
                 ),

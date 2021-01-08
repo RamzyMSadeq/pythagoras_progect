@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +18,6 @@ import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-import 'package:flutter/services.dart' ;
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,7 +29,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> initializeVideo;
   DateTime currentBackPressTime;
 
-  //String iframeUrl = "https://www.youtube.com/watch/embed/IdbyTjI1ZFo";
   YoutubePlayerController _controller;
 
   InAppWebViewController webView;
@@ -42,18 +38,6 @@ class _HomeScreenState extends State<HomeScreen> {
     BlocProvider.of<UserBloc>(context).add(NotificationEvent());
     super.initState();
   }
-
-  // @override
-  // void initState() {
-  //   _controller = YoutubePlayerController(
-  //   initialVideoId: Provider.of<AuthProviderUser>(context).initialVideo,
-  //   flags: YoutubePlayerFlags(
-  //     autoPlay: false,
-  //     // mute: true,
-  //   ),
-  // );
-  //   super.initState();
-  // }
 
   @override
   void dispose() {
@@ -88,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         // mute: true,
       ),
     );
-    
+
     return SafeArea(
       child: Directionality(
         textDirection: TextDirection.rtl,
@@ -105,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Align(
                     alignment: Alignment.center,
-                                      child: Text(
+                    child: Text(
                       "فيديو توضيحي للتطبيق",
                       style: styleTitleSignUp,
                     ),
@@ -124,12 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         progressColors: ProgressBarColors(
                           playedColor: Colors.amber,
                           handleColor: Colors.amberAccent,
-                        )
-
-                        // onReady () {
-                        //     _controller.addListener(listener);
-                        // },
-                        ),
+                        )),
                   ),
                   SizedBox(
                     height: ScreenUtil().setHeight(30),
@@ -141,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       title: "إبدأ الآن",
                       route: () async {
                         BlocProvider.of<UserBloc>(context).add(LevelsEvent());
-                      
 
                         _controller.pause();
 

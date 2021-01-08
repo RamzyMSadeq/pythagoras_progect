@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,11 +8,9 @@ import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/log_in_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_title_man.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 
 class ConfirmPhoneScreen extends StatefulWidget {
@@ -104,8 +101,6 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
                   },
                   beforeTextPaste: (text) {
                     print("Allowing to paste $text");
-                    //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                    //but you can show anything you want here, like your pop up saying wrong paste format or etc
                     return true;
                   },
                 ),

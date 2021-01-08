@@ -10,7 +10,7 @@ import 'package:pythagoras/values/styles.dart';
 class CardClasess extends StatelessWidget {
   int index;
   List<LevelsData> dataLevel;
-  CardClasess({this.index , this.dataLevel});
+  CardClasess({this.index, this.dataLevel});
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -34,24 +34,6 @@ class CardClasess extends StatelessWidget {
                   bottom: ScreenUtil().setHeight(4),
                 ),
                 width: double.infinity,
-                // index==1
-                // ?
-                // ScreenUtil().setWidth(330)
-                // :
-                // index==2
-                // ?
-                // ScreenUtil().setWidth(310)
-                // :
-                // index==3
-                // ?
-                // ScreenUtil().setWidth(280)
-                // :
-                // index==4
-                // ?
-                // ScreenUtil().setWidth(280)
-                // :
-                // ScreenUtil().setWidth(350),
-
                 height: index == 5 || index == 6 || index == 7
                     ? ScreenUtil().setHeight(170)
                     : ScreenUtil().setHeight(130),
@@ -114,69 +96,6 @@ class CardClasess extends StatelessWidget {
                   ),
                 ),
               ),
-              // index == 0
-              //  ?
-              //  Transform.translate(
-              //    offset: Offset(
-              //      ScreenUtil().setWidth(10),
-              //       ScreenUtil().setHeight(-30)
-              //       ),
-              //                     child: Align(
-              //      alignment: Alignment.bottomLeft,
-              //      child: Container(
-              //        width: ScreenUtil().setWidth(60),
-              //        height: ScreenUtil().setHeight(60),
-              //        decoration: BoxDecoration(
-              //          color: whiteColor,
-              //          shape: BoxShape.circle
-              //        ),
-              //      ),
-              //    ),
-              //  )
-              //  :
-              //   index == 1
-              //  ?
-              //  Transform.translate(
-              //    offset: Offset(
-              //    ScreenUtil().setWidth(15),
-              //       ScreenUtil().setHeight(-32)
-              //       ),
-              //                     child: Align(
-              //      alignment: Alignment.bottomLeft,
-              //      child: Container(
-              //        width: ScreenUtil().setWidth(60),
-              //        height: ScreenUtil().setHeight(60),
-              //        decoration: BoxDecoration(
-              //          color: whiteColor,
-              //          shape: BoxShape.circle
-              //        ),
-              //      ),
-              //    ),
-              //  )
-              //  :
-              //  index == 2
-              //  ?
-              //  Transform.translate(
-              //    offset: Offset(
-              //    ScreenUtil().setWidth(5),
-              //       ScreenUtil().setHeight(-60)
-              //       ),
-              //                     child: Align(
-              //      alignment: Alignment.bottomLeft,
-              //      child: Container(
-              //        width: ScreenUtil().setWidth(45),
-              //        height: ScreenUtil().setHeight(60),
-              //        decoration: BoxDecoration(
-              //          color: whiteColor,
-              //         //shape: BoxShape.circle
-              //        ),
-              //      ),
-              //    ),
-              //  )
-              //  :
-              //  Container()
-              //  ,
-
               Align(
                   alignment: Alignment.centerLeft,
                   child: Transform.translate(

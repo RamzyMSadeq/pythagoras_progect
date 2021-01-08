@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:pythagoras/bloc/bloc_class.dart';
-import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field_controller.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_dropdown.dart';
@@ -191,8 +187,8 @@ class _EditProfileState extends State<EditProfile> {
               height: ScreenUtil().setHeight(10),
             ),
             CustomTextFieldControler(
-              cont:textEditingControllerMobile ,
-            //  initialValue: widget.mobile,
+              cont: textEditingControllerMobile,
+              //  initialValue: widget.mobile,
               keyboardType: TextInputType.number,
               hintTitle: widget.mobile,
               icon: Icon(
@@ -216,30 +212,17 @@ class _EditProfileState extends State<EditProfile> {
             ),
             Align(
               alignment: Alignment.centerRight,
-              child: Text("(اتركها فارغة لعدم التعديل)",
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: orangeColor
-              ),
+              child: Text(
+                "(اتركها فارغة لعدم التعديل)",
+                style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.bold,
+                    color: orangeColor),
               ),
             ),
             SizedBox(
               height: ScreenUtil().setHeight(10),
             ),
-            // CustomTextFieldControler(
-            //   hintTitle: "اعد كتابة كلمة السر",
-            //   icon: Icon(
-            //     Icons.lock,
-            //     size: 20,
-            //   ),
-            //   onSaved: authProviderUserWithListen.setConfirmPassword,
-            //   onValidate:
-            //       authProviderUserWithListen.validateConfirmPassword,
-            // ),
-            // SizedBox(
-            //   height: ScreenUtil().setHeight(10),
-            // ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [

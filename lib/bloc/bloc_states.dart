@@ -1,7 +1,6 @@
 import 'package:pythagoras/components/models/levels.dart';
 import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
-import 'package:pythagoras/components/models/token_data.dart';
 import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';

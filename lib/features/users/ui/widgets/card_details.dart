@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/shadows.dart';
@@ -58,40 +57,9 @@ class CardDetails extends StatelessWidget {
                       : unitdata.description,
                   style: styleSubTitleDetails,
                 ),
-                // Text(
-                //   "ستتعلم كيفية حساب المثلث و كيفية حساب الضلع الغير معلوم",
-                //   style: styleSubTitleDetails.copyWith(fontSize: 9),
-                // )
               ],
             ),
           ),
-          // Container(
-          //   height: ScreenUtil().setHeight(80),
-          //   padding: EdgeInsets.only(left: 10),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.end,
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       Text(
-          //         "25",
-          //         style: styleTitleDetails.copyWith(fontSize: 10, color: color),
-          //       ),
-          //       Row(
-          //         children: [
-          //           Icon(
-          //             Icons.remove_red_eye,
-          //             size: 12,
-          //             color: hintColor,
-          //           ),
-          //           Text(
-          //             "شوهد بواسطة 2.050 طالب",
-          //             style: styleSubTitleDetails.copyWith(fontSize: 6),
-          //           )
-          //         ],
-          //       )
-          //     ],
-          //   ),
-          // )
         ],
       ),
     );

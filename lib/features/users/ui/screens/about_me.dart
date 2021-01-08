@@ -46,9 +46,7 @@ class AboutMe extends StatelessWidget {
                     ),
                   )),
             ),
-            // SizedBox(
-            //   height: ScreenUtil().setHeight(10),
-            // ),
+        
             Text(
               "فيثاغورث ",
               style: styleForgetPassLogIn.copyWith(fontSize: 22),

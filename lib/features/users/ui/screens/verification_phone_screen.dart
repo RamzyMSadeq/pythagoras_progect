@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,14 +6,10 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
-import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/home_screen.dart';
-import 'package:pythagoras/features/users/ui/screens/update_password.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_title_man.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 
 class VerificationPhoneScreen extends StatefulWidget {
@@ -44,8 +39,6 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
-    final authProviderUserNoListen =
-        Provider.of<AuthProviderUser>(context, listen: false);
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -64,11 +57,9 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
               height: ScreenUtil().setHeight(200),
               width: double.infinity,
               child: CardTitleMan(
-                   title: Provider.of<AuthProviderUser>(context).titlePay,
-                  subTitle1:
-                      Provider.of<AuthProviderUser>(context).subTitlePay,
-                  subTitle2:
-                      Provider.of<AuthProviderUser>(context).subTitlePay,
+                  title: Provider.of<AuthProviderUser>(context).titlePay,
+                  subTitle1: Provider.of<AuthProviderUser>(context).subTitlePay,
+                  subTitle2: Provider.of<AuthProviderUser>(context).subTitlePay,
                   color: blueColor),
             ),
             SizedBox(
@@ -107,8 +98,6 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
                 },
                 beforeTextPaste: (text) {
                   print("Allowing to paste $text");
-                  //if you return true then it will show the paste confirmation dialog. Otherwise if false, then nothing will happen.
-                  //but you can show anything you want here, like your pop up saying wrong paste format or etc
                   return true;
                 },
               ),
@@ -123,8 +112,9 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
                 route: () {
                   BlocProvider.of<UserBloc>(context).add(
                       ResetPasswordConfirmEvent(
-                          authProviderUserWithListen.mobile, currentText , context));
-                 // pushAndRemoveUntil(context, UpdatePassword());
+                          authProviderUserWithListen.mobile,
+                          currentText,
+                          context));
                 },
               ),
             ),

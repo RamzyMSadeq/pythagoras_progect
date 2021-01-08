@@ -29,21 +29,7 @@ class Conditions extends StatelessWidget {
         // color: pinkColor,
         child: ListView(
           children: [
-            // FadeIn(
-            //   animate: true,
-            //   duration: Duration(milliseconds: 1000),
-            //   child: Align(
-            //       alignment: Alignment.topCenter,
-            //       child: Container(
-            //         height: ScreenUtil().setHeight(200),
-            //         width: double.infinity,
-            //         child: SvgPicture.asset(
-            //           backgroundlogin,
-            //           fit: BoxFit.fill,
-            //         ),
-            //       )),
-            // ),
-
+          
             SizedBox(
               height: ScreenUtil().setHeight(30),
             ),

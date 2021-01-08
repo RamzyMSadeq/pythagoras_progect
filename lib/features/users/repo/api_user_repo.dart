@@ -1,11 +1,7 @@
-import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:pythagoras/components/models/levels.dart';
 import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
-import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
 import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
@@ -14,50 +10,6 @@ class ApiRepositoryUser {
   ApiRepositoryUser._();
 
   static ApiRepositoryUser apiRepositoryUser = ApiRepositoryUser._();
-
-//   Future<UserData> registerUser(
-//       String name,
-//       String gender,
-//       String password,
-//       String mobile,
-//       String levelId,
-//       String location,
-//       String supervisor,
-//       String supervisorType,
-//       File avatar) async {
-//     try {
-//       Map map = await ApiUserClient.apiUserClient.registerUser(
-//           name,
-//           gender,
-//           password,
-//           mobile,
-//           levelId,
-//           location,
-//           supervisor,
-//           supervisorType,
-//           avatar);
-//            print("777777778888444444444441111111111111111111111111111 $map");
-//       UserData user = UserData.fromJson(map);
-//  print("7555555555555555555555555555555555555555111111111111111");
-//       return user;
-//     } catch (e) {
-//       return null;
-//     }
-//   }
-
-  // Future<TokenData> logInUser(
-  //   String mobile,
-  //   String password,
-  // ) async {
-  //   try {
-  //     Map map = await ApiUserClient.apiUserClient.logInUser(mobile, password);
-  //     TokenData tokenData = TokenData.fromJson(map);
-
-  //     return tokenData;
-  //   } catch (e) {
-  //     return null;
-  //   }
-  // }
 
   Future<MeUser> meUser() async {
     try {

@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
-import 'package:pythagoras/bloc2/bloc_class2.dart';
-import 'package:pythagoras/bloc2/bloc_states2.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
 import 'package:pythagoras/services/check_connct_internet.dart';
@@ -57,11 +54,7 @@ class _MyAppState extends State<MyApp> {
     connectivityService = ConnectivityService();
   }
 
-  // @override
-  // void dispose() {
-  //   CheckInternet().listener.cancel();
-  //   super.dispose();
-  // }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -71,11 +64,8 @@ class _MyAppState extends State<MyApp> {
         child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context) => UserBloc(EmptyTasksState())),
-            BlocProvider(create: (context) => UserBloc2(EmptyTasksState2()))
           ],
-          // create: (context) {
-          //   return UserBloc(EmptyTasksState());
-          // },
+
           child: MultiProvider(
             providers: [
               ChangeNotifierProvider<AuthProviderUser>(
@@ -93,8 +83,6 @@ class _MyAppState extends State<MyApp> {
               supportedLocales: [
                 const Locale('en', ''), // English, no country code
                 const Locale('ar', ''), // Hebrew, no country code
-                // Chinese *See Advanced Locales below*
-                // ... other locales the app supports
               ],
               debugShowCheckedModeBanner: false,
               title: 'Flutter Demo',
@@ -124,9 +112,7 @@ class _MyApp2State extends State<MyApp2> {
     NotificationHandler().initialization();
     CheckInternet().checkConnection(context);
     //NotificationHandel().initi();
-    SocketHandel().ini();
-    // SocketHandel().listenToChannel("public", "notification", "PushNotification");
-    //NotificationHandel().showNotification();
+    SocketHandel().ini(context);
     super.initState();
   }
 

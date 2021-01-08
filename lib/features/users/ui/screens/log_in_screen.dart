@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,21 +9,16 @@ import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
-
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/confirm_phone_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/sign_up_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_phone-dialog.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/services/sp_helper.dart';
-import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
-
-import 'home_screen.dart';
 
 class LogInScreen extends StatelessWidget {
   final GlobalKey<FormState> loginFormkey =
@@ -170,13 +164,6 @@ class LogInScreen extends StatelessWidget {
                                   route: () {
                                     authProviderUserNoListen.onSavedLoginForm(
                                         context, loginFormkey);
-                                    // if (st == true) {
-                                    //   BlocProvider.of<UserBloc>(context).add(
-                                    //       LogInEvent(
-                                    //           authProviderUserWithListen.mobile,
-                                    //           authProviderUserWithListen
-                                    //               .password));
-                                    // }
                                   },
                                 ),
                               ),
@@ -224,14 +211,6 @@ class LogInScreen extends StatelessWidget {
                                           // child: Text('Empty Tasks'),
                                           );
                                     } else if (state is TasksErrorState) {
-                                      // Fluttertoast.showToast(
-                                      //     msg: "رقم الهاتف او كلمة المرور غير صحيحة",
-                                      //     toastLength: Toast.LENGTH_SHORT,
-                                      //     gravity: ToastGravity.BOTTOM,
-                                      //     timeInSecForIosWeb: 3,
-                                      //     backgroundColor: Colors.red,
-                                      //     textColor: Colors.white,
-                                      //     fontSize: 16.0);
                                       return Container();
                                     } else if (state is UserLogedInState) {
                                       String tok = state.token;
@@ -267,9 +246,7 @@ class LogInScreen extends StatelessWidget {
 
                                       BlocProvider.of<UserBloc>(context)
                                           .add(MeStatusEvent(context));
-                                      // }
-                                      // );
-                                      //dpush(context, LogInScreen());
+
                                       return Container();
                                     }
 
@@ -279,38 +256,28 @@ class LogInScreen extends StatelessWidget {
                                           "555555555555555555555555555555555555");
                                       Provider.of<AuthProviderUser>(context)
                                           .setPhoneVerified(phoneV);
-                                      // if (phoneV == 1) {
-                                      //   push(context, HomeScreen());
-                                      //   return Container();
-                                      // }else{
-                                      //   push(context, ConfirmPhoneScreen());
-                                      //   return Container();
-                                      // }
-                                      // push(context, HomeScreen());
-
                                     }
 
                                     return Container();
                                   },
                                 ),
                               ),
-                              
                             ],
                           )),
                     ),
                     Align(
-                                  alignment: Alignment.bottomLeft,
-                                  heightFactor: ScreenUtil().setHeight(1.15),
-                                  // widthFactor: 1.9,
-                                  child: Container(
-                                      //flutt color: pinkColor,
-                                      height: ScreenUtil().setHeight(170),
-                                      width: ScreenUtil().setWidth(180),
-                                      //color: orangeColor,
-                                      child: Image.asset(
-                                        loginBoutom0,
-                                        fit: BoxFit.fill,
-                                      ))),
+                        alignment: Alignment.bottomLeft,
+                        heightFactor: ScreenUtil().setHeight(1.15),
+                        // widthFactor: 1.9,
+                        child: Container(
+                            //flutt color: pinkColor,
+                            height: ScreenUtil().setHeight(170),
+                            width: ScreenUtil().setWidth(180),
+                            //color: orangeColor,
+                            child: Image.asset(
+                              loginBoutom0,
+                              fit: BoxFit.fill,
+                            ))),
                   ],
                 ),
               ),

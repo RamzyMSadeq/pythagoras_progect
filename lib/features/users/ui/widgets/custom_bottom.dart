@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/screenutil.dart';
-import 'package:pythagoras/features/users/ui/screens/sign_up_screen.dart';
 import 'package:pythagoras/values/borders.dart';
-import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/styles.dart';
 
 class CustomBottom extends StatelessWidget {

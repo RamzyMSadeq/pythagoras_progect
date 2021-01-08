@@ -6,20 +6,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
-
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
-import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
-import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 class LiveScreen extends StatefulWidget {
-  String linkLive;
-  String level;
-  String term;
+  var linkLive;
+  var level;
+  var term;
   Color color;
   LiveScreen({this.linkLive, this.level, this.term, this.color});
   @override
@@ -28,9 +22,6 @@ class LiveScreen extends StatefulWidget {
 
 class _LiveScreenState extends State<LiveScreen> {
   InAppWebViewController webViewController;
-  // final Completer<WebViewController> _controllerW =
-  //     Completer<WebViewController>();
-  // WebViewController webViewController1;
 
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(VideoEvent());
@@ -47,7 +38,6 @@ class _LiveScreenState extends State<LiveScreen> {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    //  if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
     super.initState();
   }
 
@@ -57,23 +47,10 @@ class _LiveScreenState extends State<LiveScreen> {
     super.dispose();
   }
 
-  // _onNavigationDelegateExample(
-  //     WebViewController controller, BuildContext context, String data) async {
-  //   final String contentBase64 =
-  //       base64Encode(const Utf8Encoder().convert(data));
-  //   this.finalV = 'data:text/html;base64,$contentBase64';
-  //   setState(() {
-
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     print("rmxiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii ${widget.linkLive}");
 
-    String dataBr = """${widget.linkLive}""";
-
-    // _onNavigationDelegateExample(webViewController1, context, dataBr);
     BlocProvider.of<UserBloc>(context)
         .add(UnitEvent(widget.term, widget.level));
     return Scaffold(
@@ -81,16 +58,6 @@ class _LiveScreenState extends State<LiveScreen> {
       backgroundColor: whiteColor,
       appBar: AppBar(
         elevation: 0,
-        // actions: [
-        //   IconButton(
-        //       icon: Icon(
-        //         Icons.notifications,
-        //         size: 25,
-        //         color: whiteColor,
-        //       ),
-        //       onPressed: () {})
-        // ],
-        //   leading: Icon(Icons.share),
         backgroundColor: widget.color,
         title: Column(
           children: [
@@ -158,42 +125,7 @@ class _LiveScreenState extends State<LiveScreen> {
                       print("console message: ${consoleMessage.message}");
                     },
                   ),
-
-                  // WebView(
-                  //   initialMediaPlaybackPolicy: AutoMediaPlaybackPolicy.always_allow,
-                  //   userAgent: "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36",
-                  //   initialUrl: finalV,
-                  //   javascriptMode: JavascriptMode.unrestricted,
-                  //   onWebViewCreated: (WebViewController webViewController) {
-
-                  //     webViewController1 = webViewController;
-
-                  //   },
-
-                  // ),
                 )
-              // InAppWebView(
-              //   initialData: InAppWebViewInitialData(
-              //     data: """${widget.linkLive}""",
-              //   ),
-              //   initialHeaders: {},
-              //   initialOptions: InAppWebViewGroupOptions(
-              //       crossPlatform: InAppWebViewOptions(
-              //     debuggingEnabled: true,
-              //   )),
-              //   onWebViewCreated: (InAppWebViewController controller) {
-              //     _webViewController = controller;
-              //   },
-              //   onLoadStart:
-              //       (InAppWebViewController controller, String url) {},
-              //   onLoadStop:
-              //       (InAppWebViewController controller, String url) {},
-              //   onConsoleMessage: (InAppWebViewController controller,
-              //       ConsoleMessage consoleMessage) {
-              //     print("console message: ${consoleMessage.message}");
-              //   },
-              // ),
-
               : Container(
                   child: Center(
                     child: Text("No Video"),

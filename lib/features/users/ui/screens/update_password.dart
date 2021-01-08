@@ -7,14 +7,11 @@ import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
-
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/ui/screens/log_in_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_Text_Field.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/colors.dart';
-import 'package:pythagoras/values/constants.dart';
 import 'package:pythagoras/values/images_name.dart';
 import 'package:pythagoras/values/styles.dart';
 
@@ -25,8 +22,6 @@ class UpdatePassword extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
-    final authProviderUserNoListen =
-        Provider.of<AuthProviderUser>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomPadding: false,
@@ -112,7 +107,7 @@ class UpdatePassword extends StatelessWidget {
                                           token1,
                                           authProviderUserWithListen
                                               .confirmPassword,
-                                              context));
+                                          context));
                                 },
                               ),
                             ),
@@ -143,7 +138,7 @@ class UpdatePassword extends StatelessWidget {
                                   }
                                   if (state
                                       is ResetPasswordConfirmUpdateState) {
-                                  //  pushAndRemoveUntil(context, LogInScreen());
+                                    //  pushAndRemoveUntil(context, LogInScreen());
                                     return Container();
                                   }
                                   return Container();
@@ -156,50 +151,6 @@ class UpdatePassword extends StatelessWidget {
                 ],
               ),
             ),
-
-            // SizedBox(
-            //   height: ScreenUtil().setHeight(50),
-            //   child: BlocBuilder<UserBloc, BlocStates>(
-            //     builder: (context, state) {
-            //       if (state is TasksLoadingState) {
-            //         return Center(
-            //           child: CircularProgressIndicator(),
-            //         );
-            //       } else if (state is EmptyTasksState) {
-            //         return Center(
-            //             // child: Text('Empty Tasks'),
-            //             );
-            //       } else if (state is TasksErrorState) {
-            //         return Center(
-            //           child: Text(state.error),
-            //         );
-            //       } else if (state is UserLogedInState) {
-            //         String tok = state.token;
-            //         print("yyuyuyuyuuuuuuuuuuuuuuuuyuyuyuuyyuyu $tok");
-            //         SPHelper.spHelper.setToken(tok);
-            //         BlocProvider.of<UserBloc>(context).add(MeStatusEvent());
-            //         //push(context, HomeScreen());
-            //         return Center();
-            //       }
-            //       if (state is MeStatusState) {
-            //         int phoneV = state.phoneVerified;
-
-            //         Provider.of<AuthProviderUser>(context)
-            //             .setPhoneVerified(phoneV);
-            //         if (phoneV == 1) {
-            //           push(context, HomeScreen());
-            //           return Container();
-            //         }else{
-            //           push(context, ConfirmPhoneScreen());
-            //           return Container();
-            //         }
-            //         //push(context, HomeScreen());
-
-            //       }
-            //       return Container();
-            //     },
-            //   ),
-            // ),
           ],
         ),
       ),
