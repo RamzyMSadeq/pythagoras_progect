@@ -4,11 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/screens/sign_up_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_phone-dialog.dart';
@@ -45,6 +47,7 @@ class LogInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppGet authGet = Get.find();
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
     final authProviderUserNoListen =
         Provider.of<AuthProviderUser>(context, listen: false);
@@ -252,6 +255,13 @@ class LogInScreen extends StatelessWidget {
 
                                     if (state is MeStatusState) {
                                       int phoneV = state.phoneVerified;
+                                      Future.delayed(
+                                          Duration(milliseconds: 100), () {
+                                        authGet.setBolcked(state.blocked);
+                                        SPHelper.spHelper.setBlocked(state.blocked);
+                                        print(
+                                            "888888888888888888888888 ${state.blocked}");
+                                      });
                                       print(
                                           "555555555555555555555555555555555555");
                                       Provider.of<AuthProviderUser>(context)

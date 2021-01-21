@@ -67,31 +67,37 @@ class CheckInternet {
   }
 
   checkConnection(BuildContext context) async {
-    listener = DataConnectionChecker().onStatusChange.listen((status) {
-      switch (status) {
-        case DataConnectionStatus.connected:
-          //Navigator.of(context).pop();
-          //   OverlaySupportEntry.of(context).dismiss();
-          SocketHandel().pusherClient.disconnect();
-          internetStatus = "Connected to the Internet";
-          contentmessage = "Connected to the Internet";
-          _showDialog(internetStatus, "متصل بالانترنت", context, Colors.green,
-              Duration(seconds: 3));
-          break;
-        case DataConnectionStatus.disconnected:
-          internetStatus = "You are disconnected to the Internet. ";
-          contentmessage = "Please check your internet connection";
-          _showDialog(
-              internetStatus,
-              "غير متصل بالانترنت , جاري الاتصال",
-              context,
-              Colors.red,
-              status == DataConnectionStatus.connected
-                  ? Duration(hours: 0)
-                  : Duration(hours: 3));
-          break;
-      }
-    });
-    return await DataConnectionChecker().connectionStatus;
+    try {
+      listener = DataConnectionChecker().onStatusChange.listen((status) {
+        switch (status) {
+          case DataConnectionStatus.connected:
+            //Navigator.of(context).pop();
+            //   OverlaySupportEntry.of(context).dismiss();
+            
+           // SocketHandel().pusherClient.disconnect();
+            internetStatus = "Connected to the Internet";
+            contentmessage = "Connected to the Internet";
+            _showDialog(internetStatus, "متصل بالانترنت", context, Colors.green,
+                Duration(seconds: 3));
+            break;
+          case DataConnectionStatus.disconnected:
+            internetStatus = "You are disconnected to the Internet. ";
+            contentmessage = "Please check your internet connection";
+            _showDialog(
+                internetStatus,
+                "غير متصل بالانترنت , جاري الاتصال",
+                context,
+                Colors.red,
+                status == DataConnectionStatus.connected
+                    ? Duration(hours: 0)
+                    : Duration(hours: 3));
+            break;
+        }
+      });
+
+      return await DataConnectionChecker().connectionStatus;
+    } catch (e) {
+      print(e);
+    }
   }
 }

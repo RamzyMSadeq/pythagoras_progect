@@ -38,4 +38,15 @@ class SPHelper {
     return x;
   }
 
+    setBlocked(int value) async {
+    sharedPreferences = await initSharedPrefrences();
+    sharedPreferences.setInt('blocked', value);
+  }
+
+  Future<int> getBlocked() async {
+    sharedPreferences = await initSharedPrefrences();
+    int x = sharedPreferences.getInt('blocked');
+    return x;
+  }
+
 }

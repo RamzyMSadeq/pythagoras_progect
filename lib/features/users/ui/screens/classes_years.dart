@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:pythagoras/animate_do.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
-import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_details.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_classes_years.dart';
 import 'package:pythagoras/values/colors.dart';
@@ -21,7 +19,7 @@ class ClassesYears extends StatelessWidget {
   String mathType;
 
   ClassesYears({this.level, this.color, this.mathType});
-  int count2;
+ // int count2;
 
   isBob(BuildContext context) {
     BlocProvider.of<UserBloc>(context).add(LevelsEvent());
@@ -30,20 +28,20 @@ class ClassesYears extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("object        $color");
-    int count = Provider.of<AuthProviderUser>(context).countNotificationSp;
-    if (Provider.of<AuthProviderUser>(context).countNotification == null) {
-      count2 = 0;
-    } else {
-      count2 = Provider.of<AuthProviderUser>(context).countNotification;
-    }
+    // print("object        $color");
+    // int count = Provider.of<AuthProviderUser>(context).countNotificationSp;
+    // if (Provider.of<AuthProviderUser>(context).countNotification == null) {
+    //   count2 = 0;
+    // } else {
+    //   count2 = Provider.of<AuthProviderUser>(context).countNotification;
+    // }
 
-    if (count2 > count) {
-      Provider.of<AuthProviderUser>(context)
-          .setCountNotification(count2 - count);
-    } else {
-      Provider.of<AuthProviderUser>(context).setCountNotification(0);
-    }
+    // if (count2 > count) {
+    //   Provider.of<AuthProviderUser>(context)
+    //       .setCountNotification(count2 - count);
+    // } else {
+    //   Provider.of<AuthProviderUser>(context).setCountNotification(0);
+    // }
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: whiteColor,

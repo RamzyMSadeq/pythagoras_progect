@@ -75,10 +75,10 @@ class _ClassesDetailsState extends State<ClassesDetails> {
         centerTitle: true,
       ),
       body: WillPopScope(
-        onWillPop: () async {
+         onWillPop: () async {
           return isBob(context);
         },
-        child: Container(
+              child: Container(
           height: double.infinity,
           width: double.infinity,
           child: ListView(

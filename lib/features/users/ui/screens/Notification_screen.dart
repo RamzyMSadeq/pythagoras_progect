@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
@@ -22,13 +24,10 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
-  
   @override
-  void initState() { 
-     BlocProvider.of<UserBloc>(context).add(NotificationEvent());
+  void initState() {
+    BlocProvider.of<UserBloc>(context).add(NotificationEvent());
     super.initState();
-    
   }
 
   isBob(BuildContext context) {
@@ -38,6 +37,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppGet authGet = Get.find();
     return WillPopScope(
       onWillPop: () async {
         return isBob(context);
@@ -78,6 +78,12 @@ class _NotificationScreenState extends State<NotificationScreen> {
 
                     SPHelper.spHelper
                         .setCountNotification(myNotification.length);
+                    Future.delayed(Duration(milliseconds: 500), () {
+                      authGet.setCountNotifiSp(myNotification.length);
+                    });
+
+                    print(
+                        "ccccccccvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv ${myNotification.length}");
                     return ListView.builder(
                       itemCount: myNotification.length,
                       itemBuilder: (context, index) {

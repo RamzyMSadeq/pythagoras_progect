@@ -14,7 +14,9 @@ class CardPaymentDialog extends StatefulWidget {
   var unitId;
   var level;
   var price;
-  CardPaymentDialog({this.unitId, this.level, this.price});
+  var mathh;
+  var term;
+  CardPaymentDialog({this.unitId, this.level, this.price , this.mathh , this.term});
   @override
   _CardPaymentDialogState createState() => _CardPaymentDialogState();
 }
@@ -141,7 +143,14 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                               BlocProvider.of<UserBloc>(context).add(
                                   OrderPaymebtEvent("credit", widget.unitId));
                               Navigator.of(context).pop();
-                              pushReplecment(context, WebViewPayment());
+                              pushReplecment(
+                                  context,
+                                  WebViewPayment(
+                                    level: widget.level,
+                                    unitId: widget.unitId,
+                                    mathh: widget.mathh,
+                                    term: widget.term,
+                                  ));
                             },
                             child: Container(
                               height: ScreenUtil().setHeight(35),

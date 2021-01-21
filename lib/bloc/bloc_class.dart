@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pythagoras/components/models/levels.dart';
 import 'package:pythagoras/components/models/me_user.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
@@ -9,6 +10,7 @@ import 'package:pythagoras/components/models/unit.dart';
 import 'package:pythagoras/components/models/unit_twilv_elvent.dart';
 import 'package:pythagoras/components/models/user_data.dart';
 import 'package:pythagoras/components/models/video.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/features/users/repo/api_user_repo.dart';
 import 'package:pythagoras/features/users/ui/screens/confirm_phone_screen.dart';
@@ -18,6 +20,7 @@ import 'package:pythagoras/features/users/ui/screens/setting_screen.dart';
 import 'package:pythagoras/features/users/ui/screens/update_password.dart';
 import 'package:pythagoras/features/users/ui/screens/verification_phone_screen.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_payment-dialog.dart';
+import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/constants.dart';
 
 import 'bloc_events.dart';
@@ -35,6 +38,7 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
   String videoIni;
   Map allSettings;
   Notification1 allNotificaton;
+  AppGet authGet = Get.find();
 
   ///////////////////////////////////////////////////
   Future<Levels> getAllLevels() async {
@@ -94,14 +98,26 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         yield TasksLoadingState();
         Map login = await ApiUserClient.apiUserClient
             .loginUser2(event.mobile, event.password);
-        String token = login["access_token"];
-        print("i89999911111111111111112222222222222");
-        print("dooooooooooooooooooooooone $token");
-        if (login["message"] == "success") {
-          print("dooooooooooooooooooooooone $token");
-          yield UserLogedInState(token);
+        if (login == null) {
+          Fluttertoast.showToast(
+              msg: "تأكد من المدخلات",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          yield EmptyTasksState();
         } else {
-          print("errrrrrrrrrrrrrrrrrrrrrrrrrrror 88888888888888555555555");
+          String token = login["access_token"];
+          print("i89999911111111111111112222222222222");
+          print("dooooooooooooooooooooooone $token");
+          if (login["message"] == "success") {
+            print("dooooooooooooooooooooooone $token");
+            yield UserLogedInState(token);
+          } else {
+            print("errrrrrrrrrrrrrrrrrrrrrrrrrrror 88888888888888555555555");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -122,21 +138,37 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
             event.supervisorType,
             event.avatar);
 
-        if (user['message'] == "User successfully registered") {
-          yield SuccessState();
-          push(event.context, LogInScreen());
+        if (user == null) {
           Fluttertoast.showToast(
-              msg: "تم انشاء حساب بنجاح",
+              msg: "تأكد من المدخلات",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 3,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
-          print("Done Register ${user['message']}");
+          yield EmptyTasksState();
         } else {
-          yield TasksErrorState("غير موجود");
-          print("EEEEEErrrrooooooooor222222222222222222222222222");
+          if (user['message'] == "User successfully registered") {
+            yield SuccessState();
+            push(event.context, LogInScreen());
+            Fluttertoast.showToast(
+                msg: "تم انشاء حساب بنجاح",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            Future.delayed(Duration(milliseconds: 200), () {
+              authGet.setCountNotifiSp(0);
+              SPHelper.spHelper.setCountNotification(0);
+            });
+            print("Done Register ${user['message']}");
+          } else {
+            yield TasksErrorState("غير موجود");
+            print("EEEEEErrrrooooooooor222222222222222222222222222");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -148,10 +180,22 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         yield TasksLoadingState();
         Map map = await ApiUserClient.apiUserClient
             .logOutUser(event.mobile, event.password);
-        if (map["message"] == "Successfully logged out") {
-          yield UserLogedOutState(map["message"]);
+        if (map == null) {
+          Fluttertoast.showToast(
+              msg: "فشل تسجيل الخروج",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          yield EmptyTasksState();
+        } else {
+          if (map["message"] == "Successfully logged out") {
+            yield UserLogedOutState(map["message"]);
+          }
+          UserLogedOutState(map["message"]);
         }
-        UserLogedOutState(map["message"]);
       } catch (e) {
         yield TasksErrorState(e.toString());
       }
@@ -178,21 +222,33 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         yield TasksLoadingState();
         Map map =
             await ApiUserClient.apiUserClient.passwordResetUser(event.mobile);
-        if (map["message"] == "success") {
-          print("ghghghghghghghhhhhhhhhhhhhhhhhhhhhhhhh ${map["status"]}");
-
-          yield ResetState(map["status"]);
-          pushReplecment(event.context, VerificationPhoneScreen());
+        if (map == null) {
           Fluttertoast.showToast(
-              msg: "تم ارسال رمز التفعيل",
+              msg: "تأكد من المدخلات",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 3,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
+          yield EmptyTasksState();
         } else {
-          print("EEEEEErrrrooooooooor4444444444444444444444");
+          if (map["message"] == "success") {
+            print("ghghghghghghghhhhhhhhhhhhhhhhhhhhhhhhh ${map["status"]}");
+
+            yield ResetState(map["status"]);
+            pushReplecment(event.context, VerificationPhoneScreen());
+            Fluttertoast.showToast(
+                msg: "تم ارسال رمز التفعيل",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            print("EEEEEErrrrooooooooor4444444444444444444444");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -205,11 +261,23 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         yield TasksLoadingState();
         Map map = await ApiUserClient.apiUserClient
             .resetPasswordConfirmUser(event.mobile, event.code);
-        if (map["token"] != null) {
-          yield ResetPasswordConfirmState(map["status"], map["token"]);
-          pushAndRemoveUntil(event.context, UpdatePassword());
+        if (map == null) {
+          Fluttertoast.showToast(
+              msg: "تأكد من المدخلات",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.BOTTOM,
+              timeInSecForIosWeb: 3,
+              backgroundColor: Colors.red,
+              textColor: Colors.white,
+              fontSize: 16.0);
+          yield EmptyTasksState();
         } else {
-          print("EEEEEErrrrooooooooor555555555555");
+          if (map["token"] != null) {
+            yield ResetPasswordConfirmState(map["status"], map["token"]);
+            pushAndRemoveUntil(event.context, UpdatePassword());
+          } else {
+            print("EEEEEErrrrooooooooor555555555555");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -224,19 +292,31 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         Map map = await ApiUserClient.apiUserClient
             .resetPasswordConfirmUpdateUser(
                 event.mobile, event.token, event.password);
-        if (map["status"] == "success") {
-          yield ResetPasswordConfirmUpdateState(map["status"]);
-          pushAndRemoveUntil(event.context, LogInScreen());
+        if (map == null) {
           Fluttertoast.showToast(
-              msg: "تم تعديل كلمة المرور",
+              msg: "تأكد من المدخلات",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 3,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
+          yield EmptyTasksState();
         } else {
-          print("EEEEEErrrrooooooooor555555555555");
+          if (map["status"] == "success") {
+            yield ResetPasswordConfirmUpdateState(map["status"]);
+            pushAndRemoveUntil(event.context, LogInScreen());
+            Fluttertoast.showToast(
+                msg: "تم تعديل كلمة المرور",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            print("EEEEEErrrrooooooooor555555555555");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -249,20 +329,32 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         yield TasksLoadingState();
         Map map =
             await ApiUserClient.apiUserClient.confirmPhoneUser(event.code);
-        if (map["status"] == "success") {
-          print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk6666666666666666");
-          yield ConfirmPhoneState(map["status"]);
-          pushAndRemoveUntil(event.context, HomeScreen());
+        if (map == null) {
           Fluttertoast.showToast(
-              msg: "تم تأكيد الحساب بنجاح",
+              msg: "تأكد من المدخلات",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 3,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
+          yield EmptyTasksState();
         } else {
-          print("EEEEEErrrrooooooooor6666666666666666");
+          if (map["status"] == "success") {
+            print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk6666666666666666");
+            yield ConfirmPhoneState(map["status"]);
+            pushAndRemoveUntil(event.context, HomeScreen());
+            Fluttertoast.showToast(
+                msg: "تم تأكيد الحساب بنجاح",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            print("EEEEEErrrrooooooooor6666666666666666");
+          }
         }
       } catch (e) {
         yield TasksErrorState(e.toString());
@@ -382,13 +474,26 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
         if (map["phoneVerified"] != 2) {
           yield MeStatusState(
               map["isAdmin"], map["phoneVerified"], map["blocked"]);
-          if (map["phoneVerified"] == 1) {
-            print(
-                "mnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
-            pushAndRemoveUntil(event.context, HomeScreen());
+
+          if (map["blocked"] == 1) {
+            Fluttertoast.showToast(
+                msg: "ثم تعطيل حسابك , راجع ادارة التطبيق",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.red,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            pushAndRemoveUntil(event.context, LogInScreen());
           } else {
-            print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
-            push(event.context, ConfirmPhoneScreen());
+            if (map["phoneVerified"] == 1) {
+              print(
+                  "mnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
+              pushAndRemoveUntil(event.context, HomeScreen());
+            } else {
+              print("vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv");
+              push(event.context, ConfirmPhoneScreen());
+            }
           }
         } else {
           print("EEEEEErrrrooooooooor6666666666666666");
@@ -428,19 +533,31 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
             event.supervisorType,
             event.password,
             event.confirmPassword);
-        if (map["message"] == "success") {
-          yield EditProfileState(map["message"]);
+        if (map == null) {
           Fluttertoast.showToast(
-              msg: "تم تعديل البيانات بنجاح",
+              msg: "تأكد من المدخلات",
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
               timeInSecForIosWeb: 3,
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.red,
               textColor: Colors.white,
               fontSize: 16.0);
-          pushAndRemoveUntil(event.context, SettingScreen());
+          yield EmptyTasksState();
         } else {
-          print("EEEEEErrrrooooooooor6666666666666666");
+          if (map["message"] == "success") {
+            yield EditProfileState(map["message"]);
+            Fluttertoast.showToast(
+                msg: "تم تعديل البيانات بنجاح",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIosWeb: 3,
+                backgroundColor: Colors.green,
+                textColor: Colors.white,
+                fontSize: 16.0);
+            push(event.context, SettingScreen());
+          } else {
+            print("EEEEEErrrrooooooooor6666666666666666");
+          }
         }
       } catch (e) {
         print("oo222222222222222222222222222yyyyyyyyyyyyyyyyyrrrrrrrrrrrrr");
@@ -467,6 +584,8 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
                 unitId: event.unitId,
                 level: event.level,
                 price: event.price,
+                mathh: event.mathType,
+                term: event.term,
               );
             },
           );

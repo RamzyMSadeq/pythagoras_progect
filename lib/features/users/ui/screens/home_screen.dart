@@ -4,14 +4,18 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/components/models/notification_model.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
+import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/features/users/ui/screens/classes_screen2.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
+import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/borders.dart';
 import 'package:pythagoras/values/colors.dart';
 import 'package:pythagoras/values/constants.dart';
@@ -35,9 +39,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    // setNoti();
     BlocProvider.of<UserBloc>(context).add(NotificationEvent());
     super.initState();
   }
+
+  // setNoti() async {
+  //   int count = await SPHelper.spHelper.getCountNotification();
+  //   Provider.of<AuthProviderUser>(context).setCountNotificationSp(count);
+  //   print("oooooooooooooooooooooooooooooooooooo $count");
+  // }
 
   @override
   void dispose() {
@@ -65,8 +76,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    AppGet authGet = Get.find();
+    // setNoti();
     _controller = YoutubePlayerController(
-      initialVideoId: Provider.of<AuthProviderUser>(context).initialVideo,
+      initialVideoId:
+          Provider.of<AuthProviderUser>(context, listen: false).initialVideo,
       flags: YoutubePlayerFlags(
         autoPlay: false,
         // mute: true,
@@ -190,9 +204,45 @@ class _HomeScreenState extends State<HomeScreen> {
                               Notification1 notification = state.notification1;
                               List<DataNotification> myNotification =
                                   notification.data;
-                              Provider.of<AuthProviderUser>(context)
-                                  .setCountNotification(myNotification.length);
+                              //authGet.setCountNotifi(myNotification.length);
+                              Future.delayed(Duration(milliseconds: 500),
+                                  () async {
+                                int count1 = myNotification.length;
+                                int count2 = authGet.countNotificationfetSp;
+                                if (count1 > count2) {
+                                  authGet.setCountNotifi(count1 - count2);
+                                } else {
+                                  authGet.setCountNotifi(0);
+                                }
+                                Map map =
+                                    await ApiUserClient.apiUserClient.meStatusUser();
+                                print(
+                                    "++++++++++++++++++++++++++ ${map['blocked']}");
+                                SPHelper.spHelper.setBlocked(map['blocked']);
+                                //BlocProvider.of<UserBloc>(context).add(MeStatusEvent(context));
+                              });
+
+                              // int c1 = Provider.of<AuthProviderUser>(context)
+                              //     .countNotificationSp;
+                              // if (myNotification.length < c1) {
+                              //   print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii $c1");
+                              //   SPHelper.spHelper.setCountNotification(0);
+                              // }
+
+                              // Provider.of<AuthProviderUser>(context)
+                              //     .setCountNotification(myNotification.length);
+                              // BlocProvider.of<UserBloc>(context)
+                              //             .add(MeStatusEvent(context));
+                              // return Container();
                             }
+                            // if (state is MeStatusState) {
+                            //           Future.delayed(
+                            //               Duration(milliseconds: 100), () {
+                            //            // authGet.setBolcked(state.blocked);
+                            //             SPHelper.spHelper.setBlocked(state.blocked);
+                            //           });
+                            //           return Container();
+                            //         }
                             return Container();
                           },
                         ),

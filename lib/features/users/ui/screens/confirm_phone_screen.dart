@@ -32,7 +32,7 @@ class _ConfirmPhoneScreenState extends State<ConfirmPhoneScreen> {
   @override
   void dispose() {
     errorController.close();
-    textEditingController.dispose();
+   // textEditingController.dispose();
     super.dispose();
   }
 

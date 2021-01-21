@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/screenutil.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
+import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/features/users/ui/screens/home_screen.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/constants.dart';
@@ -22,27 +25,36 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  AppGet authGet = Get.find();
+
   @override
   void initState() {
+    // int blllo;
     super.initState();
+    // Future.delayed(Duration(milliseconds: 200), () {
+    //   blllo = authGet.blocked;
+    //   print("++++++++++++++++++++++++++++++++++++++++ $blllo");
+    // });
+
     Timer(Duration(seconds: 3), () async {
+      // Map data1 = await ApiUserClient.apiUserClient.settingsUser();
+      // authGet.setTerm(data1["term_enabled"]);
       String token = await SPHelper.spHelper.getToken();
+      int bloked = await SPHelper.spHelper.getBlocked();
       print("rrrrrrrrrrrraaaaaaaaaaaammmmmmmmmmmm $token");
-      if (token == null || token == '') {
+      if (token == null || token == '' || bloked == 1) {
         pushAndRemoveUntil(
           context,
           LogInScreen(),
         );
-       
       } else {
-         BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+        BlocProvider.of<UserBloc>(context).add(SettingsEvent());
         Timer(Duration(seconds: 3), () async {
           pushAndRemoveUntil(
             context,
             HomeScreen(),
           );
         });
-        
       }
     });
   }

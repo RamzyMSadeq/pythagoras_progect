@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_states.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
 import 'package:pythagoras/services/check_connct_internet.dart';
@@ -54,10 +56,9 @@ class _MyAppState extends State<MyApp> {
     connectivityService = ConnectivityService();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
+    Get.put(AppGet());
     return OverlaySupport(
       child: Provider<ConnectivityService>(
         create: (context) => new ConnectivityService(),
@@ -65,7 +66,6 @@ class _MyAppState extends State<MyApp> {
           providers: [
             BlocProvider(create: (context) => UserBloc(EmptyTasksState())),
           ],
-
           child: MultiProvider(
             providers: [
               ChangeNotifierProvider<AuthProviderUser>(
@@ -107,6 +107,7 @@ class MyApp2 extends StatefulWidget {
 }
 
 class _MyApp2State extends State<MyApp2> {
+  AppGet authGet = Get.find();
   @override
   void initState() {
     NotificationHandler().initialization();
@@ -117,15 +118,10 @@ class _MyApp2State extends State<MyApp2> {
   }
 
   @override
-  void dispose() {
-    CheckInternet().listener.cancel();
-
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    authGet.setCountNotifiSp(widget.cou);
     Provider.of<AuthProviderUser>(context).setCountNotificationSp(widget.cou);
+
     return StreamProvider<ConnectivityStatus>.value(
       value: Provider.of<ConnectivityService>(context).valueStream,
       child: SplashScreen(),

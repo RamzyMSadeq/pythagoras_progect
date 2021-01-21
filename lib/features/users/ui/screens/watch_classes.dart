@@ -186,10 +186,15 @@ class _WatchClassesState extends State<WatchClasses> {
                                               title: "الدرس ${index + 1}",
                                               desTitle: item.title,
                                               price: widget.price,
+                                              mathh: widget.mathType,
                                             ),
                                             widget.unitId,
                                             widget.level,
-                                            widget.price));
+                                            widget.price,
+                                            mathType: widget.mathType,
+                                            term: widget.term
+                                            
+                                            ));
                                   } else {
                                     Provider.of<UserProvider>(context,
                                             listen: false)
@@ -212,7 +217,10 @@ class _WatchClassesState extends State<WatchClasses> {
                                               ),
                                               widget.unitId,
                                               widget.level,
-                                              widget.price));
+                                              widget.price,
+                                               mathType: widget.mathType,
+                                            term: widget.term
+                                              ));
                                     });
                                   }
                                 },

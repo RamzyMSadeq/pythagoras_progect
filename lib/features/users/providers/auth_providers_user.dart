@@ -23,7 +23,6 @@ class AuthProviderUser extends ChangeNotifier {
   String blocked;
   String location;
   bool isEmpty = false;
- 
 
   setIsEmpty(bool value) {
     this.isEmpty = value;
@@ -32,22 +31,22 @@ class AuthProviderUser extends ChangeNotifier {
 
   setLocation(String value) {
     this.location = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setIsAdmin(String value) {
     this.isAdmin = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setPhoneVerified(int value) {
     this.phoneVerified = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setBlocked(String value) {
     this.blocked = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setVideoOflineUrl(String value) {
@@ -104,12 +103,13 @@ class AuthProviderUser extends ChangeNotifier {
 
   setCountNotification(int value) {
     this.countNotification = value;
-    notifyListeners();
+    // notifyListeners();
   }
 
   setCountNotificationSp(int value) {
     this.countNotificationSp = value;
-    notifyListeners();
+    print("ssssssssssssppppppppppp $value");
+    // notifyListeners();
   }
 
   settitlePay(String value) {
@@ -129,59 +129,59 @@ class AuthProviderUser extends ChangeNotifier {
 
   setsubTitleLive(String value) {
     this.subTitleLive = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   setValueBirthday(String value) {
     this.birthday = value;
-    notifyListeners();
+  //  notifyListeners();
   }
 
   setName(String value) {
     this.name = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   setFatherName(String value) {
     this.fatherName = value;
-    notifyListeners();
+  //  notifyListeners();
   }
 
   setLink(String value) {
     this.link = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setValueGender(String value) {
     this.valueGender = value;
-    notifyListeners();
+    //notifyListeners();
   }
 
   setValueClass(String value) {
     this.valueClass = value;
     var neee = className.indexOf("$valueClass");
     print("rrrrrrrmaaaaaaaaaaaaaaaaaaazzzzzzzzzzzz $neee");
-    notifyListeners();
+   // notifyListeners();
   }
 
   setValueState(String value) {
     this.valueState = value;
-    notifyListeners();
+ //   notifyListeners();
   }
 
   setMobile(String value) {
     this.mobile = value;
-    notifyListeners();
+  //  notifyListeners();
   }
 
   setPassword(String value) {
     this.password = value;
-    notifyListeners();
+   // notifyListeners();
   }
 
   setConfirmPassword(String value) {
     this.confirmPassword = value;
-    notifyListeners();
+  //  notifyListeners();
   }
 
   validateMobile(String value) {
@@ -258,30 +258,29 @@ class AuthProviderUser extends ChangeNotifier {
       registerFormkey.currentState.save();
       int classe = className.indexOf("$valueClass");
       String valueGender1 = valueGender == "ذكر" ? "MALE" : "FEMALE";
-      if(imageProfile == null){
-          Fluttertoast.showToast(
-              msg: "الرجاء ادخال صوره ",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 3,
-              backgroundColor: Colors.red,
-              textColor: Colors.white,
-              fontSize: 16.0);
-      }else{
+      if (imageProfile == null) {
+        Fluttertoast.showToast(
+            msg: "الرجاء ادخال صوره ",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 3,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0);
+      } else {
         BlocProvider.of<UserBloc>(context).add(RegisterUserEvent(
-          name,
-          valueGender1,
-          password,
-          mobile,
-          "${classe + 1}",
-          location,
-          fatherName,
-          link,
-          imageProfile,
-          context));
-
+            name,
+            valueGender1,
+            password,
+            mobile,
+            "${classe + 1}",
+            location,
+            fatherName,
+            link,
+            imageProfile,
+            context));
       }
-      
+
       //  push(context, LogInScreen());
 
       // notifyListeners();

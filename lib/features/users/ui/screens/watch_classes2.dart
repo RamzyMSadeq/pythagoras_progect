@@ -25,6 +25,7 @@ class WatchClasses2 extends StatefulWidget {
   var title;
   var desTitle;
   var price;
+  var mathh;
   WatchClasses2(
       {this.level,
       this.term,
@@ -33,7 +34,9 @@ class WatchClasses2 extends StatefulWidget {
       this.color,
       this.title,
       this.desTitle,
-      this.price});
+      this.price,
+      this.mathh
+      });
   @override
   _WatchClasses2State createState() => _WatchClasses2State();
 }
@@ -215,7 +218,10 @@ class _WatchClasses2State extends State<WatchClasses2> {
                                       ),
                                       widget.unitId,
                                       widget.level,
-                                      widget.price));
+                                      widget.price,
+                                        mathType: widget.mathh,
+                                            term: widget.term
+                                      ));
                             } else {
                               Provider.of<UserProvider>(context, listen: false)
                                   .getVideoAccess(item.id.toString());
@@ -235,7 +241,9 @@ class _WatchClasses2State extends State<WatchClasses2> {
                                         ),
                                         widget.unitId,
                                         widget.level,
-                                        widget.price));
+                                        widget.price,
+                                         mathType: widget.mathh,
+                                            term: widget.term));
                               });
                             }
                           },
