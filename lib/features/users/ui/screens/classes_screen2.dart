@@ -42,7 +42,7 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
   }
 
   isBob(BuildContext context) {
-    push(context, HomeScreen());
+    pushAndRemoveUntil(context, HomeScreen());
     return true;
   }
 

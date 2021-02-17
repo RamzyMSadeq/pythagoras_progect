@@ -37,6 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
     // });
 
     Timer(Duration(seconds: 3), () async {
+    BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+
       // Map data1 = await ApiUserClient.apiUserClient.settingsUser();
       // authGet.setTerm(data1["term_enabled"]);
       String token = await SPHelper.spHelper.getToken();
@@ -48,7 +50,6 @@ class _SplashScreenState extends State<SplashScreen> {
           LogInScreen(),
         );
       } else {
-        BlocProvider.of<UserBloc>(context).add(SettingsEvent());
         Timer(Duration(seconds: 3), () async {
           pushAndRemoveUntil(
             context,

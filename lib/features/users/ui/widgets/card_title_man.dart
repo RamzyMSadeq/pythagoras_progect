@@ -14,6 +14,7 @@ class CardTitleMan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("+++++++++++++++++++++ $title , $subTitle1 , $subTitle2");
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Stack(
@@ -31,10 +32,10 @@ class CardTitleMan extends StatelessWidget {
             padding: EdgeInsets.only(
               left: ScreenUtil().setWidth(100),
               right: ScreenUtil().setWidth(30),
-             // top: ScreenUtil().setHeight(10),
-            //  bottom: ScreenUtil().setHeight(10),
+              // top: ScreenUtil().setHeight(10),
+              //  bottom: ScreenUtil().setHeight(10),
             ),
-          //  height: ScreenUtil().setHeight(190),
+            //  height: ScreenUtil().setHeight(190),
             width: ScreenUtil().setWidth(335),
             // decoration: BoxDecoration(borderRadius: borderRadius8, color: color),
             child: Column(
