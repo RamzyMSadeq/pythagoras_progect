@@ -9,3 +9,5 @@ final String forgroundsplash = 'assets/images/forgroundsplash.png';
 final String loginBoutom0 = 'assets/images/loginBoutom0.png';
 final String man = 'assets/images/man.png';
 final String imagebottom = 'assets/images/imagebottom.png';
+final String shapecategory = 'assets/images/shapecategory.svg';
+

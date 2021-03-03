@@ -119,7 +119,7 @@ class ContactUs extends StatelessWidget {
                  children: [
                    InkWell(
                      onTap: ()async{
-                        var url ="https://wa.me/96899098340";
+                        var url ="https://wa.me/96879192497";
                                         if (await canLaunch(url)) {
                                           await launch(url);
                                         } else {
