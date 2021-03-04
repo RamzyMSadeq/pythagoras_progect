@@ -23,7 +23,7 @@ class CardPhoneDialog extends StatelessWidget {
       child: Dialog(
         shape: RoundedRectangleBorder(borderRadius: borderRadius8),
         child: Container(
-          height: ScreenUtil().setHeight(247),
+          height: ScreenUtil().setHeight(315),
           width: ScreenUtil().setWidth(267),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

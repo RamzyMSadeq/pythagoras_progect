@@ -27,7 +27,7 @@ class CardDetails extends StatelessWidget {
         children: [
           Container(
             height: ScreenUtil().setHeight(90),
-            width: ScreenUtil().setWidth(91),
+            width: ScreenUtil().setWidth(85),
             decoration:
                 BoxDecoration(borderRadius: borderRadius8, color: color),
             child: Center(

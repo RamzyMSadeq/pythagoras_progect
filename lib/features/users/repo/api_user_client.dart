@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:pythagoras/services/sp_helper.dart';
+ import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';

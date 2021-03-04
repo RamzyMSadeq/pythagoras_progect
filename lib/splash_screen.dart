@@ -65,6 +65,7 @@ class _SplashScreenState extends State<SplashScreen> {
     ScreenUtil.init(
       context,
       designSize: Size(375, 812),
+      allowFontScaling: true
     );
 
     return SafeArea(

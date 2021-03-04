@@ -10,9 +10,7 @@ import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
-import 'package:pythagoras/services/check_connct_internet.dart';
-import 'package:pythagoras/services/connectivity.dart';
-import 'package:pythagoras/services/notification_handler.dart';
+  import 'package:pythagoras/services/notification_handler.dart';
 import 'package:pythagoras/services/socket_class.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/splash_screen.dart';
@@ -49,49 +47,46 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  ConnectivityService connectivityService;
+  // ConnectivityService connectivityService;
   @override
   void initState() {
     super.initState();
-    connectivityService = ConnectivityService();
+    // connectivityService = ConnectivityService();
   }
 
   @override
   Widget build(BuildContext context) {
     Get.put(AppGet());
     return OverlaySupport(
-      child: Provider<ConnectivityService>(
-        create: (context) => new ConnectivityService(),
-        child: MultiBlocProvider(
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => UserBloc(EmptyTasksState())),
+        ],
+        child: MultiProvider(
           providers: [
-            BlocProvider(create: (context) => UserBloc(EmptyTasksState())),
+            ChangeNotifierProvider<AuthProviderUser>(
+                create: (context) => AuthProviderUser()),
+            ChangeNotifierProvider<UserProvider>(
+                create: (context) => UserProvider()),
           ],
-          child: MultiProvider(
-            providers: [
-              ChangeNotifierProvider<AuthProviderUser>(
-                  create: (context) => AuthProviderUser()),
-              ChangeNotifierProvider<UserProvider>(
-                  create: (context) => UserProvider()),
+          child: MaterialApp(
+            localizationsDelegates: [
+              // ... app-specific localization delegate[s] here
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
             ],
-            child: MaterialApp(
-              localizationsDelegates: [
-                // ... app-specific localization delegate[s] here
-                GlobalMaterialLocalizations.delegate,
-                GlobalWidgetsLocalizations.delegate,
-                GlobalCupertinoLocalizations.delegate,
-              ],
-              supportedLocales: [
-                const Locale('en', ''), // English, no country code
-                const Locale('ar', ''), // Hebrew, no country code
-              ],
-              debugShowCheckedModeBanner: false,
-              title: 'Flutter Demo',
-              theme: ThemeData(
-                primarySwatch: Colors.blue,
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              home: MyApp2(widget.cou),
+            supportedLocales: [
+              const Locale('en', ''), // English, no country code
+              const Locale('ar', ''), // Hebrew, no country code
+            ],
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              visualDensity: VisualDensity.adaptivePlatformDensity,
             ),
+            home: MyApp2(widget.cou),
           ),
         ),
       ),
@@ -111,7 +106,7 @@ class _MyApp2State extends State<MyApp2> {
   @override
   void initState() {
     NotificationHandler().initialization();
-    CheckInternet().checkConnection(context);
+    // CheckInternet().checkConnection(context);
     //NotificationHandel().initi();
     SocketHandel().ini(context);
     super.initState();
@@ -122,9 +117,6 @@ class _MyApp2State extends State<MyApp2> {
     authGet.setCountNotifiSp(widget.cou);
     Provider.of<AuthProviderUser>(context).setCountNotificationSp(widget.cou);
 
-    return StreamProvider<ConnectivityStatus>.value(
-      value: Provider.of<ConnectivityService>(context).valueStream,
-      child: SplashScreen(),
-    );
+    return SplashScreen();
   }
 }

@@ -145,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: ScreenUtil().setHeight(20),
                   ),
                   Container(
-                    height: ScreenUtil().setHeight(200),
+                    height: ScreenUtil().setHeight(159),
                     width: ScreenUtil().setWidth(308),
                     child: SvgPicture.asset(
                       homeimage,
@@ -180,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           style: styleTitleSignUp,
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(10),
+                          height: ScreenUtil().setHeight(5),
                         ),
                         Text(
                           "تعلم الرياضيات معنا",

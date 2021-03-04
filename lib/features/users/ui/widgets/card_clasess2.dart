@@ -33,7 +33,7 @@ class YearListAddress extends StatelessWidget {
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 14,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -43,12 +43,12 @@ class YearListAddress extends StatelessWidget {
                   textDirection: TextDirection.rtl,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
+                    fontSize: 9,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
                 Divider(
                   height: ScreenUtil().setHeight(3),
@@ -57,14 +57,14 @@ class YearListAddress extends StatelessWidget {
                   indent: ScreenUtil().setWidth(50),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 3,
                 ),
                 Text(
                   dataLevel[index].description,
                   textAlign: TextAlign.right,
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
+                    fontSize: 8,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
