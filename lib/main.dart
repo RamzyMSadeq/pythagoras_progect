@@ -10,7 +10,9 @@ import 'package:pythagoras/bloc/bloc_states.dart';
 import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/providers/user_provider.dart';
-  import 'package:pythagoras/services/notification_handler.dart';
+import 'package:pythagoras/services/check_connct_internet.dart';
+import 'package:pythagoras/services/connectivity.dart';
+import 'package:pythagoras/services/notification_handler.dart';
 import 'package:pythagoras/services/socket_class.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/splash_screen.dart';
@@ -47,11 +49,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  // ConnectivityService connectivityService;
+//  ConnectivityService connectivityService;
   @override
   void initState() {
     super.initState();
-    // connectivityService = ConnectivityService();
+  // connectivityService = ConnectivityService();
   }
 
   @override
@@ -106,7 +108,7 @@ class _MyApp2State extends State<MyApp2> {
   @override
   void initState() {
     NotificationHandler().initialization();
-    // CheckInternet().checkConnection(context);
+   // CheckInternet().checkConnection(context);
     //NotificationHandel().initi();
     SocketHandel().ini(context);
     super.initState();
@@ -117,6 +119,12 @@ class _MyApp2State extends State<MyApp2> {
     authGet.setCountNotifiSp(widget.cou);
     Provider.of<AuthProviderUser>(context).setCountNotificationSp(widget.cou);
 
-    return SplashScreen();
+    return
+        // StreamProvider<ConnectivityStatus>.value(
+        //   value: Provider.of<ConnectivityService>(context).valueStream,
+        //   child:
+
+        SplashScreen();
+    //  );
   }
 }

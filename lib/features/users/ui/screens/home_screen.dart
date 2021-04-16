@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // setNoti();
     _controller = YoutubePlayerController(
       initialVideoId:
-          Provider.of<AuthProviderUser>(context, listen: false).initialVideo,
+          authGet.initialVideo,
       flags: YoutubePlayerFlags(
         autoPlay: false,
         // mute: true,

@@ -88,18 +88,18 @@ class AuthProviderUser extends ChangeNotifier {
 
   String birthday = "تاريخ الميلاد";
 
-  String initialVideo = "IdbyTjI1ZFo";
-  String titlePay = "";
-  String subTitlePay = "";
-  String titleLive = "";
-  String subTitleLive = "";
+  // String initialVideo = "IdbyTjI1ZFo";
+  // String titlePay = "";
+  // String subTitlePay = "";
+  // String titleLive = "";
+  // String subTitleLive = "";
   int countNotification = 0;
   int countNotificationSp = 0;
-  setInitialVideo(String value) {
-    this.initialVideo = value;
-    print("ttttrrrrrrrrrrrrrrrrrrrrrrrrrr $initialVideo");
-    //notifyListeners();
-  }
+  // setInitialVideo(String value) {
+  //   this.initialVideo = value;
+  //   print("ttttrrrrrrrrrrrrrrrrrrrrrrrrrr $initialVideo");
+  //   //notifyListeners();
+  // }
 
   setCountNotification(int value) {
     this.countNotification = value;
@@ -112,25 +112,25 @@ class AuthProviderUser extends ChangeNotifier {
     // notifyListeners();
   }
 
-  settitlePay(String value) {
-    this.titlePay = value;
-    //notifyListeners();
-  }
+  // settitlePay(String value) {
+  //   this.titlePay = value;
+  //   //notifyListeners();
+  // }
 
-  setsubTitlePay(String value) {
-    this.subTitlePay = value;
-    //notifyListeners();
-  }
+  // setsubTitlePay(String value) {
+  //   this.subTitlePay = value;
+  //   //notifyListeners();
+  // }
 
-  settitleLive(String value) {
-    this.titleLive = value;
-    //notifyListeners();
-  }
+  // settitleLive(String value) {
+  //   this.titleLive = value;
+  //   //notifyListeners();
+  // }
 
-  setsubTitleLive(String value) {
-    this.subTitleLive = value;
-    //notifyListeners();
-  }
+  // setsubTitleLive(String value) {
+  //   this.subTitleLive = value;
+  //   //notifyListeners();
+  // }
 
   setValueBirthday(String value) {
     this.birthday = value;
@@ -154,7 +154,7 @@ class AuthProviderUser extends ChangeNotifier {
 
   setValueGender(String value) {
     this.valueGender = value;
-    //notifyListeners();
+    notifyListeners();
   }
 
   setValueClass(String value) {

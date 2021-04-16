@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -99,9 +100,33 @@ class LogInScreen extends StatelessWidget {
                                 child: CustomTextField(
                                   keyboardType: TextInputType.number,
                                   hintTitle: "رقم الهاتف",
-                                  icon: Icon(
-                                    Icons.phone,
-                                    size: 20,
+                                  icon: Container(
+                                  
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(120),
+                                      height: 50,
+                                      child: Row(
+                                        children: [
+                                          CountryCodePicker(
+                                              dialogSize: Size(300, 230),
+                                              onChanged: (value) {
+                                                // print("cooooode ${value.dialCode}");
+                                                // setCode(value.dialCode);
+                                              },
+                                              initialSelection: 'OM',
+                                              padding: EdgeInsets.only(left: 15),
+                                              //countryFilter: ['EG', 'SA'],
+
+                                              // favorite: ['+39', 'FR'],
+                                              enabled: false,
+                                              showCountryOnly: false,
+                                              showOnlyCountryWhenClosed: false,
+                                              alignLeft: false,
+                                            ),
+                                            VerticalDivider(color: blackColor,)
+                                        ],
+                                      ),
+                                    )
                                   ),
                                   onSaved: authProviderUserWithListen.setMobile,
                                   onValidate:
@@ -183,7 +208,7 @@ class LogInScreen extends StatelessWidget {
                                     push(context, SignUpScreen());
                                   },
                                   child: Container(
-                                    width: ScreenUtil().setWidth(262),
+                                    width: ScreenUtil().setWidth(292),
                                     alignment: Alignment.center,
                                     child: Row(
                                       children: [
@@ -229,20 +254,20 @@ class LogInScreen extends StatelessWidget {
                                     if (state is SettingsState) {
                                       Map mySetting = state.data["setting"];
 
-                                      Provider.of<AuthProviderUser>(context)
+                                      authGet
                                           .setInitialVideo(
                                               mySetting["guide_video_url"]);
 
-                                      Provider.of<AuthProviderUser>(context)
+                                      authGet
                                           .settitlePay(
                                               mySetting["payment_guide_title"]);
-                                      Provider.of<AuthProviderUser>(context)
+                                      authGet
                                           .setsubTitlePay(mySetting[
                                               "payment_guide_description"]);
-                                      Provider.of<AuthProviderUser>(context)
+                                      authGet
                                           .settitleLive(mySetting[
                                               "online_videos_guide_title"]);
-                                      Provider.of<AuthProviderUser>(context)
+                                      authGet
                                           .setsubTitleLive(mySetting[
                                               "online_videos_guide_description"]);
                                       //  Timer(Duration(seconds: 2), () async {

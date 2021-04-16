@@ -92,7 +92,7 @@ var styleTitleDialog = TextStyle(
   fontFamily: "Ithrabold",
 );
 var styleSubDialog = TextStyle(
-  fontSize: ScreenUtil().setSp(16),
+  fontSize: ScreenUtil().setSp(13),
   color: whiteColor,
   fontFamily: "Ithrabold",
 );

@@ -3,7 +3,6 @@ import 'package:flutter_pusher_client/flutter_pusher.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:laravel_echo/laravel_echo.dart';
-import 'package:provider/provider.dart';
 import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/services/notification_handler.dart';

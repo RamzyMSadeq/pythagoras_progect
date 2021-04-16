@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:provider/provider.dart';
 import 'package:pythagoras/bloc/bloc_class.dart';
 import 'package:pythagoras/bloc/bloc_events.dart';
+import 'package:pythagoras/features/users/GetApp/app_get.dart';
 import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
 import 'package:pythagoras/features/users/ui/widgets/card_title_man.dart';
 import 'package:pythagoras/features/users/ui/widgets/custom_bottom.dart';
@@ -39,6 +41,7 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
   @override
   Widget build(BuildContext context) {
     final authProviderUserWithListen = Provider.of<AuthProviderUser>(context);
+        AppGet authGet = Get.find();
 
     return Scaffold(
       resizeToAvoidBottomPadding: false,
@@ -57,9 +60,9 @@ class _VerificationPhoneScreenState extends State<VerificationPhoneScreen> {
               height: ScreenUtil().setHeight(200),
               width: double.infinity,
               child: CardTitleMan(
-                  title: Provider.of<AuthProviderUser>(context).titlePay,
-                  subTitle1: Provider.of<AuthProviderUser>(context).subTitlePay,
-                  subTitle2: Provider.of<AuthProviderUser>(context).subTitlePay,
+                  title:authGet.titlePay,
+                  subTitle1:authGet.subTitlePay,
+                  subTitle2: authGet.subTitlePay,
                   color: blueColor),
             ),
             SizedBox(

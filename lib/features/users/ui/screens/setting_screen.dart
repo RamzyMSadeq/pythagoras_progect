@@ -105,7 +105,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                   ),
                             Container(
                               width: ScreenUtil().setWidth(135),
-                              height: ScreenUtil().setHeight(85),
+                              height: ScreenUtil().setHeight(90),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -116,7 +116,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     style: styleSettingName,
                                   ),
                                   Text(
-                                    myUser.location,
+                                    myUser.location == null ? "" : myUser.location,
                                     style: styleSettingPhone,
                                   ),
                                   Text(
@@ -149,7 +149,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                     )),
                               Container(
                                 width: ScreenUtil().setWidth(120),
-                                height: ScreenUtil().setHeight(100),
+                                height: ScreenUtil().setHeight(90),
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: AssetImage(profile),
@@ -253,7 +253,7 @@ class _SettingScreenState extends State<SettingScreen> {
                               },
                               child: Container(
                                   height: ScreenUtil().setHeight(40),
-                                  width: ScreenUtil().setWidth(100),
+                                  width: ScreenUtil().setWidth(120),
                                   child: Row(
                                     children: [
                                       Icon(

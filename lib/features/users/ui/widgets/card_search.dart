@@ -21,7 +21,7 @@ class _CardSearchState extends State<CardSearch> {
     return widget.myVideo != null
         ? Container(
             margin: EdgeInsets.symmetric(horizontal: 13, vertical: 10),
-            height: ScreenUtil().setHeight(115),
+            //height: ScreenUtil().setHeight(115),
             width: ScreenUtil().setWidth(350),
             decoration: BoxDecoration(
                 color: pinkColor,

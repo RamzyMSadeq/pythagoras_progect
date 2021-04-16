@@ -152,7 +152,7 @@ class _ClassesScreen2State extends State<ClassesScreen2> {
                       setState(() {});
                     },
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.only(bottom: 12),
+                        contentPadding: EdgeInsets.only(top: 10),
                         border: InputBorder.none,
                         hintText: "بحث",
                         hintStyle: styleTextFieldLogIn,

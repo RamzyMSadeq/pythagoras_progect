@@ -1,3 +1,4 @@
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,11 +7,7 @@ import 'package:flutter_screenutil/screenutil.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:pythagoras/bloc/bloc_events.dart';
 import 'package:pythagoras/features/users/GetApp/app_get.dart';
-import 'package:pythagoras/features/users/providers/auth_providers_user.dart';
-import 'package:pythagoras/features/users/repo/api_user_client.dart';
 import 'package:pythagoras/features/users/ui/screens/home_screen.dart';
 import 'package:pythagoras/services/sp_helper.dart';
 import 'package:pythagoras/values/constants.dart';
@@ -31,26 +28,50 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     // int blllo;
     super.initState();
+    inita();
+
     // Future.delayed(Duration(milliseconds: 200), () {
     //   blllo = authGet.blocked;
     //   print("++++++++++++++++++++++++++++++++++++++++ $blllo");
     // });
 
     Timer(Duration(seconds: 3), () async {
-    BlocProvider.of<UserBloc>(context).add(SettingsEvent());
+      // BlocProvider.of<UserBloc>(context).add(SettingsEvent());
 
       // Map data1 = await ApiUserClient.apiUserClient.settingsUser();
       // authGet.setTerm(data1["term_enabled"]);
       String token = await SPHelper.spHelper.getToken();
       int bloked = await SPHelper.spHelper.getBlocked();
       print("rrrrrrrrrrrraaaaaaaaaaaammmmmmmmmmmm $token");
-      if (token == null || token == '' || bloked == 1) {
-        pushAndRemoveUntil(
+      if (token == null ||
+          token == '' ||
+          bloked == 1 ||
+          authGet.allMeStatus.value['phoneVerified'] == 0) {
+        pushAndRemoveUntil(          
           context,
           LogInScreen(),
         );
-      } else {
+      }
+      // else if(){
+
+      //   pushAndRemoveUntil(
+      //     context,
+      //     LogInScreen(),
+      //   );
+      // }
+      else {
         Timer(Duration(seconds: 3), () async {
+          authGet.setInitialVideo(
+              authGet.allSettings.value['setting']["guide_video_url"]);
+
+          authGet.settitlePay(
+              authGet.allSettings.value['setting']["payment_guide_title"]);
+          authGet.setsubTitlePay(authGet.allSettings.value['setting']
+              ["payment_guide_description"]);
+          authGet.settitleLive(authGet.allSettings.value['setting']
+              ["online_videos_guide_title"]);
+          authGet.setsubTitleLive(authGet.allSettings.value['setting']
+              ["online_videos_guide_description"]);
           pushAndRemoveUntil(
             context,
             HomeScreen(),
@@ -60,13 +81,15 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
+  inita() async {
+    await authGet.getAllMeStatus();
+    await authGet.getAllSettings();
+  }
+
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      context,
-      designSize: Size(375, 812),
-      allowFontScaling: true
-    );
+    ScreenUtil.init(context,
+        designSize: Size(375, 812), allowFontScaling: true);
 
     return SafeArea(
       child: Scaffold(
@@ -121,17 +144,17 @@ class _SplashScreenState extends State<SplashScreen> {
                       } else if (state is SettingsState) {
                         Map mySetting = state.data["setting"];
 
-                        Provider.of<AuthProviderUser>(context)
-                            .setInitialVideo(mySetting["guide_video_url"]);
+                        // Provider.of<AuthProviderUser>(context)
+                        //     .setInitialVideo(mySetting["guide_video_url"]);
 
-                        Provider.of<AuthProviderUser>(context)
-                            .settitlePay(mySetting["payment_guide_title"]);
-                        Provider.of<AuthProviderUser>(context).setsubTitlePay(
-                            mySetting["payment_guide_description"]);
-                        Provider.of<AuthProviderUser>(context).settitleLive(
-                            mySetting["online_videos_guide_title"]);
-                        Provider.of<AuthProviderUser>(context).setsubTitleLive(
-                            mySetting["online_videos_guide_description"]);
+                        // Provider.of<AuthProviderUser>(context)
+                        //     .settitlePay(mySetting["payment_guide_title"]);
+                        // Provider.of<AuthProviderUser>(context).setsubTitlePay(
+                        //     mySetting["payment_guide_description"]);
+                        // Provider.of<AuthProviderUser>(context).settitleLive(
+                        //     mySetting["online_videos_guide_title"]);
+                        // Provider.of<AuthProviderUser>(context).setsubTitleLive(
+                        //     mySetting["online_videos_guide_description"]);
 
                         //dpush(context, LogInScreen());
                         return Container();

@@ -485,7 +485,8 @@ class UserBloc extends Bloc<BlocEvents, BlocStates> {
                 textColor: Colors.white,
                 fontSize: 16.0);
             pushAndRemoveUntil(event.context, LogInScreen());
-          } else {
+          } 
+          else {
             if (map["phoneVerified"] == 1) {
               print(
                   "mnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");

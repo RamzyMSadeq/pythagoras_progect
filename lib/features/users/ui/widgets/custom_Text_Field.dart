@@ -5,7 +5,7 @@ import 'package:pythagoras/values/styles.dart';
 
 class CustomTextField extends StatefulWidget {
   String hintTitle;
-  Icon icon;
+  Widget icon;
   final Function onSaved;
   final Function onValidate;
   TextInputType keyboardType;
@@ -31,7 +31,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   Widget build(BuildContext context) {
     int nu = 8;
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection:widget.hintTitle == "رقم الهاتف" ?TextDirection.ltr :  TextDirection.rtl,
       child: TextFormField(
         maxLength: widget.hintTitle == "رقم الهاتف" ? nu : null,
         keyboardType: widget.keyboardType,

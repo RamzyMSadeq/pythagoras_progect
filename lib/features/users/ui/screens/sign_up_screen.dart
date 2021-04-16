@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rounded_date_picker/rounded_picker.dart';
@@ -166,71 +167,71 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onSaved: authProviderUserWithListen.setName,
                         onValidate: authProviderUserWithListen.validateName,
                       ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(10),
-                      ),
-                      CustomDropDown(
-                        type: "gender",
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(10),
-                      ),
-                      Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: InkWell(
-                          onTap: () {
-                            return showRoundedDatePicker(
-                              context: context,
-                              height: 320,
-                              theme: ThemeData(primarySwatch: Colors.pink),
-                              initialDate: selectedDate,
-                              firstDate: DateTime(selectedDate.year - 100),
-                              lastDate: DateTime(selectedDate.year + 10),
-                              borderRadius: 16,
-                            ).then((value) {
-                              if (value != null) {
-                                selectedDate = value;
-                              } else {
-                                selectedDate = DateTime.now();
-                              }
+                      // SizedBox(
+                      //   height: ScreenUtil().setHeight(10),
+                      // ),
+                      // CustomDropDown(
+                      //   type: "gender",
+                      // ),
+                      // SizedBox(
+                      //   height: ScreenUtil().setHeight(10),
+                      // ),
+                      // Directionality(
+                      //   textDirection: TextDirection.rtl,
+                      //   child: InkWell(
+                      //     onTap: () {
+                      //       return showRoundedDatePicker(
+                      //         context: context,
+                      //         height: 320,
+                      //         theme: ThemeData(primarySwatch: Colors.pink),
+                      //         initialDate: selectedDate,
+                      //         firstDate: DateTime(selectedDate.year - 100),
+                      //         lastDate: DateTime(selectedDate.year + 10),
+                      //         borderRadius: 16,
+                      //       ).then((value) {
+                      //         if (value != null) {
+                      //           selectedDate = value;
+                      //         } else {
+                      //           selectedDate = DateTime.now();
+                      //         }
 
-                              setState(() {});
-                            });
-                          },
-                          child: Container(
-                            height: ScreenUtil().setHeight(45),
-                            width: double.infinity,
-                            padding: EdgeInsets.only(right: 12),
-                            decoration: BoxDecoration(
-                                color:
-                                    backgroundTextFieldColor.withOpacity(.12),
-                                borderRadius: borderRadius22),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  flex: 1,
-                                  child: Icon(
-                                    Icons.date_range,
-                                    color: Colors.grey[600],
-                                  ),
-                                ),
-                                Expanded(
-                                    flex: 12,
-                                    child: Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Text(
-                                        "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
-                                        style: TextStyle(
-                                            color: Colors.grey[400],
-                                            fontFamily: "Ithrabold",
-                                            fontSize: 14),
-                                      ),
-                                    ))
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
+                      //         setState(() {});
+                      //       });
+                      //     },
+                      //     child: Container(
+                      //       height: ScreenUtil().setHeight(45),
+                      //       width: double.infinity,
+                      //       padding: EdgeInsets.only(right: 12),
+                      //       decoration: BoxDecoration(
+                      //           color:
+                      //               backgroundTextFieldColor.withOpacity(.12),
+                      //           borderRadius: borderRadius22),
+                      //       child: Row(
+                      //         children: [
+                      //           Expanded(
+                      //             flex: 1,
+                      //             child: Icon(
+                      //               Icons.date_range,
+                      //               color: Colors.grey[600],
+                      //             ),
+                      //           ),
+                      //           Expanded(
+                      //               flex: 12,
+                      //               child: Container(
+                      //                 padding: EdgeInsets.only(right: 10),
+                      //                 child: Text(
+                      //                   "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
+                      //                   style: TextStyle(
+                      //                       color: hintColor,
+                      //                       fontFamily: "Ithrabold",
+                      //                       fontSize: 14),
+                      //                 ),
+                      //               ))
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: ScreenUtil().setHeight(10),
                       ),
@@ -255,10 +256,34 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       CustomTextField(
                         keyboardType: TextInputType.number,
                         hintTitle: "رقم الهاتف",
-                        icon: Icon(
-                          Icons.phone,
-                          size: 20,
-                        ),
+                        icon: Container(
+                                  
+                                    child: Container(
+                                      width: ScreenUtil().setWidth(120),
+                                      height: 50,
+                                      child: Row(
+                                        children: [
+                                          CountryCodePicker(
+                                              dialogSize: Size(300, 230),
+                                              onChanged: (value) {
+                                                // print("cooooode ${value.dialCode}");
+                                                // setCode(value.dialCode);
+                                              },
+                                              initialSelection: 'OM',
+                                              padding: EdgeInsets.only(left: 15),
+                                              //countryFilter: ['EG', 'SA'],
+
+                                              // favorite: ['+39', 'FR'],
+                                              enabled: false,
+                                              showCountryOnly: false,
+                                              showOnlyCountryWhenClosed: false,
+                                              alignLeft: false,
+                                            ),
+                                            VerticalDivider(color: blackColor,)
+                                        ],
+                                      ),
+                                    )
+                                  ),
                         onSaved: authProviderUserWithListen.setMobile,
                         onValidate: authProviderUserWithListen.validateMobile,
                       ),
@@ -277,52 +302,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         height: ScreenUtil().setHeight(10),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Container(
-                              width: ScreenUtil().setWidth(75),
-                              child: Divider(
-                                thickness: 2,
-                                endIndent: 20,
-                              )),
-                          Text(
-                            "معلومات ولي الأمر",
-                            style: styleTitleSignUpLight,
-                          ),
-                          Container(
-                              width: ScreenUtil().setWidth(75),
-                              child: Divider(
-                                thickness: 2,
-                                endIndent: 20,
-                              ))
-                        ],
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(10),
-                      ),
-                      CustomTextField(
-                        hintTitle: "إسم ولي الأمر",
-                        icon: Icon(
-                          Icons.person,
-                          size: 20,
-                        ),
-                        onSaved: authProviderUserWithListen.setFatherName,
-                        onValidate:
-                            authProviderUserWithListen.validateFatherName,
-                      ),
-                      SizedBox(
-                        height: ScreenUtil().setHeight(10),
-                      ),
-                      CustomTextField(
-                        hintTitle: "صلة القرابة بولي الأمر",
-                        icon: Icon(
-                          Icons.group,
-                          size: 20,
-                        ),
-                        onSaved: authProviderUserWithListen.setLink,
-                        onValidate: authProviderUserWithListen.validateLink,
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //   children: [
+                      //     Container(
+                      //         width: ScreenUtil().setWidth(75),
+                      //         child: Divider(
+                      //           thickness: 2,
+                      //           endIndent: 20,
+                      //         )),
+                      //     Text(
+                      //       "معلومات ولي الأمر",
+                      //       style: styleTitleSignUpLight,
+                      //     ),
+                      //     Container(
+                      //         width: ScreenUtil().setWidth(75),
+                      //         child: Divider(
+                      //           thickness: 2,
+                      //           endIndent: 20,
+                      //         ))
+                      //   ],
+                      // ),
+                      // SizedBox(
+                      //   height: ScreenUtil().setHeight(10),
+                      // ),
+                      // CustomTextField(
+                      //   hintTitle: "إسم ولي الأمر",
+                      //   icon: Icon(
+                      //     Icons.person,
+                      //     size: 20,
+                      //   ),
+                      //   onSaved: authProviderUserWithListen.setFatherName,
+                      //   onValidate:
+                      //       authProviderUserWithListen.validateFatherName,
+                      // ),
+                      // SizedBox(
+                      //   height: ScreenUtil().setHeight(10),
+                      // ),
+                      // CustomTextField(
+                      //   hintTitle: "صلة القرابة بولي الأمر",
+                      //   icon: Icon(
+                      //     Icons.group,
+                      //     size: 20,
+                      //   ),
+                      //   onSaved: authProviderUserWithListen.setLink,
+                      //   onValidate: authProviderUserWithListen.validateLink,
+                      // ),
                       SizedBox(
                         height: ScreenUtil().setHeight(30),
                       ),

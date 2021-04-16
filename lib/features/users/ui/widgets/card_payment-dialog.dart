@@ -48,7 +48,7 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  height: ScreenUtil().setHeight(160),
+                  height: ScreenUtil().setHeight(100),
                   child: Stack(
                     overflow: Overflow.visible,
                     children: [
@@ -58,7 +58,7 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                           margin: EdgeInsets.only(top: 25),
                           //   alignment: Alignment.centerRight,
 
-                          height: ScreenUtil().setHeight(102),
+                          height: ScreenUtil().setHeight(80),
                           width: ScreenUtil().setWidth(150),
                           decoration: BoxDecoration(
                               borderRadius: borderRadius8, color: whiteColor),
@@ -102,14 +102,25 @@ class _CardPaymentDialogState extends State<CardPaymentDialog> {
                       ),
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(10),
+                      height: ScreenUtil().setHeight(5),
                     ),
                     Container(
                       // height: ScreenUtil().setHeight(50),
                       child: Text(
-                        "يرجي شراء الوحدة  \n للاستمرار",
+                        "يرجي شراء الوحدة للاستمرار",
                         textAlign: TextAlign.center,
                         style: styleSubDialog,
+                      ),
+                    ),
+                     SizedBox(
+                      height: ScreenUtil().setHeight(5),
+                    ),
+                    Container(
+                      // height: ScreenUtil().setHeight(50),
+                      child: Text(
+                        "📌 ملاحظة : السعر أعلاه يمثل قيمة الوحدة كاملة",
+                        textAlign: TextAlign.center,
+                        style: styleSettingTitle,
                       ),
                     ),
                     Container(

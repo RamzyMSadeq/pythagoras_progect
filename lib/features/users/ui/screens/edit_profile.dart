@@ -122,62 +122,62 @@ class _EditProfileState extends State<EditProfile> {
               SizedBox(
                 height: ScreenUtil().setHeight(10),
               ),
-              CustomDropDown(
-                type: "gender",
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              Directionality(
-                textDirection: TextDirection.rtl,
-                child: InkWell(
-                  onTap: () {
-                    return showRoundedDatePicker(
-                      context: context,
-                      height: 320,
-                      theme: ThemeData(primarySwatch: Colors.pink),
-                      initialDate: selectedDate,
-                      firstDate: DateTime(selectedDate.year - 100),
-                      lastDate: DateTime(selectedDate.year + 10),
-                      borderRadius: 16,
-                    ).then((value) {
-                      selectedDate = value;
-                      setState(() {});
-                    });
-                  },
-                  child: Container(
-                    height: ScreenUtil().setHeight(45),
-                    width: double.infinity,
-                    padding: EdgeInsets.only(right: 12),
-                    decoration: BoxDecoration(
-                        color: backgroundTextFieldColor.withOpacity(.12),
-                        borderRadius: borderRadius22),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Icon(
-                            Icons.date_range,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                        Expanded(
-                            flex: 12,
-                            child: Container(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Text(
-                                "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
-                                style: TextStyle(
-                                    color: Colors.grey[400],
-                                    fontFamily: "Ithrabold",
-                                    fontSize: 14),
-                              ),
-                            ))
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // CustomDropDown(
+              //   type: "gender",
+              // ),
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(10),
+              // ),
+              // Directionality(
+              //   textDirection: TextDirection.rtl,
+              //   child: InkWell(
+              //     onTap: () {
+              //       return showRoundedDatePicker(
+              //         context: context,
+              //         height: 320,
+              //         theme: ThemeData(primarySwatch: Colors.pink),
+              //         initialDate: selectedDate,
+              //         firstDate: DateTime(selectedDate.year - 100),
+              //         lastDate: DateTime(selectedDate.year + 10),
+              //         borderRadius: 16,
+              //       ).then((value) {
+              //         selectedDate = value;
+              //         setState(() {});
+              //       });
+              //     },
+              //     child: Container(
+              //       height: ScreenUtil().setHeight(45),
+              //       width: double.infinity,
+              //       padding: EdgeInsets.only(right: 12),
+              //       decoration: BoxDecoration(
+              //           color: backgroundTextFieldColor.withOpacity(.12),
+              //           borderRadius: borderRadius22),
+              //       child: Row(
+              //         children: [
+              //           Expanded(
+              //             flex: 1,
+              //             child: Icon(
+              //               Icons.date_range,
+              //               color: Colors.grey[600],
+              //             ),
+              //           ),
+              //           Expanded(
+              //               flex: 12,
+              //               child: Container(
+              //                 padding: EdgeInsets.only(right: 10),
+              //                 child: Text(
+              //                   "${selectedDate.day} / ${selectedDate.month} / ${selectedDate.year}",
+              //                   style: TextStyle(
+              //                       color: Colors.grey[400],
+              //                       fontFamily: "Ithrabold",
+              //                       fontSize: 14),
+              //                 ),
+              //               ))
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: ScreenUtil().setHeight(10),
               ),
@@ -234,56 +234,56 @@ class _EditProfileState extends State<EditProfile> {
                       color: orangeColor),
                 ),
               ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      )),
-                  Text(
-                    "معلومات ولي الامر",
-                    style: styleTitleSignUpLight,
-                  ),
-                  Container(
-                      width: ScreenUtil().setWidth(75),
-                      child: Divider(
-                        thickness: 2,
-                        endIndent: 20,
-                      ))
-                ],
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextFieldControler(
-                initialValue: widget.supervisor,
-                hintTitle: widget.supervisor,
-                icon: Icon(
-                  Icons.person,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setFatherName,
-                onValidate: authProviderUserWithListen.validateFatherName,
-              ),
-              SizedBox(
-                height: ScreenUtil().setHeight(10),
-              ),
-              CustomTextFieldControler(
-                initialValue: widget.supervisorType,
-                hintTitle: widget.supervisorType,
-                icon: Icon(
-                  Icons.group,
-                  size: 20,
-                ),
-                onSaved: authProviderUserWithListen.setLink,
-                onValidate: authProviderUserWithListen.validateLink,
-              ),
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(10),
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+              //   children: [
+              //     Container(
+              //         width: ScreenUtil().setWidth(75),
+              //         child: Divider(
+              //           thickness: 2,
+              //           endIndent: 20,
+              //         )),
+              //     Text(
+              //       "معلومات ولي الامر",
+              //       style: styleTitleSignUpLight,
+              //     ),
+              //     Container(
+              //         width: ScreenUtil().setWidth(75),
+              //         child: Divider(
+              //           thickness: 2,
+              //           endIndent: 20,
+              //         ))
+              //   ],
+              // ),
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(10),
+              // ),
+              // CustomTextFieldControler(
+              //   initialValue: widget.supervisor,
+              //   hintTitle: widget.supervisor,
+              //   icon: Icon(
+              //     Icons.person,
+              //     size: 20,
+              //   ),
+              //   onSaved: authProviderUserWithListen.setFatherName,
+              //   onValidate: authProviderUserWithListen.validateFatherName,
+              // ),
+              // SizedBox(
+              //   height: ScreenUtil().setHeight(10),
+              // ),
+              // CustomTextFieldControler(
+              //   initialValue: widget.supervisorType,
+              //   hintTitle: widget.supervisorType,
+              //   icon: Icon(
+              //     Icons.group,
+              //     size: 20,
+              //   ),
+              //   onSaved: authProviderUserWithListen.setLink,
+              //   onValidate: authProviderUserWithListen.validateLink,
+              // ),
               SizedBox(
                 height: ScreenUtil().setHeight(30),
               ),
